@@ -10,7 +10,13 @@ import designParser.asm.visitor.ClassMethodVisitor;
 import designParser.asm.visitor.ModelBuilderClassVisitor;
 
 public class DesignParser {
-    private final static String[] CLASS_NAMES = { "appLauncher.AppLauncher" };
+    private final static String[] CLASS_NAMES = { 
+            "appLauncher.AppLauncher",
+            "appLauncher.HtmlFileInfo",
+            "appLauncher.IDirectoryEventHandler",
+            "appLauncher.ILaunchableFileInfo",
+            "designParser.model.api.AccessLevel"
+    };
     
     /**
      * Reads in a list of Java Classes and reverse engineers their design.
