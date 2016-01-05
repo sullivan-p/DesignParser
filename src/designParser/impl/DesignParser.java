@@ -5,9 +5,10 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Opcodes;
 
-import designParser.visitor.ClassDeclarationVisitor;
-import designParser.visitor.ClassFieldVisitor;
-import designParser.visitor.ClassMethodVisitor;
+import designParser.asmvisitor.ClassDeclarationVisitor;
+import designParser.asmvisitor.ClassFieldVisitor;
+import designParser.asmvisitor.ClassMethodVisitor;
+import designParser.asmvisitor.ModelBuilderClassVisitor;
 
 public class DesignParser {
     private final static String[] CLASS_NAMES = { "appLauncher.AppLauncher" };
@@ -27,11 +28,11 @@ public class DesignParser {
             // Java class
             ClassReader reader = new ClassReader(className);
             // make class declaration visitor to get superclass and interfaces
-            ClassVisitor decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5);
+            ModelBuilderClassVisitor decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5);
             // DECORATE declaration visitor with field visitor
-            ClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, decVisitor);
+            ModelBuilderClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, decVisitor);
             // DECORATE field visitor with method visitor
-            ClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor);
+            ModelBuilderClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor);
             // TODO: add more DECORATORS here in later milestones to accomplish
             // specific tasks
             // Tell the Reader to use our (heavily decorated) ClassVisitor to
