@@ -7,22 +7,32 @@ import designParser.model.api.IClass;
 import designParser.model.api.IEnum;
 import designParser.model.api.IInterface;
 import designParser.model.api.IModel;
-import designParser.model.api.IObjOrientedEntity;
 import designParser.model.visitor.IModelVisitor;
 
 public class Model implements IModel {
-	private List<IObjOrientedEntity> entities;
+    private List<IClass> classModels;
+    private List<IInterface> interfaceModels;
+    private List<IEnum> enumModels;
 	private final String DOES_NOT_EXIST_ERROR = " does not exist in the model.";
 	private final String ALREADY_EXISTS_ERROR = " already exists in the model.";
 
 	public Model() {
-		entities = new ArrayList<IObjOrientedEntity>();
+        classModels = new ArrayList<IClass>();
+        interfaceModels = new ArrayList<IInterface>();
+        enumModels = new ArrayList<IEnum>();
 	}
 
+	@Override
+    public boolean hasEntity(String name)  {
+        return (hasInterfaceModel(name) || 
+                hasEnumModel(name) ||
+                hasClassModel(name));
+    }
+	
     @Override
-    public boolean hasEntity(String name) {
-        for (IObjOrientedEntity e : entities) {
-            if (e.getName().equals(name)) {
+    public boolean hasClassModel(String name) {
+        for (IClass c : classModels) {
+            if (c.getName().equals(name)) {
                 return true;
             }
         }
@@ -30,45 +40,85 @@ public class Model implements IModel {
     }
 
     @Override
-    public IObjOrientedEntity getEntity(String name) throws IllegalArgumentException {
-        for (IObjOrientedEntity e : entities) {
-            if (e.getName().equals(name)) {
-                return e;
+    public boolean hasInterfaceModel(String name) {
+        for (IInterface i : interfaceModels) {
+            if (i.getName().equals(name)) {
+                return true;
             }
-        }         
+        }
+        return false;
+    }
+
+    @Override
+    public boolean hasEnumModel(String name) {
+        for (IEnum e : enumModels) {
+            if (e.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    @Override
+    public IClass getClassModel(String name) throws IllegalArgumentException {
+        for (IClass c : classModels) {
+            if (c.getName().equals(name)) {
+                return c;
+            }
+        }
         throw new IllegalArgumentException(name + DOES_NOT_EXIST_ERROR);
     }
 
     @Override
-    public IClass addNewClassModel(String name) {
-        if (hasEntity(name)) {
+    public IInterface getInterfaceModel(String name) throws IllegalArgumentException {
+        for (IInterface i : interfaceModels) {
+            if (i.getName().equals(name)) {
+                return i;
+            }
+        }
+        throw new IllegalArgumentException(name + DOES_NOT_EXIST_ERROR);
+    }
+    
+    @Override
+    public IEnum getEnumModel(String name) throws IllegalArgumentException {
+        for (IEnum e : enumModels) {
+            if (e.getName().equals(name)) {
+                return e;
+            }
+        }
+        throw new IllegalArgumentException(name + DOES_NOT_EXIST_ERROR);
+    }
+    
+    @Override
+    public IClass addNewClassModel(String name, boolean isConcrete) {
+        if (hasClassModel(name)) {
             throw new IllegalArgumentException(name + ALREADY_EXISTS_ERROR);
         }
         
-        IClass classModel = new ClassModel(name);
-        entities.add(classModel);
+        IClass classModel = new ClassModel(name, isConcrete);
+        classModels.add(classModel);
         return classModel;
     }
 
     @Override
     public IInterface addNewInterfaceModel(String name) {
-        if (hasEntity(name)) {
+        if (hasInterfaceModel(name)) {
             throw new IllegalArgumentException(name + ALREADY_EXISTS_ERROR);
         }
         
         IInterface interfaceModel = new InterfaceModel(name);
-        entities.add(interfaceModel);
+        interfaceModels.add(interfaceModel);
         return interfaceModel;
     }
     
     @Override
     public IEnum addNewEnumModel(String name) {
-        if (hasEntity(name)) {
+        if (hasEnumModel(name)) {
             throw new IllegalArgumentException(name + ALREADY_EXISTS_ERROR);
         }        
         
         IEnum enumModel = new EnumModel(name);
-        entities.add(enumModel);
+        enumModels.add(enumModel);
         return enumModel;
     }    
     

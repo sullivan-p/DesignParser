@@ -1,6 +1,8 @@
 package designParser.model.api;
 
+import java.util.List;
+
 public interface IInterface extends IObjOrientedEntity {
-    public IInterface getExtendedInterface();
-    public void setExtendedInterface(IInterface extInterface);
+    public List<IInterface> getExtendedInterfaces();
+    public void setExtendedInterfaces(List<IInterface> extInterfaces);
 }

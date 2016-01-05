@@ -11,18 +11,18 @@ public class InterfaceModel implements IInterface {
     private String name;
     private List<IField> fields;
     private List<IMethod> methods;
-    private IInterface extendedInterface;
+    private List<IInterface> extendedInterfaces;
 
     public InterfaceModel(String name) {
         this.name = name;
     }
     
     public InterfaceModel(String name, List<IField> fields, 
-            List<IMethod> methods, IInterface extendedInterface) {
+            List<IMethod> methods, List<IInterface> extendedInterfaces) {
         this.name = name;
         this.fields = fields;
         this.methods = methods;
-        this.extendedInterface = extendedInterface;
+        this.extendedInterfaces = extendedInterfaces;
     }
 
     @Override
@@ -41,8 +41,8 @@ public class InterfaceModel implements IInterface {
     }
 
     @Override
-    public IInterface getExtendedInterface() {
-        return extendedInterface;
+    public List<IInterface> getExtendedInterfaces() {
+        return extendedInterfaces;
     }
 
     @Override
@@ -56,8 +56,8 @@ public class InterfaceModel implements IInterface {
     }
 
     @Override
-    public void setExtendedInterface(IInterface extInterface) {
-        this.extendedInterface = extInterface;
+    public void setExtendedInterfaces(List<IInterface> extInterfaces) {
+        this.extendedInterfaces = extInterfaces;
     }
     
     @Override

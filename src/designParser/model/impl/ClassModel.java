@@ -16,19 +16,19 @@ public class ClassModel implements IClass {
     private List<IInterface> interfaces;
     private boolean isConcrete;
     
-    public ClassModel(String name) {
+    public ClassModel(String name, boolean isConcrete) {
         this.name = name;
+        this.isConcrete = isConcrete;
     }
     
     public ClassModel(String name, List<IField> fields, 
             List<IMethod> methods, IClass extendedClass,
             List<IInterface> interfaces, boolean isConcrete) {
-        this.name = name;
+        this(name, isConcrete);
         this.fields = fields;
         this.methods = methods;
         this.extendedClass = extendedClass;
         this.interfaces = interfaces;
-        this.isConcrete = isConcrete;
     }
     
     @Override
