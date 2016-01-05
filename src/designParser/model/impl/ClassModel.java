@@ -16,6 +16,10 @@ public class ClassModel implements IClass {
     private List<IInterface> interfaces;
     private boolean isConcrete;
     
+    public ClassModel(String name) {
+        this.name = name;
+    }
+    
     public ClassModel(String name, List<IField> fields, 
             List<IMethod> methods, IClass extendedClass,
             List<IInterface> interfaces, boolean isConcrete) {
@@ -57,9 +61,34 @@ public class ClassModel implements IClass {
         return isConcrete;
     }
 
+
+    @Override
+    public void setFields(List<IField> fields) {
+        this.fields = fields;
+    }
+
+    @Override
+    public void setMethods(List<IMethod> methods) {
+        this.methods = methods;
+    }
+
+    @Override
+    public void setExtendedClass(IClass extClass) {
+        this.extendedClass = extClass;
+    }
+
+    @Override
+    public void setInterfaces(List<IInterface> interfaces) {
+        this.interfaces = interfaces;
+    }
+
+    @Override
+    public void setIsConcrete(boolean isConcrete) {
+        this.isConcrete = isConcrete;
+    }
+    
     @Override
     public void accept(IModelVisitor visitor) {
         // TODO Auto-generated method stub
-
     }
 }

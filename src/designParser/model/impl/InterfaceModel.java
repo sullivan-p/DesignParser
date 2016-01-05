@@ -13,6 +13,10 @@ public class InterfaceModel implements IInterface {
     private List<IMethod> methods;
     private IInterface extendedInterface;
 
+    public InterfaceModel(String name) {
+        this.name = name;
+    }
+    
     public InterfaceModel(String name, List<IField> fields, 
             List<IMethod> methods, IInterface extendedInterface) {
         this.name = name;
@@ -41,6 +45,21 @@ public class InterfaceModel implements IInterface {
         return extendedInterface;
     }
 
+    @Override
+    public void setFields(List<IField> fields) {
+        this.fields = fields;
+    }
+
+    @Override
+    public void setMethods(List<IMethod> methods) {
+        this.methods = methods;
+    }
+
+    @Override
+    public void setExtendedInterface(IInterface extInterface) {
+        this.extendedInterface = extInterface;
+    }
+    
     @Override
     public void accept(IModelVisitor visitor) {
         // TODO Auto-generated method stub
