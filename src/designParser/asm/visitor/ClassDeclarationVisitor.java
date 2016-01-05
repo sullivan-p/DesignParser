@@ -2,8 +2,6 @@ package designParser.asm.visitor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-
 import org.objectweb.asm.Opcodes;
 
 import designParser.model.api.IClass;
@@ -11,13 +9,13 @@ import designParser.model.api.IEnum;
 import designParser.model.api.IInterface;
 import designParser.model.api.IModel;
 import designParser.model.api.IObjOrientedEntity;
-import designParser.model.impl.ClassModel;
-import designParser.model.impl.EnumModel;
-import designParser.model.impl.InterfaceModel;
 import designParser.model.impl.Model;
 
 public class ClassDeclarationVisitor extends ModelBuilderClassVisitor {
     private IModel model;
+    
+    // The current class, interface, or enum that the visitor is visiting.
+    private IObjOrientedEntity currentEntity;
 
     public ClassDeclarationVisitor(int api) {
         super(api);
@@ -32,6 +30,11 @@ public class ClassDeclarationVisitor extends ModelBuilderClassVisitor {
     @Override
     public IModel getModel() {
         return model;
+    }
+    
+    @Override
+    public IObjOrientedEntity getCurrentEntity() {
+        return currentEntity;
     }
     
     @Override
@@ -71,8 +74,6 @@ public class ClassDeclarationVisitor extends ModelBuilderClassVisitor {
         }
         classModel = model.getClassModel(name);
         
-        classModel.setInterfaces(interfaceModels);
-     
         if (superName != null) {
             if (!model.hasClassModel(superName)) {
                 // Note: This makes the assumption that all superclasses are 
@@ -83,6 +84,9 @@ public class ClassDeclarationVisitor extends ModelBuilderClassVisitor {
             IClass superClassModel = model.getClassModel(superName);
             classModel.setExtendedClass(superClassModel);
         }
+        
+        classModel.setInterfaces(interfaceModels);
+        currentEntity = classModel;
     }
     
     private void handleInterfaceVisit(String name, ArrayList<IInterface> interfaceModels) {
@@ -93,6 +97,7 @@ public class ClassDeclarationVisitor extends ModelBuilderClassVisitor {
         interfaceModel = model.getInterfaceModel(name);
         
         interfaceModel.setExtendedInterfaces(interfaceModels);
+        currentEntity = interfaceModel;
     }
     
     private void handleEnumVisit(String name, ArrayList<IInterface> interfaceModels) {
@@ -103,6 +108,7 @@ public class ClassDeclarationVisitor extends ModelBuilderClassVisitor {
         enumModel = model.getEnumModel(name);
         
         enumModel.setInterfaces(interfaceModels);
+        currentEntity = enumModel;
     }  
         
     /**
