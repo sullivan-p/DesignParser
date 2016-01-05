@@ -1,4 +1,4 @@
-package designParser.asmvisitor;
+package designParser.asm.visitor;
 
 import java.util.Arrays;
 import designParser.model.api.IModel;

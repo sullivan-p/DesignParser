@@ -1,4 +1,4 @@
-package designParser.asmvisitor;
+package designParser.asm.visitor;
 
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.Type;

@@ -1,5 +1,5 @@
 package designParser.model.api;
 
-public interface IModel {
+public interface IModel extends ITraversable {
 
 }

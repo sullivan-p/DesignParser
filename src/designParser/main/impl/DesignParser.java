@@ -1,14 +1,13 @@
-package designParser.impl;
+package designParser.main.impl;
 
 import java.io.IOException;
 import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Opcodes;
 
-import designParser.asmvisitor.ClassDeclarationVisitor;
-import designParser.asmvisitor.ClassFieldVisitor;
-import designParser.asmvisitor.ClassMethodVisitor;
-import designParser.asmvisitor.ModelBuilderClassVisitor;
+import designParser.asm.visitor.ClassDeclarationVisitor;
+import designParser.asm.visitor.ClassFieldVisitor;
+import designParser.asm.visitor.ClassMethodVisitor;
+import designParser.asm.visitor.ModelBuilderClassVisitor;
 
 public class DesignParser {
     private final static String[] CLASS_NAMES = { "appLauncher.AppLauncher" };
