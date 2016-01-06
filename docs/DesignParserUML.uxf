@@ -19,11 +19,12 @@ ModelBuilderClassVisitor
     <id>UMLGeneric</id>
     <coordinates>
       <x>318</x>
-      <y>252</y>
+      <y>246</y>
       <w>282</w>
-      <h>168</h>
+      <h>174</h>
     </coordinates>
-    <panel_attributes>/ClassVisitor/
+    <panel_attributes>&lt;&lt;abstract&gt;&gt;
+ClassVisitor
 --
 + ClassVisitor(int api)
 + ClassVisitor(int api, ClassVisitor cv)
@@ -305,7 +306,7 @@ IDataType
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>2028</x>
+      <x>2262</x>
       <y>354</y>
       <w>186</w>
       <h>54</h>
@@ -320,7 +321,7 @@ IMethod
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>2256</x>
+      <x>2490</x>
       <y>354</y>
       <w>168</w>
       <h>54</h>
@@ -390,16 +391,16 @@ IVariable
     <coordinates>
       <x>1650</x>
       <y>330</y>
-      <w>486</w>
+      <w>720</w>
       <h>36</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>10.0;10.0;790.0;10.0;790.0;40.0</additional_attributes>
+    <additional_attributes>10.0;10.0;1180.0;10.0;1180.0;40.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2118</x>
+      <x>2352</x>
       <y>330</y>
       <w>222</w>
       <h>36</h>
@@ -410,7 +411,7 @@ IVariable
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>2202</x>
+      <x>2436</x>
       <y>888</y>
       <w>96</w>
       <h>60</h>
@@ -426,7 +427,7 @@ Protected</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>2442</x>
+      <x>2676</x>
       <y>444</y>
       <w>150</w>
       <h>42</h>
@@ -440,7 +441,7 @@ IField
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>2256</x>
+      <x>2490</x>
       <y>714</y>
       <w>162</w>
       <h>66</h>
@@ -456,7 +457,7 @@ IField
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2364</x>
+      <x>2598</x>
       <y>402</y>
       <w>162</w>
       <h>54</h>
@@ -467,7 +468,7 @@ IField
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2322</x>
+      <x>2556</x>
       <y>402</y>
       <w>18</w>
       <h>324</h>
@@ -478,7 +479,7 @@ IField
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>2442</x>
+      <x>2676</x>
       <y>828</y>
       <w>150</w>
       <h>60</h>
@@ -494,7 +495,7 @@ IField
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2508</x>
+      <x>2742</x>
       <y>480</y>
       <w>18</w>
       <h>360</h>
@@ -505,7 +506,7 @@ IField
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2322</x>
+      <x>2556</x>
       <y>774</y>
       <w>162</w>
       <h>66</h>
@@ -516,7 +517,7 @@ IField
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>2028</x>
+      <x>2262</x>
       <y>714</y>
       <w>186</w>
       <h>66</h>
@@ -533,7 +534,7 @@ IField
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2118</x>
+      <x>2352</x>
       <y>402</y>
       <w>18</w>
       <h>324</h>
@@ -544,7 +545,7 @@ IField
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2208</x>
+      <x>2442</x>
       <y>714</y>
       <w>60</w>
       <h>18</h>
@@ -555,7 +556,7 @@ IField
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2208</x>
+      <x>2442</x>
       <y>732</y>
       <w>36</w>
       <h>168</h>
@@ -566,7 +567,7 @@ IField
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2256</x>
+      <x>2490</x>
       <y>840</y>
       <w>198</w>
       <h>60</h>
@@ -580,15 +581,13 @@ IField
       <x>1500</x>
       <y>426</y>
       <w>222</w>
-      <h>72</h>
+      <h>54</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Interface&gt;&gt;
-IObjOrientedEntity
+IObject
 --
 + Collection&lt;IField&gt; getFields()
-+ Collection&lt;IMethod&gt; getMethods()
-+ void setFields(Collection&lt;IField&gt; fields)
-+ void setMethods(Collection&lt;IMethod&gt; methods)</panel_attributes>
++ Collection&lt;IMethod&gt; getMethods()</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -606,7 +605,7 @@ IObjOrientedEntity
     <id>UMLGeneric</id>
     <coordinates>
       <x>1500</x>
-      <y>714</y>
+      <y>738</y>
       <w>222</w>
       <h>150</h>
     </coordinates>
@@ -648,9 +647,9 @@ IObjOrientedEntity
     <id>UMLGeneric</id>
     <coordinates>
       <x>1266</x>
-      <y>714</y>
+      <y>738</y>
       <w>222</w>
-      <h>114</h>
+      <h>150</h>
     </coordinates>
     <panel_attributes>InterfaceModel
 --
@@ -881,9 +880,9 @@ IObjOrientedEntity
     <id>UMLGeneric</id>
     <coordinates>
       <x>1266</x>
-      <y>528</y>
+      <y>594</y>
       <w>222</w>
-      <h>60</h>
+      <h>102</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Interface&gt;&gt;
 IInterface
@@ -897,7 +896,7 @@ IInterface
     <id>UMLGeneric</id>
     <coordinates>
       <x>1500</x>
-      <y>528</y>
+      <y>594</y>
       <w>222</w>
       <h>102</h>
     </coordinates>
@@ -917,7 +916,7 @@ IClass
     <id>Relation</id>
     <coordinates>
       <x>1380</x>
-      <y>492</y>
+      <y>558</y>
       <w>240</w>
       <h>48</h>
     </coordinates>
@@ -928,45 +927,45 @@ IClass
     <id>Relation</id>
     <coordinates>
       <x>1380</x>
-      <y>582</y>
+      <y>690</y>
       <w>18</w>
-      <h>144</h>
+      <h>60</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;220.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>1590</x>
-      <y>624</y>
+      <y>690</y>
       <w>18</w>
-      <h>102</h>
+      <h>60</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>1716</x>
       <y>402</y>
-      <w>402</w>
+      <w>636</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;70.0;1040.0;70.0;1040.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1716</x>
+      <y>402</y>
+      <w>840</w>
       <h>66</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;90.0;650.0;90.0;650.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1716</x>
-      <y>402</y>
-      <w>606</w>
-      <h>78</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;110.0;990.0;110.0;990.0;10.0</additional_attributes>
+    <additional_attributes>10.0;90.0;1380.0;90.0;1380.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -983,9 +982,9 @@ IClass
     <id>UMLGeneric</id>
     <coordinates>
       <x>1734</x>
-      <y>528</y>
-      <w>186</w>
-      <h>60</h>
+      <y>594</y>
+      <w>222</w>
+      <h>102</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Interface&gt;&gt;
 IEnum
@@ -999,9 +998,9 @@ IEnum
     <id>UMLGeneric</id>
     <coordinates>
       <x>1734</x>
-      <y>714</y>
+      <y>738</y>
       <w>222</w>
-      <h>108</h>
+      <h>150</h>
     </coordinates>
     <panel_attributes>EnumModel
 --
@@ -1021,34 +1020,107 @@ IEnum
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1824</x>
-      <y>582</y>
+      <x>1836</x>
+      <y>690</y>
       <w>18</w>
-      <h>144</h>
+      <h>60</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;220.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>1602</x>
-      <y>510</y>
-      <w>240</w>
+      <y>576</y>
+      <w>258</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>10.0;10.0;380.0;10.0;380.0;30.0</additional_attributes>
+    <additional_attributes>10.0;10.0;410.0;10.0;410.0;30.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>336</x>
+      <y>726</y>
+      <w>282</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>AsmDataParsers
+--
+--
+bool isEnum(int opcode)
+bool isAbstract(int opcode)
+String convertAsmToJavaName(String asmName)
+String[] extractClassNames(String signature)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>1968</x>
+      <y>738</y>
+      <w>222</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>ArrayModel
+--
+--
++ String getName()
++ Collection&lt;IField&gt; getFields()
++ Collection&lt;IMethod&gt; getMethods()
++ Collection&lt;IIInterface&gt; getInterfaces()
++ void accept(IModelVisitor)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1716</x>
+      <y>462</y>
+      <w>360</w>
+      <h>288</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;580.0;10.0;580.0;460.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>1602</x>
-      <y>510</y>
+      <y>576</y>
       <w>18</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;30.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>1500</x>
+      <y>510</y>
+      <w>222</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Interface&gt;&gt;
+ICustomObject
+--
++ void setFields(Collection&lt;IField&gt; fields)
++ void setMethods(Collection&lt;IMethod&gt; methods)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1602</x>
+      <y>474</y>
+      <w>18</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
   </element>
 </diagram>
