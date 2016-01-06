@@ -14,7 +14,7 @@ public class VariableModel implements IVariable {
      * @param name
      * @param types If the variable is not a generic data type, should be a 
      * single-element collection that contains only the variable's data type. 
-     * If the variable is a generic type, should be a list that contains the 
+     * If the variable is a generic type, should be a collection containing the 
      * variable's type in addition to any type parameters.
      */
     public VariableModel(String name, Collection<IDataType> types) {
