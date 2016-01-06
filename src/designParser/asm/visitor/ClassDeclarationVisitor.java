@@ -5,17 +5,18 @@ import java.util.Arrays;
 import org.objectweb.asm.Opcodes;
 
 import designParser.model.api.IClass;
+import designParser.model.api.ICustomObject;
 import designParser.model.api.IEnum;
 import designParser.model.api.IInterface;
 import designParser.model.api.IDesignModel;
-import designParser.model.api.IObjOrientedEntity;
+import designParser.model.api.IObject;
 import designParser.model.impl.DesignModel;
 
 public class ClassDeclarationVisitor extends ModelBuilderClassVisitor {
     private IDesignModel model;
     
     // The current class, interface, or enum that the visitor is visiting.
-    private IObjOrientedEntity currentEntity;
+    private ICustomObject currentEntity;
 
     public ClassDeclarationVisitor(int api, IDesignModel model) {
         super(api);
@@ -28,7 +29,7 @@ public class ClassDeclarationVisitor extends ModelBuilderClassVisitor {
     }
     
     @Override
-    public IObjOrientedEntity getCurrentEntity() {
+    public IObject getCurrentEntity() {
         return currentEntity;
     }
     

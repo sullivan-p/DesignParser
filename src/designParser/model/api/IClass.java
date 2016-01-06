@@ -2,7 +2,7 @@ package designParser.model.api;
 
 import java.util.List;
 
-public interface IClass extends IObjOrientedEntity {
+public interface IClass extends ICustomObject {
     public IClass getExtendedClass();
     public List<IInterface> getInterfaces();
     public boolean getIsConcrete();

@@ -19,5 +19,5 @@ public abstract class ModelBuilderClassVisitor extends ClassVisitor {
 	 * Return the current class, interface, or enum that the visitor is 
 	 * visiting.
 	 */
-	public abstract IObjOrientedEntity getCurrentEntity();
+	public abstract IObject getCurrentEntity();
 }
