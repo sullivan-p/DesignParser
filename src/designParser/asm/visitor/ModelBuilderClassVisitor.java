@@ -13,7 +13,7 @@ public abstract class ModelBuilderClassVisitor extends ClassVisitor {
 		super(api, decorated);
 	}
 	
-	public abstract IModel getModel();
+	public abstract IDesignModel getModel();
 	
 	/**
 	 * Return the current class, interface, or enum that the visitor is 

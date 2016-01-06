@@ -2,7 +2,7 @@ package designParser.asm.visitor;
 
 import org.objectweb.asm.ClassVisitor;
 
-import designParser.model.api.IModel;
+import designParser.model.api.IDesignModel;
 import designParser.model.api.IObjOrientedEntity;
 
 public abstract class ClassVisitorDecorator extends ModelBuilderClassVisitor{
@@ -12,7 +12,7 @@ public abstract class ClassVisitorDecorator extends ModelBuilderClassVisitor{
 
 	public abstract ModelBuilderClassVisitor getDecoratedVisitor();
 
-	public IModel getModel() {
+	public IDesignModel getModel() {
 		return this.getDecoratedVisitor().getModel();
 	}
 	

@@ -8,7 +8,8 @@ import designParser.asm.visitor.ClassDeclarationVisitor;
 import designParser.asm.visitor.ClassFieldVisitor;
 import designParser.asm.visitor.ClassMethodVisitor;
 import designParser.asm.visitor.ModelBuilderClassVisitor;
-import designParser.model.api.IModel;
+import designParser.model.api.IDesignModel;
+import designParser.model.impl.DesignModel;
 
 public class DesignParser {
     private final static String[] CLASS_NAMES = { 
@@ -31,7 +32,7 @@ public class DesignParser {
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
-        IModel designModel = null;
+        IDesignModel designModel = new DesignModel();
         for (String className : CLASS_NAMES) {
             // ASM's ClassReader does the heavy lifting of parsing the compiled
             // Java class
@@ -39,11 +40,7 @@ public class DesignParser {
             
             // make class declaration visitor to get superclass and interfaces
             ModelBuilderClassVisitor decVisitor;
-            if (designModel == null) {
-                decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5);
-            } else {
-                decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, designModel);
-            }
+            decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, designModel);
             
             // DECORATE declaration visitor with field visitor
             ModelBuilderClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, decVisitor);

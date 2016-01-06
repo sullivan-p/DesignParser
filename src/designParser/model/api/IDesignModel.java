@@ -1,6 +1,6 @@
 package designParser.model.api;
 
-public interface IModel extends ITraversable {
+public interface IDesignModel extends ITraversable {
         
     /**
      * Return true if the model contains a class, interface, or enum with the

@@ -6,17 +6,17 @@ import java.util.List;
 import designParser.model.api.IClass;
 import designParser.model.api.IEnum;
 import designParser.model.api.IInterface;
-import designParser.model.api.IModel;
+import designParser.model.api.IDesignModel;
 import designParser.model.visitor.IModelVisitor;
 
-public class Model implements IModel {
+public class DesignModel implements IDesignModel {
     private List<IClass> classModels;
     private List<IInterface> interfaceModels;
     private List<IEnum> enumModels;
 	private final String DOES_NOT_EXIST_ERROR = " does not exist in the model.";
 	private final String ALREADY_EXISTS_ERROR = " already exists in the model.";
 
-	public Model() {
+	public DesignModel() {
         classModels = new ArrayList<IClass>();
         interfaceModels = new ArrayList<IInterface>();
         enumModels = new ArrayList<IEnum>();

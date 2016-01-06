@@ -4,6 +4,9 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
+import designParser.model.api.IMethod;
+import designParser.model.impl.MethodModel;
+
 public class ClassMethodVisitor extends ClassVisitorDecorator {
 	ModelBuilderClassVisitor decoratedVisitor;
 
@@ -15,6 +18,7 @@ public class ClassMethodVisitor extends ClassVisitorDecorator {
 	@Override
 	public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
 		MethodVisitor toDecorate = super.visitMethod(access, name, desc, signature, exceptions);
+		
 		// TODO: delete the line below
 		System.out.println("method " + name);
 		// TODO: create an internal representation of the current method and

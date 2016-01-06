@@ -7,28 +7,23 @@ import org.objectweb.asm.Opcodes;
 import designParser.model.api.IClass;
 import designParser.model.api.IEnum;
 import designParser.model.api.IInterface;
-import designParser.model.api.IModel;
+import designParser.model.api.IDesignModel;
 import designParser.model.api.IObjOrientedEntity;
-import designParser.model.impl.Model;
+import designParser.model.impl.DesignModel;
 
 public class ClassDeclarationVisitor extends ModelBuilderClassVisitor {
-    private IModel model;
+    private IDesignModel model;
     
     // The current class, interface, or enum that the visitor is visiting.
     private IObjOrientedEntity currentEntity;
 
-    public ClassDeclarationVisitor(int api) {
-        super(api);
-        model = new Model();
-    }
-
-    public ClassDeclarationVisitor(int api, IModel model) {
+    public ClassDeclarationVisitor(int api, IDesignModel model) {
         super(api);
         this.model = model;
     }
 
     @Override
-    public IModel getModel() {
+    public IDesignModel getModel() {
         return model;
     }
     
