@@ -10,111 +10,57 @@ import designParser.model.api.IMethod;
 public class EmptyModelVisitor extends UmlModelVisitor implements IModelVisitor {
 
 	@Override
-	public void previsit(IDesignModel d) {
-		// TODO Auto-generated method stub
-
-	}
+	public void previsit(IDesignModel d) {}
 
 	@Override
-	public void visit(IDesignModel d) {
-		// TODO Auto-generated method stub
-
-	}
+	public void visit(IDesignModel d) {}
 
 	@Override
-	public void postvisit(IDesignModel d) {
-		// TODO Auto-generated method stub
-
-	}
+	public void postvisit(IDesignModel d) {}
 
 	@Override
-	public void previsit(IClass c) {
-		// TODO Auto-generated method stub
-
-	}
+	public void previsit(IClass c) {}
 
 	@Override
-	public void visit(IClass c) {
-		// TODO Auto-generated method stub
-
-	}
+	public void visit(IClass c) {}
 
 	@Override
-	public void postvisit(IClass c) {
-		// TODO Auto-generated method stub
-
-	}
+	public void postvisit(IClass c) {}
 
 	@Override
-	public void previsit(IInterface i) {
-		// TODO Auto-generated method stub
-
-	}
+	public void previsit(IInterface i) {}
 
 	@Override
-	public void visit(IInterface i) {
-		// TODO Auto-generated method stub
-
-	}
+	public void visit(IInterface i) {}
 
 	@Override
-	public void postvisit(IInterface i) {
-		// TODO Auto-generated method stub
-
-	}
+	public void postvisit(IInterface i) {}
 
 	@Override
-	public void previsit(IEnum e) {
-		// TODO Auto-generated method stub
-
-	}
+	public void previsit(IEnum e) {}
 
 	@Override
-	public void visit(IEnum e) {
-		// TODO Auto-generated method stub
-
-	}
+	public void visit(IEnum e) {}
 
 	@Override
-	public void postvisit(IEnum e) {
-		// TODO Auto-generated method stub
-
-	}
+	public void postvisit(IEnum e) {}
 
 	@Override
-	public void previsit(IMethod m) {
-		// TODO Auto-generated method stub
-
-	}
+	public void previsit(IMethod m) {}
 
 	@Override
-	public void visit(IMethod m) {
-		// TODO Auto-generated method stub
-
-	}
+	public void visit(IMethod m) {}
 
 	@Override
-	public void postvisit(IMethod m) {
-		// TODO Auto-generated method stub
-
-	}
+	public void postvisit(IMethod m) {}
 
 	@Override
-	public void previsit(IField f) {
-		// TODO Auto-generated method stub
-
-	}
+	public void previsit(IField f) {}
 
 	@Override
-	public void visit(IField f) {
-		// TODO Auto-generated method stub
-
-	}
+	public void visit(IField f) {}
 
 	@Override
-	public void postvisit(IField f) {
-		// TODO Auto-generated method stub
-
-	}
+	public void postvisit(IField f) {}
 
 }
