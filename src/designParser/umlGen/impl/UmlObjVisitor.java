@@ -33,7 +33,7 @@ public class UmlObjVisitor extends UmlModelVisitor {
 	public void previsit(IInterface i) {
 	    appendObjPrevisitStr(sb, i, "\\<\\<interface\\>\\>");
 	}	
-
+	
 	public void previsit(IEnum e) {
         appendObjPrevisitStr(sb, e, "\\<\\<enum\\>\\>");
 	}	

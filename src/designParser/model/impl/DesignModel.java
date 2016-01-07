@@ -28,6 +28,11 @@ public class DesignModel implements IDesignModel {
         interfaceModels = new ArrayList<IInterface>();
         enumModels = new ArrayList<IEnum>();
 	}
+	
+	@Override
+	public List<String> getObjNamesToModel() {
+	    return objNamesToModel;
+	}
 
 	@Override
     public boolean hasObject(String name)  {

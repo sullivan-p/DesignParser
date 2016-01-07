@@ -1,7 +1,10 @@
 package designParser.model.api;
 
+import java.util.List;
+
 public interface IDesignModel extends ITraversable {
-        
+    List<String> getObjNamesToModel();
+
     /**
      * Return true if the model contains a class, interface, or enum with the
      * given name.

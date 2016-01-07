@@ -82,6 +82,10 @@ public class EnumModel implements IEnum {
     @Override
     public void accept(IModelVisitor visitor) {
         visitor.previsit(this);
+        for (IField f : fields) {
+            f.accept(visitor);
+        }
+        visitor.visit(this);
         for (IMethod m : methods) {
             m.accept(visitor);
         }

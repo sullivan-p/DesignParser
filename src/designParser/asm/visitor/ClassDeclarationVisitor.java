@@ -1,6 +1,7 @@
 package designParser.asm.visitor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import designParser.asm.util.AsmProcessData;
 import designParser.model.api.IClass;
@@ -37,20 +38,29 @@ public class ClassDeclarationVisitor extends ModelBuilderClassVisitor {
 		name = AsmProcessData.qualifiedToUnqualifiedName(
 		        AsmProcessData.convertAsmToJavaName(name));
 		String javaName, unqualifiedName;
-		for (int i = 0; i < interfaces.length; ++i) {
-		    javaName = AsmProcessData.convertAsmToJavaName(interfaces[i]);
+		List<String> interfaceNames = new ArrayList<String>();
+		for (String i : interfaces) {
+		    javaName = AsmProcessData.convertAsmToJavaName(i);
 		    unqualifiedName = AsmProcessData.qualifiedToUnqualifiedName(javaName);
-			interfaces[i] = unqualifiedName;
+		    // Only record interfaces that should be included in the model.
+			if (model.getObjNamesToModel().contains(unqualifiedName)) {
+			    interfaceNames.add(unqualifiedName);
+			}
 		}
 		if (superName != null) {
             javaName = AsmProcessData.convertAsmToJavaName(superName);
             unqualifiedName = AsmProcessData.qualifiedToUnqualifiedName(javaName);
-			superName = unqualifiedName;
+            // Only record super class if that class should be included in the model.
+            if (model.getObjNamesToModel().contains(unqualifiedName)) {
+                superName = unqualifiedName;
+            } else {
+                superName = null;
+            }
 		}
 
 		// The models of the interfaces that the current entity extends or
 		// implements.
-		ArrayList<IInterface> interfaceModels = addInterfacesToModel(interfaces);
+		ArrayList<IInterface> interfaceModels = addInterfacesToModel(interfaceNames);
 
 		// Determine whether the entity being visited is a class, interface, or
 		// enum, and handle the visit appropriately.
@@ -120,7 +130,7 @@ public class ClassDeclarationVisitor extends ModelBuilderClassVisitor {
 	 * @return A list of the interface models in the IModel that match the given
 	 *         interface names
 	 */
-	private ArrayList<IInterface> addInterfacesToModel(String[] interfaceNames) {
+	private ArrayList<IInterface> addInterfacesToModel(List<String> interfaceNames) {
 		ArrayList<IInterface> interfaceModels = new ArrayList<IInterface>();
 		for (String name : interfaceNames) {
 			IInterface interfaceModel;
