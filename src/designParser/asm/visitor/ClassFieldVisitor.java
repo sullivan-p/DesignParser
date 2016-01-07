@@ -1,6 +1,6 @@
 package designParser.asm.visitor;
 
-import java.util.HashSet;
+import java.util.Set;
 
 import org.objectweb.asm.FieldVisitor;
 
@@ -21,7 +21,7 @@ public class ClassFieldVisitor extends ClassVisitorDecorator {
 		FieldVisitor toDecorate = super.visitField(access, name, desc, signature, value);
 		
 		String typeDescriptor = (signature != null) ? signature : desc;
-		HashSet<String> typeNames = AsmProcessData.getTypeNamesFromDescriptor(typeDescriptor);
+		Set<String> typeNames = AsmProcessData.getTypeNamesFromDescriptor(typeDescriptor);
         AccessLevel accessLevel = AsmProcessData.getAccessLevel(access);
         String fieldSig = getFieldSignature(name, accessLevel, typeDescriptor);
 		IField fieldModel = new FieldModel(name, fieldSig, typeNames, accessLevel);

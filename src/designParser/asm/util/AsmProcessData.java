@@ -3,6 +3,7 @@ package designParser.asm.util;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import org.objectweb.asm.Opcodes;
@@ -86,20 +87,25 @@ public final class AsmProcessData {
     /**
      * Return the names of all data types that are described in the descriptor.
      * If a type is a generic type, include type parameter names as well.
+     * FIXME: This method returns "void" in the set when passed a descriptor for 
+     * a void method and returns "[]" in the set when passed a descriptor that 
+     * includes an array.
      */
-    public static HashSet<String> getTypeNamesFromDescriptor(String descriptor) {
-        HashSet<String> typeNames = new HashSet<String>();
+    public static Set<String> getTypeNamesFromDescriptor(String descriptor) {       
+        Set<String> typeNames = new HashSet<String>();
         
         StringTokenizer st = new StringTokenizer(descriptor, "()<>;");
         while (st.hasMoreTokens()) {
             String token = st.nextToken();
             if (token.charAt(0) == 'L') {
-                typeNames.add(convertAsmToJavaName(token.substring(1)));
+                typeNames.add(qualifiedToUnqualifiedName(
+                        convertAsmToJavaName(token.substring(1))));
             } else {
                 for (int charIdx = 0; charIdx < token.length(); ++charIdx) {
                     char c = token.charAt(charIdx);
                     if (c == 'L') {
-                        typeNames.add(convertAsmToJavaName(token.substring(charIdx)));
+                        typeNames.add(qualifiedToUnqualifiedName(
+                                convertAsmToJavaName(token.substring(charIdx))));
                         break;
                     }
                     typeNames.add(getSymbolToTypeNameMap().get(c));

@@ -1,14 +1,19 @@
 package designParser.umlGen.impl;
 
+import java.util.Collection;
+
 import designParser.model.api.IClass;
 import designParser.model.api.IEnum;
 import designParser.model.api.IInterface;
 import designParser.umlGen.api.UmlModelVisitor;
+import designParser.umlGen.util.UmlArrowMarkup;
 
 public class UmlInheritanceVisitor extends UmlModelVisitor{
     private StringBuilder sb;
-    
-    public UmlInheritanceVisitor() {
+    private Collection<String> objNamesToModel;
+
+    public UmlInheritanceVisitor(Collection<String> objNamesToModel) {
+        this.objNamesToModel = objNamesToModel;
         sb = new StringBuilder();
     }
 
@@ -16,46 +21,31 @@ public class UmlInheritanceVisitor extends UmlModelVisitor{
         return sb.toString();
 	}
 
-	public void visit(IClass c) {
-	    if (c.getExtendedClass() != null) {
-	        appendExtendsArrow(sb, c.getName(), c.getExtendedClass().getName());
+	public void previsit(IClass c) {
+	    IClass superclassModel = c.getExtendedClass();
+	    if (superclassModel != null && objNamesToModel.contains(superclassModel.getName())) {
+	        sb.append(UmlArrowMarkup.getExtendsArrow(c.getName(), c.getExtendedClass().getName()));
 	    }
 	    for (IInterface i : c.getInterfaces()) {
-	        appendImplementsArrow(sb, c.getName(), i.getName());
+	        if (objNamesToModel.contains(i.getName())) {
+	            sb.append(UmlArrowMarkup.getImplementsArrow(c.getName(), i.getName()));
+	        }
 	    }
 	}
 
-	public void visit(IInterface i) {
+	public void previsit(IInterface i) {
 	    for (IInterface extInterface : i.getExtendedInterfaces()) {
-	        appendExtendsArrow(sb, i.getName(), extInterface.getName());
-	    }
+            if (objNamesToModel.contains(extInterface.getName())) {
+                sb.append(UmlArrowMarkup.getExtendsArrow(i.getName(), extInterface.getName()));
+            }
+        }
 	}
 
-	public void visit(IEnum e) {
+	public void previsit(IEnum e) {
         for (IInterface i : e.getInterfaces()) {
-            appendImplementsArrow(sb, e.getName(), i.getName());
+            if (objNamesToModel.contains(i.getName())) {
+                sb.append(UmlArrowMarkup.getImplementsArrow(e.getName(), i.getName()));
+            }
         }
     }
-	
-	private static void appendExtendsArrow(StringBuilder s, String subclassName, 
-	        String superclassName) {
-	    appendArrow(s, subclassName, superclassName, "onormal", "solid");
-    }
-
-    private static void appendImplementsArrow(StringBuilder s, String subclassName, 
-            String superclassName) {
-        appendArrow(s, subclassName, superclassName, "onormal", "dashed");
-    }
-    
-	private static void appendArrow(StringBuilder s, String sourceName, 
-	        String destName, String arrowHead, String style) {
-        s.append(sourceName);
-        s.append(" -> ");
-        s.append(destName);
-        s.append(" [arrowhead=\"");
-        s.append(arrowHead);
-        s.append("\", style=\"");
-        s.append(style);
-        s.append("\"];\n");    
-	}
 }
