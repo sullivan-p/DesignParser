@@ -35,7 +35,7 @@ public class ExtendsArrowTest {
 			designModel = methodVisitor.getModel();
 		}
 
-		IUmlGenerator umlGenerator = new UmlGenerator("AppLauncher", designModel);
+		IUmlGenerator umlGenerator = new UmlGenerator("AppLauncher", designModel, OBJECT_NAMES);
 		System.out.println(umlGenerator.getUmlMarkup());
 	}
 }

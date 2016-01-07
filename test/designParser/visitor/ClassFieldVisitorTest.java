@@ -43,7 +43,7 @@ public class ClassFieldVisitorTest {
 			designModel = methodVisitor.getModel();
 		}
 
-		IUmlGenerator umlGenerator = new UmlGenerator("AppLauncher", designModel);
+		IUmlGenerator umlGenerator = new UmlGenerator("AppLauncher", designModel, OBJECT_NAMES);
 		System.out.println(umlGenerator.getUmlMarkup());
 		assertEquals(res, (umlGenerator.getUmlMarkup().substring(0, res.length()+5).replace("\n", "")));
 		//+5 because of the escape (\) characters we had to use
