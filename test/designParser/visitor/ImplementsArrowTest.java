@@ -35,7 +35,7 @@ public class ImplementsArrowTest {
 			designModel = methodVisitor.getModel();
 		}
 
-		IUmlGenerator umlGenerator = new UmlGenerator("AppLauncher", designModel, OBJECT_NAMES);
+		IUmlGenerator umlGenerator = new UmlGenerator("TestImplementsArrow", designModel, OBJECT_NAMES);
 		System.out.println(umlGenerator.getUmlMarkup());
 	}
 
