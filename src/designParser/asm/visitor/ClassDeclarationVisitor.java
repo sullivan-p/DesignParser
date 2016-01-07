@@ -34,12 +34,18 @@ public class ClassDeclarationVisitor extends ModelBuilderClassVisitor {
 	public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
 
 		// Convert names from ASM format to Java fully qualified names.
-		name = AsmProcessData.convertAsmToJavaName(name);
+		name = AsmProcessData.qualifiedToUnqualifiedName(
+		        AsmProcessData.convertAsmToJavaName(name));
+		String javaName, unqualifiedName;
 		for (int i = 0; i < interfaces.length; ++i) {
-			interfaces[i] = AsmProcessData.convertAsmToJavaName(interfaces[i]);
+		    javaName = AsmProcessData.convertAsmToJavaName(interfaces[i]);
+		    unqualifiedName = AsmProcessData.qualifiedToUnqualifiedName(javaName);
+			interfaces[i] = unqualifiedName;
 		}
 		if (superName != null) {
-			superName = AsmProcessData.convertAsmToJavaName(superName);
+            javaName = AsmProcessData.convertAsmToJavaName(superName);
+            unqualifiedName = AsmProcessData.qualifiedToUnqualifiedName(javaName);
+			superName = unqualifiedName;
 		}
 
 		// The models of the interfaces that the current entity extends or
@@ -77,8 +83,9 @@ public class ClassDeclarationVisitor extends ModelBuilderClassVisitor {
 			IClass superClassModel = model.getClassModel(superName);
 			classModel.setExtendedClass(superClassModel);
 		}
-
+	
 		classModel.setInterfaces(interfaceModels);
+		classModel.setIsConcrete(isConcrete);
 		currentEntity = classModel;
 	}
 

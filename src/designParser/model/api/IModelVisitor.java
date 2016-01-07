@@ -1,11 +1,4 @@
-package designParser.model.visitor;
-
-import designParser.model.api.IClass;
-import designParser.model.api.IDesignModel;
-import designParser.model.api.IEnum;
-import designParser.model.api.IField;
-import designParser.model.api.IInterface;
-import designParser.model.api.IMethod;
+package designParser.model.api;
 
 public interface IModelVisitor {
     public void previsit(IDesignModel d);

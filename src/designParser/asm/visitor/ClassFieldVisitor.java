@@ -23,7 +23,8 @@ public class ClassFieldVisitor extends ClassVisitorDecorator {
 		String typeDescriptor = (signature != null) ? signature : desc;
 		HashSet<String> typeNames = AsmProcessData.getTypeNamesFromDescriptor(typeDescriptor);
         AccessLevel accessLevel = AsmProcessData.getAccessLevel(access);
-		IField fieldModel = new FieldModel(name, typeNames, accessLevel);
+        String fieldSig = getFieldSignature(name, accessLevel, typeDescriptor);
+		IField fieldModel = new FieldModel(name, fieldSig, typeNames, accessLevel);
 		this.getCurrentEntity().getFields().add(fieldModel);
 		
 		return toDecorate;
@@ -33,4 +34,9 @@ public class ClassFieldVisitor extends ClassVisitorDecorator {
 	public ModelBuilderClassVisitor getDecoratedVisitor() {
 		return decoratedVisitor;
 	};
+	
+    private String getFieldSignature(String name, AccessLevel al, String descriptor) {
+        String prettyTypeName = AsmProcessData.getPrettyTypeNames(descriptor);      
+        return al.toUmlString() + " " + prettyTypeName + " " + name;
+    }
 }

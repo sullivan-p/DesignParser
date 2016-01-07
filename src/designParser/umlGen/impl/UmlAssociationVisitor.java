@@ -1,13 +1,13 @@
-package designParser.model.visitor;
+package designParser.umlGen.impl;
 
 import designParser.model.api.IClass;
 import designParser.model.api.IEnum;
 import designParser.model.api.IField;
 import designParser.model.api.IInterface;
 import designParser.model.api.IMethod;
+import designParser.umlGen.api.UmlModelVisitor;
 
-public class UmlObjVisitor extends UmlModelVisitor {
-
+public class UmlAssociationVisitor extends UmlModelVisitor{
 	public String getUmlMarkup() {
 		return null;
 	}

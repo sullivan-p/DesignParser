@@ -1,4 +1,4 @@
-package designParser.model.visitor;
+package designParser.model.impl;
 
 import designParser.model.api.IClass;
 import designParser.model.api.IDesignModel;
@@ -6,8 +6,9 @@ import designParser.model.api.IEnum;
 import designParser.model.api.IField;
 import designParser.model.api.IInterface;
 import designParser.model.api.IMethod;
+import designParser.model.api.IModelVisitor;
 
-public class EmptyModelVisitor extends UmlModelVisitor implements IModelVisitor {
+public class EmptyModelVisitor implements IModelVisitor {
 
 	@Override
 	public void previsit(IDesignModel d) {}

@@ -10,9 +10,11 @@ import designParser.asm.visitor.ClassMethodVisitor;
 import designParser.asm.visitor.ModelBuilderClassVisitor;
 import designParser.model.api.IDesignModel;
 import designParser.model.impl.DesignModel;
+import designParser.umlGen.api.IUmlGenerator;
+import designParser.umlGen.impl.UmlGenerator;
 
 public class DesignParser {
-    private final static String[] CLASS_NAMES = { 
+    private final static String[] OBJECT_NAMES = { 
             "appLauncherSltn.AppLauncherApplication",
             "appLauncherSltn.ApplicationLauncher",
             "appLauncherSltn.DataFileRunner",
@@ -46,28 +48,20 @@ public class DesignParser {
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
-        IDesignModel designModel = new DesignModel();
-        for (String className : CLASS_NAMES) {
-            // ASM's ClassReader does the heavy lifting of parsing the compiled
-            // Java class
+        IDesignModel designModel = new DesignModel(OBJECT_NAMES);
+        for (String className : OBJECT_NAMES) {
             ClassReader reader = new ClassReader(className);
             
-            // make class declaration visitor to get superclass and interfaces
             ModelBuilderClassVisitor decVisitor;
             decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, designModel);
-            
-            // DECORATE declaration visitor with field visitor
             ModelBuilderClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, decVisitor);
-            
-            // DECORATE field visitor with method visitor
             ModelBuilderClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor);
             
-            // TODO: add more DECORATORS here in later milestones to accomplish
-            // specific tasks
-            // Tell the Reader to use our (heavily decorated) ClassVisitor to
-            // visit the class
             reader.accept(methodVisitor, ClassReader.EXPAND_FRAMES);
             designModel = methodVisitor.getModel();
         }
+        
+        IUmlGenerator umlGenerator = new UmlGenerator("AppLauncher", designModel);
+        System.out.println(umlGenerator.getUmlMarkup());
     }
 }

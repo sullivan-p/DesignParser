@@ -48,9 +48,9 @@ public class ClassMethodVisitor extends ClassVisitorDecorator {
         if (name.equals("<init>")) {
             String objName = this.getCurrentEntity().getName();
             name = AsmProcessData.qualifiedToUnqualifiedName(objName);
-            return al.toString() + " " + name + "(" + prettyParamTypes + ")";
+            return al.toUmlString() + " " + name + "(" + prettyParamTypes + ")";
         }
         
-        return al.toString() + " " + prettyReturnType + " " + name + "(" + prettyParamTypes + ")";
+        return al.toUmlString() + " " + prettyReturnType + " " + name + "(" + prettyParamTypes + ")";
     }
 }

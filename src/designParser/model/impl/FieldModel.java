@@ -3,13 +3,14 @@ package designParser.model.impl;
 import java.util.Collection;
 
 import designParser.model.api.IField;
-import designParser.model.visitor.IModelVisitor;
+import designParser.model.api.IModelVisitor;
 
 public class FieldModel extends VariableModel implements IField {
     private AccessLevel accessLevel;
 
-    public FieldModel(String name, Collection<String> typeNames, AccessLevel accessLevel) {
-        super(name, typeNames);
+    public FieldModel(String name, String signature, 
+            Collection<String> typeNames, AccessLevel accessLevel) {
+        super(name, signature, typeNames);
         this.accessLevel = accessLevel;
     }
 

@@ -6,7 +6,7 @@ import java.util.Collection;
 import designParser.model.api.IField;
 import designParser.model.api.IInterface;
 import designParser.model.api.IMethod;
-import designParser.model.visitor.IModelVisitor;
+import designParser.model.api.IModelVisitor;
 
 public class InterfaceModel implements IInterface {
 	private String name;

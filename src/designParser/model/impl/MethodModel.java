@@ -3,7 +3,7 @@ package designParser.model.impl;
 import java.util.Collection;
 
 import designParser.model.api.IMethod;
-import designParser.model.visitor.IModelVisitor;
+import designParser.model.api.IModelVisitor;
 
 public class MethodModel implements IMethod {
     private String name;

@@ -3,20 +3,27 @@ package designParser.model.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import designParser.asm.util.AsmProcessData;
 import designParser.model.api.IClass;
 import designParser.model.api.IEnum;
 import designParser.model.api.IInterface;
+import designParser.model.api.IModelVisitor;
+import designParser.model.api.IObject;
 import designParser.model.api.IDesignModel;
-import designParser.model.visitor.IModelVisitor;
 
 public class DesignModel implements IDesignModel {
     private List<IClass> classModels;
     private List<IInterface> interfaceModels;
     private List<IEnum> enumModels;
+    private List<String> objNamesToModel;
 	private final String DOES_NOT_EXIST_ERROR = " does not exist in the model.";
 	private final String ALREADY_EXISTS_ERROR = " already exists in the model.";
 
-	public DesignModel() {
+	public DesignModel(String[] names) {
+	    this.objNamesToModel = new ArrayList<String>();
+	    for (String objName : names) {
+	        objNamesToModel.add(AsmProcessData.qualifiedToUnqualifiedName(objName));
+	    };
         classModels = new ArrayList<IClass>();
         interfaceModels = new ArrayList<IInterface>();
         enumModels = new ArrayList<IEnum>();
@@ -126,14 +133,24 @@ public class DesignModel implements IDesignModel {
 	public void accept(IModelVisitor visitor) {
 		visitor.previsit(this);
 		for (IClass c : classModels) {
-		    c.accept(visitor);
+		    if (isObjectToModel(c)) {
+		        c.accept(visitor);
+		    }
 		}
         for (IInterface i : interfaceModels) {
-            i.accept(visitor);
+            if (isObjectToModel(i)) {
+                i.accept(visitor);
+            }
         }
         for (IEnum e : enumModels) {
-            e.accept(visitor);
+            if (isObjectToModel(e)) {
+                e.accept(visitor);
+            }
         }    
         visitor.postvisit(this);
+	}
+	
+	private boolean isObjectToModel(IObject o) {
+	    return objNamesToModel.contains(o.getName());
 	}
 }

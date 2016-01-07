@@ -1,12 +1,12 @@
-package designParser.model.visitor;
+package designParser.umlGen.impl;
 
 import designParser.model.api.IClass;
 import designParser.model.api.IEnum;
-import designParser.model.api.IField;
 import designParser.model.api.IInterface;
-import designParser.model.api.IMethod;
+import designParser.umlGen.api.UmlModelVisitor;
 
-public class UmlAssociationVisitor extends UmlModelVisitor{
+public class UmlInheritanceVisitor extends UmlModelVisitor{
+
 	public String getUmlMarkup() {
 		return null;
 	}
@@ -36,11 +36,5 @@ public class UmlAssociationVisitor extends UmlModelVisitor{
 	}
 
 	public void postvisit(IEnum e) {
-	}
-
-	public void visit(IMethod m) {
-	}
-
-	public void visit(IField f) {
 	}
 }

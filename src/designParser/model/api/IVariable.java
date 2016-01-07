@@ -3,6 +3,7 @@ package designParser.model.api;
 import java.util.Collection;
 
 public interface IVariable extends IModelComponent {
+    public String getSignature();
     
     /**
      * If the variable is not a generic data type, return a single-element

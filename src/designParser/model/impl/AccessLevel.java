@@ -19,4 +19,17 @@ public enum AccessLevel {
             return "";
         }
     }
+    
+    public String toUmlString() {
+        switch (this) {
+        case Public:
+            return "+";
+        case Private:
+            return "-";
+        case Protected:
+            return "#";
+        default:
+            return "";
+        }
+    }
 }

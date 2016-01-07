@@ -4,8 +4,8 @@ import java.util.Collection;
 
 import designParser.model.api.IField;
 import designParser.model.api.IMethod;
+import designParser.model.api.IModelVisitor;
 import designParser.model.api.IObject;
-import designParser.model.visitor.IModelVisitor;
 
 public class ArrayModel implements IObject {
     private String name;
