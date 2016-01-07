@@ -1,10 +1,10 @@
 package pizzaStore;
 
 public class NYPizzaIngredientFactory implements PizzaIngredientFactory {
-    ThinCrustDough dough;
-    MarinaraSauce sauce;
-    ReggianoCheese cheese;
-    FreshClams clams;
+    private ThinCrustDough dough;
+    private MarinaraSauce sauce;
+    private ReggianoCheese cheese;
+    private FreshClams clams;
     
     public NYPizzaIngredientFactory() {
         dough = new ThinCrustDough();
