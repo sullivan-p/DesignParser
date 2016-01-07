@@ -23,7 +23,7 @@ public class DesignModel implements IDesignModel {
 	}
 
 	@Override
-    public boolean hasEntity(String name)  {
+    public boolean hasObject(String name)  {
         return (hasInterfaceModel(name) || 
                 hasEnumModel(name) ||
                 hasClassModel(name));

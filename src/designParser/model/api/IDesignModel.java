@@ -7,7 +7,7 @@ public interface IDesignModel extends ITraversable {
      * given name.
      * @param name Fully qualified name of the class, interface, or enum.
      */
-    boolean hasEntity(String name);
+    boolean hasObject(String name);
     
     /**
      * Return true if the model contains a model of the class with the given 
