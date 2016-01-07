@@ -19,7 +19,7 @@ public class DesignParser {
             "appLauncher.HtmlFileInfo",
             "appLauncher.IDirectoryEventHandler",
             "appLauncher.ILaunchableFileInfo",
-            "designParser.model.api.AccessLevel",
+            "designParser.model.impl.AccessLevel",
             "designParser.model.api.PrimitiveDataType",
             "designParser.model.api.IModelComponent"
     };
