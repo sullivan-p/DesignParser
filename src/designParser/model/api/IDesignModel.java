@@ -29,7 +29,7 @@ public interface IDesignModel extends ITraversable {
      * @param name Fully qualified name of the enum.
      */
     boolean hasEnumModel(String name);
-    
+        
     /**
      * Return the model for the class with the given name.
      * @param name Fully qualified name of the class.

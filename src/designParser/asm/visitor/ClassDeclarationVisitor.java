@@ -2,15 +2,13 @@ package designParser.asm.visitor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import org.objectweb.asm.Opcodes;
 
+import designParser.asm.util.AsmProcessData;
 import designParser.model.api.IClass;
 import designParser.model.api.ICustomObject;
 import designParser.model.api.IEnum;
 import designParser.model.api.IInterface;
 import designParser.model.api.IDesignModel;
-import designParser.model.api.IObject;
-import designParser.model.impl.DesignModel;
 
 public class ClassDeclarationVisitor extends ModelBuilderClassVisitor {
     private IDesignModel model;
@@ -29,7 +27,7 @@ public class ClassDeclarationVisitor extends ModelBuilderClassVisitor {
     }
     
     @Override
-    public IObject getCurrentEntity() {
+    public ICustomObject getCurrentEntity() {
         return currentEntity;
     }
     
@@ -38,12 +36,12 @@ public class ClassDeclarationVisitor extends ModelBuilderClassVisitor {
         System.out.println("Class: " + name + " extends " + superName + " implements " + Arrays.toString(interfaces));
         
         // Convert names from ASM format to Java fully qualified names.
-        name = convertAsmToJavaName(name);
+        name = AsmProcessData.convertAsmToJavaName(name);
         for (int i = 0; i < interfaces.length; ++i) {
-            interfaces[i] = convertAsmToJavaName(interfaces[i]);
+            interfaces[i] = AsmProcessData.convertAsmToJavaName(interfaces[i]);
         }
         if (superName != null) {
-            superName = convertAsmToJavaName(superName);
+            superName = AsmProcessData.convertAsmToJavaName(superName);
         }
         
         // The models of the interfaces that the current entity extends or 
@@ -52,12 +50,12 @@ public class ClassDeclarationVisitor extends ModelBuilderClassVisitor {
         
         // Determine whether the entity being visited is a class, interface, or
         // enum, and handle the visit appropriately.
-        if (isInterface(access)) {
+        if (AsmProcessData.isInterface(access)) {
             handleInterfaceVisit(name, interfaceModels);
-        } else if (isEnum(access)) {
+        } else if (AsmProcessData.isEnum(access)) {
             handleEnumVisit(name, interfaceModels);
         } else {
-            handleClassVisit(name, !isAbstract(access), superName, interfaceModels);
+            handleClassVisit(name, !AsmProcessData.isAbstract(access), superName, interfaceModels);
         }               
         
         super.visit(version, access, name, signature, superName, interfaces);
@@ -125,39 +123,5 @@ public class ClassDeclarationVisitor extends ModelBuilderClassVisitor {
             interfaceModels.add(interfaceModel);
         }
         return interfaceModels;
-    }
-    
-    /**
-     * Examine the opcode and return true if the ClassVisitor is visiting an 
-     * interface, false otherwise.
-     */
-    private boolean isInterface(int opcode) {
-        int bitmask = Opcodes.ACC_INTERFACE;
-        return (opcode & bitmask) != 0;
-    }
-
-    /**
-     * Examine the opcode and return true if the ClassVisitor is visiting an 
-     * enum, false otherwise.
-     */
-    private boolean isEnum(int opcode) {
-        int bitmask = Opcodes.ACC_ENUM;
-        return (opcode & bitmask) != 0;    
-    }
-    
-    /**
-     * Examine the opcode and return true if the ClassVisitor is visiting an 
-     * abstract class, false otherwise.
-     */
-    private boolean isAbstract(int opcode) {
-        int bitmask = Opcodes.ACC_ABSTRACT;
-        return (opcode & bitmask) != 0;    
-    }
-    
-    /**
-     * Given an ASM name, generate and return a Java qualified name.
-     */
-    private String convertAsmToJavaName(String asmName) {
-        return asmName.replace("/", ".");
     }
 }

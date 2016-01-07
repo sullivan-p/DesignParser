@@ -13,7 +13,7 @@ import designParser.model.impl.DesignModel;
 
 public class DesignParser {
     private final static String[] CLASS_NAMES = { 
-            "designParser.model.api.IObjOrientedEntity",
+            "designParser.model.api.IObject",
             "designParser.asm.visitor.ClassDeclarationVisitor",
             "appLauncher.AppLauncher",
             "appLauncher.HtmlFileInfo",

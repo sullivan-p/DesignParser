@@ -1,10 +1,12 @@
 package designParser.asm.visitor;
 
-import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.Type;
+import java.util.HashSet;
 
+import org.objectweb.asm.MethodVisitor;
+
+import designParser.asm.util.AsmProcessData;
 import designParser.model.api.IMethod;
+import designParser.model.impl.AccessLevel;
 import designParser.model.impl.MethodModel;
 
 public class ClassMethodVisitor extends ClassVisitorDecorator {
@@ -19,58 +21,36 @@ public class ClassMethodVisitor extends ClassVisitorDecorator {
 	public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
 		MethodVisitor toDecorate = super.visitMethod(access, name, desc, signature, exceptions);
 		
-		// TODO: delete the line below
-		System.out.println("method " + name);
-		// TODO: create an internal representation of the current method and
-		// pass it to the methods below
-		addAccessLevel(access);
-		addReturnType(desc);
-		addArguments(desc);
-		// TODO: add the current method to your internal representation of the
-		// current class
-		// What is a good way for the code to remember what the current class
-		// is?
+        String typeDescriptor = (signature != null) ? signature : desc;
+        HashSet<String> typeNames = AsmProcessData.getTypeNamesFromDescriptor(typeDescriptor);
+        AccessLevel accessLevel = AsmProcessData.getAccessLevel(access);
+        String methodSig = getMethodSignature(name, accessLevel, typeDescriptor);
+        IMethod methodModel = new MethodModel(name, typeNames, accessLevel, methodSig);
+        this.getCurrentEntity().getMethods().add(methodModel);
+		
 		return toDecorate;
-	}
-
-	void addAccessLevel(int access) {
-		String level = "";
-		if ((access & Opcodes.ACC_PUBLIC) != 0) {
-			level = "public";
-		} else if ((access & Opcodes.ACC_PROTECTED) != 0) {
-			level = "protected";
-		} else if ((access & Opcodes.ACC_PRIVATE) != 0) {
-			level = "private";
-		} else {
-			level = "default";
-		}
-		// TODO: delete the next line
-		System.out.println("access level: " + level);
-		// TODO: ADD this information to your representation of the current
-		// method.
-	}
-
-	void addReturnType(String desc) {
-		String returnType = Type.getReturnType(desc).getClassName();
-		// TODO: delete the next line
-		System.out.println("return type: " + returnType);
-		// TODO: ADD this information to your representation of the current
-		// method.
-	}
-
-	void addArguments(String desc) {
-		Type[] args = Type.getArgumentTypes(desc);
-		for (int i = 0; i < args.length; i++) {
-			String arg = args[i].getClassName();
-			// TODO: delete the next line
-			System.out.println("arg " + i + ": " + arg);
-			// TODO: ADD this information to your representation of the current
-			// method.
-		}
 	}
 
 	@Override
 	public ModelBuilderClassVisitor getDecoratedVisitor() {
 		return decoratedVisitor;
 	}
+	
+	private String getMethodSignature(String name, AccessLevel al, String descriptor) {
+        int paramsEnd = descriptor.indexOf(')');
+        String paramsSubStr = descriptor.substring(1, paramsEnd);
+        String returnSubStr = descriptor.substring(paramsEnd+1);
+        
+        String prettyParamTypes = AsmProcessData.getPrettyTypeNames(paramsSubStr);
+        String prettyReturnType = AsmProcessData.getPrettyTypeNames(returnSubStr);
+        
+        // Special case for constructor methods.
+        if (name.equals("<init>")) {
+            String objName = this.getCurrentEntity().getName();
+            name = AsmProcessData.qualifiedToUnqualifiedName(objName);
+            return al.toString() + " " + name + "(" + prettyParamTypes + ")";
+        }
+        
+        return al.toString() + " " + prettyReturnType + " " + name + "(" + prettyParamTypes + ")";
+    }
 }

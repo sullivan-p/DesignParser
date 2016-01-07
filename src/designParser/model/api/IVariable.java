@@ -6,9 +6,9 @@ public interface IVariable extends IModelComponent {
     
     /**
      * If the variable is not a generic data type, return a single-element
-     * container that contains only the variable's data type. If the variable is 
-     * a generic type, return a collection containing the variable's type in 
-     * addition to any type parameters.
+     * container that contains only the variable's type name. If the variable is 
+     * a generic type, return a collection containing the variable's type name  
+     * as well as the names of any type parameters.
      */
-    public Collection<IDataType> getTypes();
+    public Collection<String> getTypeNames();
 }

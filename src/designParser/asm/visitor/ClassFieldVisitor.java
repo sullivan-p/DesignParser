@@ -1,9 +1,12 @@
 package designParser.asm.visitor;
 
-import org.objectweb.asm.FieldVisitor;
-import org.objectweb.asm.Type;
+import java.util.HashSet;
 
+import org.objectweb.asm.FieldVisitor;
+
+import designParser.asm.util.AsmProcessData;
 import designParser.model.api.IField;
+import designParser.model.impl.AccessLevel;
 import designParser.model.impl.FieldModel;
 
 public class ClassFieldVisitor extends ClassVisitorDecorator {
@@ -17,12 +20,11 @@ public class ClassFieldVisitor extends ClassVisitorDecorator {
 	public FieldVisitor visitField(int access, String name, String desc, String signature, Object value) {
 		FieldVisitor toDecorate = super.visitField(access, name, desc, signature, value);
 		
-		String type = Type.getType(desc).getClassName();
-		// TODO: delete the line below
-		System.out.println(" " + type + " " + name);
-		// TODO: add this field to your internal representation of the current
-		// class.
-		// What is a good way to know what the current class is?
+		String typeDescriptor = (signature != null) ? signature : desc;
+		HashSet<String> typeNames = AsmProcessData.getTypeNamesFromDescriptor(typeDescriptor);
+        AccessLevel accessLevel = AsmProcessData.getAccessLevel(access);
+		IField fieldModel = new FieldModel(name, typeNames, accessLevel);
+		this.getCurrentEntity().getFields().add(fieldModel);
 		
 		return toDecorate;
 	}

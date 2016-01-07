@@ -1,21 +1,22 @@
 package designParser.model.impl;
 
-import java.util.List;
+import java.util.Collection;
 
-import designParser.model.api.AccessLevel;
 import designParser.model.api.IMethod;
-import designParser.model.api.IVariable;
 import designParser.model.visitor.IModelVisitor;
 
 public class MethodModel implements IMethod {
     private String name;
+    private Collection<String> refTypeNames;
     private AccessLevel accessLevel;
-    private List<IVariable> params;
+    private String methodSig;
 
-    public MethodModel(String name, AccessLevel accessLevel, List<IVariable> params) {
+    public MethodModel(String name, Collection<String> refTypeNames, 
+            AccessLevel accessLevel, String methodSig) {
         this.name = name;
+        this.refTypeNames = refTypeNames;
         this.accessLevel = accessLevel;
-        this.params = params;
+        this.methodSig = methodSig;
     }
 
     @Override
@@ -29,10 +30,15 @@ public class MethodModel implements IMethod {
     }
 
     @Override
-    public List<IVariable> getParams() {
-        return params;
+    public Collection<String> getReferencedTypeNames() {
+        return refTypeNames;
     }
 
+    @Override
+    public String getMethodSignature() {
+        return methodSig;
+    }
+    
     @Override
     public void accept(IModelVisitor visitor) {
         // TODO Auto-generated method stub

@@ -8,15 +8,15 @@ import designParser.model.api.IObject;
 import designParser.model.visitor.IModelVisitor;
 
 public class ArrayModel implements IObject {
+    private String name;
 
     public ArrayModel() {
-        // TODO Auto-generated constructor stub
+        name = "[]";
     }
 
     @Override
     public String getName() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException();
+        return name;
     }
 
     @Override

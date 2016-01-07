@@ -1,9 +1,11 @@
 package designParser.model.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import designParser.model.api.IClass;
+import designParser.model.api.IDataType;
 import designParser.model.api.IEnum;
 import designParser.model.api.IInterface;
 import designParser.model.api.IDesignModel;
