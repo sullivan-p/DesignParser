@@ -30,6 +30,8 @@ public class UmlGenerator implements IUmlGenerator {
 		visitorList.add(new UmlAssociationVisitor(objs));
 	}
 
+
+
 	@Override
 	public String getUmlMarkup() {
 	    
