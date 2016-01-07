@@ -5,8 +5,7 @@ public class NYPizzaStore {
     private Sauce sauce;
     private Cheese cheese;
     private Clams clams;
-    
-    PizzaIngredientFactory ingredientFactory;
+    private PizzaIngredientFactory ingredientFactory;
 
     public NYPizzaStore() {
         ingredientFactory = new NYPizzaIngredientFactory();
@@ -18,5 +17,4 @@ public class NYPizzaStore {
         cheese = ingredientFactory.createCheese();
         clams = ingredientFactory.createClam();
     }
-
 }
