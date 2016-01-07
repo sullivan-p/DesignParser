@@ -1,10 +1,10 @@
 package designParser.model.api;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface IEnum extends ICustomObject {
-	public List<IInterface> getInterfaces();
-	public List<String> getEnumElements();
-    public void setInterfaces(List<IInterface> interfaces);
-    public void setEnumElements(List<String> enumElements);
+	public Collection<IInterface> getInterfaces();
+	public Collection<String> getEnumElements();
+    public void setInterfaces(Collection<IInterface> interfaces);
+    public void setEnumElements(Collection<String> enumElements);
 }

@@ -1,8 +1,8 @@
 package designParser.model.api;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface ICustomObject extends IObject {
-    public void setFields(List<IField> fields);
-    public void setMethods(List<IMethod> methods);
+    public void setFields(Collection<IField> fields);
+    public void setMethods(Collection<IMethod> methods);
 }

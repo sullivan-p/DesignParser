@@ -1,8 +1,8 @@
 package designParser.model.api;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface IObject extends IDataType {
-    public List<IField> getFields();
-    public List<IMethod> getMethods();
+    public Collection<IField> getFields();
+    public Collection<IMethod> getMethods();
 }

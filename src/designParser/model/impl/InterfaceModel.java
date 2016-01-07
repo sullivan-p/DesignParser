@@ -1,7 +1,7 @@
 package designParser.model.impl;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import designParser.model.api.IField;
 import designParser.model.api.IInterface;
@@ -10,9 +10,9 @@ import designParser.model.visitor.IModelVisitor;
 
 public class InterfaceModel implements IInterface {
 	private String name;
-	private List<IField> fields;
-	private List<IMethod> methods;
-	private List<IInterface> extendedInterfaces;
+	private Collection<IField> fields;
+	private Collection<IMethod> methods;
+	private Collection<IInterface> extendedInterfaces;
 
 	public InterfaceModel(String name) {
 		this.name = name;
@@ -21,8 +21,8 @@ public class InterfaceModel implements IInterface {
 		this.extendedInterfaces = new ArrayList<IInterface>();
 	}
 
-	public InterfaceModel(String name, List<IField> fields, List<IMethod> methods,
-			List<IInterface> extendedInterfaces) {
+	public InterfaceModel(String name, Collection<IField> fields, Collection<IMethod> methods,
+			Collection<IInterface> extendedInterfaces) {
 		this.name = name;
 		this.fields = fields;
 		this.methods = methods;
@@ -35,32 +35,32 @@ public class InterfaceModel implements IInterface {
 	}
 
 	@Override
-	public List<IField> getFields() {
+	public Collection<IField> getFields() {
 		return fields;
 	}
 
 	@Override
-	public List<IMethod> getMethods() {
+	public Collection<IMethod> getMethods() {
 		return methods;
 	}
 
 	@Override
-	public List<IInterface> getExtendedInterfaces() {
+	public Collection<IInterface> getExtendedInterfaces() {
 		return extendedInterfaces;
 	}
 
 	@Override
-	public void setFields(List<IField> fields) {
+	public void setFields(Collection<IField> fields) {
 		this.fields = fields;
 	}
 
 	@Override
-	public void setMethods(List<IMethod> methods) {
+	public void setMethods(Collection<IMethod> methods) {
 		this.methods = methods;
 	}
 
 	@Override
-	public void setExtendedInterfaces(List<IInterface> extInterfaces) {
+	public void setExtendedInterfaces(Collection<IInterface> extInterfaces) {
 		this.extendedInterfaces = extInterfaces;
 	}
 

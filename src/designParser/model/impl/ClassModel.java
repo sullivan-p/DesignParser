@@ -1,6 +1,7 @@
 package designParser.model.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import designParser.model.api.IClass;
@@ -11,10 +12,10 @@ import designParser.model.visitor.IModelVisitor;
 
 public class ClassModel implements IClass {
 	private String name;
-	private List<IField> fields;
-	private List<IMethod> methods;
+	private Collection<IField> fields;
+	private Collection<IMethod> methods;
 	private IClass extendedClass;
-	private List<IInterface> interfaces;
+	private Collection<IInterface> interfaces;
 	private boolean isConcrete;
 
 	public ClassModel(String name, boolean isConcrete) {
@@ -40,12 +41,12 @@ public class ClassModel implements IClass {
 	}
 
 	@Override
-	public List<IField> getFields() {
+	public Collection<IField> getFields() {
 		return fields;
 	}
 
 	@Override
-	public List<IMethod> getMethods() {
+	public Collection<IMethod> getMethods() {
 		return methods;
 	}
 
@@ -55,7 +56,7 @@ public class ClassModel implements IClass {
 	}
 
 	@Override
-	public List<IInterface> getInterfaces() {
+	public Collection<IInterface> getInterfaces() {
 		return interfaces;
 	}
 
@@ -65,12 +66,12 @@ public class ClassModel implements IClass {
 	}
 
 	@Override
-	public void setFields(List<IField> fields) {
+	public void setFields(Collection<IField> fields) {
 		this.fields = fields;
 	}
 
 	@Override
-	public void setMethods(List<IMethod> methods) {
+	public void setMethods(Collection<IMethod> methods) {
 		this.methods = methods;
 	}
 
@@ -80,7 +81,7 @@ public class ClassModel implements IClass {
 	}
 
 	@Override
-	public void setInterfaces(List<IInterface> interfaces) {
+	public void setInterfaces(Collection<IInterface> interfaces) {
 		this.interfaces = interfaces;
 	}
 

@@ -1,6 +1,6 @@
 package designParser.model.impl;
 
-import java.util.List;
+import java.util.Collection;
 
 import designParser.model.api.IField;
 import designParser.model.api.IMethod;
@@ -20,13 +20,13 @@ public class ArrayModel implements IObject {
     }
 
     @Override
-    public List<IField> getFields() {
+    public Collection<IField> getFields() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public List<IMethod> getMethods() {
+    public Collection<IMethod> getMethods() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException();
     }

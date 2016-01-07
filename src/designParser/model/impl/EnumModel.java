@@ -1,6 +1,7 @@
 package designParser.model.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import designParser.model.api.IEnum;
@@ -11,10 +12,10 @@ import designParser.model.visitor.IModelVisitor;
 
 public class EnumModel implements IEnum {
 	private String name;
-	private List<IField> fields;
-	private List<IMethod> methods;
-	private List<IInterface> interfaces;
-	private List<String> enumElements;
+	private Collection<IField> fields;
+	private Collection<IMethod> methods;
+	private Collection<IInterface> interfaces;
+	private Collection<String> enumElements;
 
 	public EnumModel(String name) {
 		this.name = name;
@@ -39,42 +40,42 @@ public class EnumModel implements IEnum {
 	}
 
 	@Override
-	public List<IField> getFields() {
+	public Collection<IField> getFields() {
 		return fields;
 	}
 
 	@Override
-	public List<IMethod> getMethods() {
+	public Collection<IMethod> getMethods() {
 		return methods;
 	}
 
 	@Override
-	public List<IInterface> getInterfaces() {
+	public Collection<IInterface> getInterfaces() {
 		return interfaces;
 	}
 
 	@Override
-	public List<String> getEnumElements() {
+	public Collection<String> getEnumElements() {
 		return enumElements;
 	}
 
 	@Override
-	public void setFields(List<IField> fields) {
+	public void setFields(Collection<IField> fields) {
 		this.fields = fields;
 	}
 
 	@Override
-	public void setMethods(List<IMethod> methods) {
+	public void setMethods(Collection<IMethod> methods) {
 		this.methods = methods;
 	}
 
 	@Override
-	public void setInterfaces(List<IInterface> interfaces) {
+	public void setInterfaces(Collection<IInterface> interfaces) {
 		this.interfaces = interfaces;
 	}
 
 	@Override
-	public void setEnumElements(List<String> enumElements) {
+	public void setEnumElements(Collection<String> enumElements) {
 		this.enumElements = enumElements;
 	}
 
