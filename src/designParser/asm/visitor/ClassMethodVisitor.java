@@ -1,6 +1,6 @@
 package designParser.asm.visitor;
 
-import java.util.HashSet;
+import java.util.Set;
 
 import org.objectweb.asm.MethodVisitor;
 
@@ -22,7 +22,7 @@ public class ClassMethodVisitor extends ClassVisitorDecorator {
 		MethodVisitor toDecorate = super.visitMethod(access, name, desc, signature, exceptions);
 		
         String typeDescriptor = (signature != null) ? signature : desc;
-        HashSet<String> typeNames = AsmProcessData.getTypeNamesFromDescriptor(typeDescriptor);
+        Set<String> typeNames = AsmProcessData.getTypeNamesFromDescriptor(typeDescriptor);
         AccessLevel accessLevel = AsmProcessData.getAccessLevel(access);
         String methodSig = getMethodSignature(name, accessLevel, typeDescriptor);
         IMethod methodModel = new MethodModel(name, typeNames, accessLevel, methodSig);

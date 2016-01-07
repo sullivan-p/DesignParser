@@ -14,29 +14,38 @@ import designParser.umlGen.api.IUmlGenerator;
 import designParser.umlGen.impl.UmlGenerator;
 
 public class DesignParser {
+//    private final static String[] OBJECT_NAMES = { 
+//            "appLauncherSltn.AppLauncherApplication",
+//            "appLauncherSltn.ApplicationLauncher",
+//            "appLauncherSltn.DataFileRunner",
+//            "appLauncherSltn.DirectoryChangeLogger",
+//            "appLauncherSltn.DirectoryEvent",
+//            "appLauncherSltn.DirectoryMonitorService",
+//            "appLauncherSltn.ExecutableFileRunner",
+//            "appLauncherSltn.IApplicationLauncher",
+//            "appLauncherSltn.IDirectoryListener",
+//            "appLauncherSltn.IDirectoryMonitorService",
+//            "appLauncherSltn.ProcessRunner"
+//    };
+    
     private final static String[] OBJECT_NAMES = { 
-            "appLauncherSltn.AppLauncherApplication",
-            "appLauncherSltn.ApplicationLauncher",
-            "appLauncherSltn.DataFileRunner",
-            "appLauncherSltn.DirectoryChangeLogger",
-            "appLauncherSltn.DirectoryEvent",
-            "appLauncherSltn.DirectoryMonitorService",
-            "appLauncherSltn.ExecutableFileRunner",
-            "appLauncherSltn.IApplicationLauncher",
-            "appLauncherSltn.IDirectoryListener",
-            "appLauncherSltn.IDirectoryMonitorService",
-            "appLauncherSltn.ProcessRunner"
-
-//            "designParser.model.api.IObject",
-//            "designParser.asm.visitor.ClassDeclarationVisitor",
-//            "appLauncher.AppLauncher",
-//            "appLauncher.HtmlFileInfo",
-//            "appLauncher.IDirectoryEventHandler",
-//            "appLauncher.ILaunchableFileInfo",
-//            "designParser.model.impl.AccessLevel",
-//            "designParser.model.api.PrimitiveDataType",
-//            "designParser.model.api.IModelComponent"
-    };
+            "pizzaStore.Cheese",
+            "pizzaStore.ChicagoPizzaIngredientFactory",
+            "pizzaStore.Clams",
+            "pizzaStore.Dough",
+            "pizzaStore.FreshClams",
+            "pizzaStore.FrozenClams",
+            "pizzaStore.MarinaraSauce",
+            "pizzaStore.MozzarellaCheese",
+            "pizzaStore.NYPizzaIngredientFactory",
+            "pizzaStore.NYPizzaStore",
+            "pizzaStore.PizzaIngredientFactory",
+            "pizzaStore.PlumTomatoSauce",
+            "pizzaStore.ReggianoCheese",
+            "pizzaStore.Sauce",
+            "pizzaStore.ThickCrustDough",
+            "pizzaStore.ThinCrustDough"
+    };    
     
     /**
      * Reads in a list of Java Classes and reverse engineers their design.
@@ -61,7 +70,7 @@ public class DesignParser {
             designModel = methodVisitor.getModel();
         }
         
-        IUmlGenerator umlGenerator = new UmlGenerator("AppLauncher", designModel);
+        IUmlGenerator umlGenerator = new UmlGenerator("AbstractPizzaFactory", designModel, OBJECT_NAMES);
         System.out.println(umlGenerator.getUmlMarkup());
     }
 }
