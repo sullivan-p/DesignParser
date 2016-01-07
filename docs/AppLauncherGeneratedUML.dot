@@ -1,0 +1,65 @@
+digraph AppLauncher{
+rankdir=BT;
+AppLauncherApplication [
+shape = "record",
+label = "{AppLauncherApplication|+ String IN_OUT_DIR\l+ String LOG_FILE\l|+ AppLauncherApplication()\l+ void main(String[])\l}"
+];
+ApplicationLauncher [
+shape = "record",
+label = "{ApplicationLauncher|- Map\<String, ProcessRunner\> extensionToRunnerMap\l|+ ApplicationLauncher()\l+ Collection\<ProcessRunner\> getRunners()\l+ void addRunner(String, ProcessRunner)\l+ void shutDown()\l+ void directoryChanged(DirectoryEvent)\l}"
+];
+DataFileRunner [
+shape = "record",
+label = "{DataFileRunner||+ DataFileRunner(String)\l+ void execute(Path)\l}"
+];
+ProcessRunner [
+shape = "record",
+label = "{\<\<abstract\>\>\nProcessRunner|# List\<Process\> processes\l# String command\l|+ ProcessRunner(String)\l+ List\<Process\> getProcesses()\l+ String getCommand()\l+ void execute(Path)\l}"
+];
+DirectoryChangeLogger [
+shape = "record",
+label = "{DirectoryChangeLogger|- Path path\l|+ DirectoryChangeLogger(Path)\l+ void directoryChanged(DirectoryEvent)\l}"
+];
+DirectoryEvent [
+shape = "record",
+label = "{DirectoryEvent|+ String ENTRY_CREATE\l+ String ENTRY_DELETE\l+ String ENTRY_MODIFY\l- String eventType\l- Path file\l- IDirectoryMonitorService service\l|+ DirectoryEvent(String, Path, IDirectoryMonitorService)\l+ String getEventType()\l+ Path getFile()\l+ IDirectoryMonitorService getSource()\l}"
+];
+DirectoryMonitorService [
+shape = "record",
+label = "{DirectoryMonitorService|- String TEMP_FILE\l- Path dir\l- boolean stop\l- WatchService watcher\l- List\<IDirectoryListener\> listeners\l|+ DirectoryMonitorService(Path)\l+ Path getDirectory()\l+ void run()\l+ boolean isRunning()\l+ void stopGracefully()\l void clearEverything()\l+ void addListener(IDirectoryListener)\l+ void removeListener(IDirectoryListener)\l void notifyListeners(DirectoryEvent)\l}"
+];
+ExecutableFileRunner [
+shape = "record",
+label = "{ExecutableFileRunner||+ ExecutableFileRunner(String)\l+ void execute(Path)\l}"
+];
+IApplicationLauncher [
+shape = "record",
+label = "{\<\<interface\>\>\nIApplicationLauncher|+ Collection\<ProcessRunner\> getRunners()\l+ void addRunner(String, ProcessRunner)\l+ void shutDown()\l}"
+];
+IDirectoryListener [
+shape = "record",
+label = "{\<\<interface\>\>\nIDirectoryListener|+ void directoryChanged(DirectoryEvent)\l}"
+];
+IDirectoryMonitorService [
+shape = "record",
+label = "{\<\<interface\>\>\nIDirectoryMonitorService|+ Path getDirectory()\l+ boolean isRunning()\l+ void stopGracefully()\l+ void addListener(IDirectoryListener)\l+ void removeListener(IDirectoryListener)\l}"
+];
+ApplicationLauncher -> IApplicationLauncher [arrowhead="onormal", style="dashed"];
+DataFileRunner -> ProcessRunner [arrowhead="onormal", style="solid"];
+DirectoryChangeLogger -> IDirectoryListener [arrowhead="onormal", style="dashed"];
+DirectoryMonitorService -> IDirectoryMonitorService [arrowhead="onormal", style="dashed"];
+ExecutableFileRunner -> ProcessRunner [arrowhead="onormal", style="solid"];
+IApplicationLauncher -> IDirectoryListener [arrowhead="onormal", style="solid"];
+ApplicationLauncher -> ProcessRunner [arrowhead="vee", style="solid"];
+ApplicationLauncher -> DirectoryEvent [arrowhead="vee", style="dashed"];
+ApplicationLauncher -> ProcessRunner [arrowhead="vee", style="dashed"];
+DirectoryChangeLogger -> DirectoryEvent [arrowhead="vee", style="dashed"];
+DirectoryEvent -> IDirectoryMonitorService [arrowhead="vee", style="solid"];
+DirectoryEvent -> IDirectoryMonitorService [arrowhead="vee", style="dashed"];
+DirectoryMonitorService -> IDirectoryListener [arrowhead="vee", style="solid"];
+DirectoryMonitorService -> DirectoryEvent [arrowhead="vee", style="dashed"];
+DirectoryMonitorService -> IDirectoryListener [arrowhead="vee", style="dashed"];
+IApplicationLauncher -> ProcessRunner [arrowhead="vee", style="dashed"];
+IDirectoryListener -> DirectoryEvent [arrowhead="vee", style="dashed"];
+IDirectoryMonitorService -> IDirectoryListener [arrowhead="vee", style="dashed"];
+}

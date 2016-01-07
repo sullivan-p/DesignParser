@@ -14,6 +14,7 @@ import designParser.umlGen.api.IUmlGenerator;
 import designParser.umlGen.impl.UmlGenerator;
 
 public class DesignParser {
+//    private final static String MODEL_NAME = "AppLauncher";
 //    private final static String[] OBJECT_NAMES = { 
 //            "appLauncherSltn.AppLauncherApplication",
 //            "appLauncherSltn.ApplicationLauncher",
@@ -28,6 +29,7 @@ public class DesignParser {
 //            "appLauncherSltn.ProcessRunner"
 //    };
     
+    private final static String MODEL_NAME = "AbstractPizzaFactory";
     private final static String[] OBJECT_NAMES = { 
             "pizzaStore.Cheese",
             "pizzaStore.ChicagoPizzaIngredientFactory",
@@ -46,6 +48,57 @@ public class DesignParser {
             "pizzaStore.ThickCrustDough",
             "pizzaStore.ThinCrustDough"
     };    
+    
+//    private final static String MODEL_NAME = "AbstractPizzaFactory";
+//    private final static String[] OBJECT_NAMES = { 
+//            "designParser.app.DesignParser",
+//            "designParser.asm.util.AsmProcessData",
+//            "designParser.asm.visitor.ClassDeclarationVisitor",
+//            "designParser.asm.visitor.ClassFieldVisitor",
+//            "designParser.asm.visitor.ClassMethodVisitor",
+//            "designParser.asm.visitor.ClassVisitorDecorator",
+//            "designParser.asm.visitor.ModelBuilderClassVisitor",            
+//            "designParser.model.api.IClass",
+//            "designParser.model.api.ICustomObject",
+//            "designParser.model.api.IDataType",
+//            "designParser.model.api.IDesignModel",
+//            "designParser.model.api.IEnum",
+//            "designParser.model.api.IField",
+//            "designParser.model.api.IInterface",
+//            "designParser.model.api.IMethod",
+//            "designParser.model.api.IModelComponent",
+//            "designParser.model.api.IModelVisitor",
+//            "designParser.model.api.IObject",
+//            "designParser.model.api.ITraversable",
+//            "designParser.model.api.IVariable",
+//            "designParser.model.api.PrimitiveDataType",
+//            "designParser.model.impl.AccessLevel",
+//            "designParser.model.impl.ArrayModel",
+//            "designParser.model.impl.ClassModel",
+//            "designParser.model.impl.DesignModel",
+//            "designParser.model.impl.EmptyModelVisitor",
+//            "designParser.model.impl.EnumModel",
+//            "designParser.model.impl.FieldModel",
+//            "designParser.model.impl.InterfaceModel",
+//            "designParser.model.impl.MethodModel",
+//            "designParser.model.impl.PrimitiveBooleanDataType",
+//            "designParser.model.impl.PrimitiveByteDataType",
+//            "designParser.model.impl.PrimitiveCharDataType",
+//            "designParser.model.impl.PrimitiveDoubleDataType",
+//            "designParser.model.impl.PrimitiveFloatDataType",
+//            "designParser.model.impl.PrimitiveIntDataType",
+//            "designParser.model.impl.PrimitiveLongDataType",
+//            "designParser.model.impl.PrimitiveShortDataType",
+//            "designParser.model.impl.VariableModel",
+//            "designParser.umlGen.api.IUmlGenerator",
+//            "designParser.umlGen.api.UmlModelVisitor",
+//            "designParser.umlGen.impl.UmlAssociationVisitor",
+//            "designParser.umlGen.impl.UmlGenerator",
+//            "designParser.umlGen.impl.UmlInheritanceVisitor",
+//            "designParser.umlGen.impl.UmlObjVisitor",
+//            "designParser.umlGen.util.UmlArrowMarkup",
+//            "designParser.umlGen.util.UmlProcessString"
+//    };   
     
     /**
      * Reads in a list of Java Classes and reverse engineers their design.
@@ -70,7 +123,7 @@ public class DesignParser {
             designModel = methodVisitor.getModel();
         }
         
-        IUmlGenerator umlGenerator = new UmlGenerator("AbstractPizzaFactory", designModel, OBJECT_NAMES);
+        IUmlGenerator umlGenerator = new UmlGenerator(MODEL_NAME, designModel, OBJECT_NAMES);
         System.out.println(umlGenerator.getUmlMarkup());
     }
 }
