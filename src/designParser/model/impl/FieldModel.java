@@ -20,6 +20,6 @@ public class FieldModel extends VariableModel implements IField {
     
     @Override
     public void accept(IModelVisitor visitor) {
-        // TODO Auto-generated method stub
+        visitor.visit(this);
     }
 }

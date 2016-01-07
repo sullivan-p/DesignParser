@@ -41,6 +41,6 @@ public class MethodModel implements IMethod {
     
     @Override
     public void accept(IModelVisitor visitor) {
-        // TODO Auto-generated method stub
+        visitor.visit(this);
     }
 }

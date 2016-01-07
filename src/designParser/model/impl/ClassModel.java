@@ -92,6 +92,14 @@ public class ClassModel implements IClass {
 
 	@Override
 	public void accept(IModelVisitor visitor) {
-		// TODO Auto-generated method stub
+        visitor.previsit(this);
+        for (IField f : fields) {
+            f.accept(visitor);
+        }
+        visitor.visit(this);
+        for (IMethod m : methods) {
+            m.accept(visitor);
+        }
+        visitor.postvisit(this);
 	}
 }

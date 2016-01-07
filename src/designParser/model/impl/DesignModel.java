@@ -124,6 +124,16 @@ public class DesignModel implements IDesignModel {
     
 	@Override
 	public void accept(IModelVisitor visitor) {
-		// TODO Auto-generated method stub
+		visitor.previsit(this);
+		for (IClass c : classModels) {
+		    c.accept(visitor);
+		}
+        for (IInterface i : interfaceModels) {
+            i.accept(visitor);
+        }
+        for (IEnum e : enumModels) {
+            e.accept(visitor);
+        }    
+        visitor.postvisit(this);
 	}
 }

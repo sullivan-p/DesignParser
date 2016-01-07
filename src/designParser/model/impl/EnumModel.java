@@ -79,8 +79,12 @@ public class EnumModel implements IEnum {
 		this.enumElements = enumElements;
 	}
 
-	@Override
-	public void accept(IModelVisitor visitor) {
-		// TODO: Implement this
-	}
+    @Override
+    public void accept(IModelVisitor visitor) {
+        visitor.previsit(this);
+        for (IMethod m : methods) {
+            m.accept(visitor);
+        }
+        visitor.postvisit(this);
+    }
 }

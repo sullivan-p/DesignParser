@@ -64,8 +64,12 @@ public class InterfaceModel implements IInterface {
 		this.extendedInterfaces = extInterfaces;
 	}
 
-	@Override
-	public void accept(IModelVisitor visitor) {
-		// TODO Auto-generated method stub
-	}
+    @Override
+    public void accept(IModelVisitor visitor) {
+        visitor.previsit(this);
+        for (IMethod m : methods) {
+            m.accept(visitor);
+        }
+        visitor.postvisit(this);
+    }
 }
