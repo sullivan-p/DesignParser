@@ -1,7 +1,6 @@
 package designParser.asm.visitor;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import designParser.asm.util.AsmProcessData;
 import designParser.model.api.IClass;
@@ -33,7 +32,6 @@ public class ClassDeclarationVisitor extends ModelBuilderClassVisitor {
     
     @Override
     public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
-        System.out.println("Class: " + name + " extends " + superName + " implements " + Arrays.toString(interfaces));
         
         // Convert names from ASM format to Java fully qualified names.
         name = AsmProcessData.convertAsmToJavaName(name);

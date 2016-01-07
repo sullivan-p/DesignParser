@@ -68,6 +68,9 @@ public final class AsmProcessData {
         return (opcode & bitmask) != 0;    
     }
     
+    /**
+     * Examine the opcode and return the corresponding access level.
+     */
     public static AccessLevel getAccessLevel(int opcode) {
         if ((opcode & Opcodes.ACC_PUBLIC) != 0) {
             return AccessLevel.Public;

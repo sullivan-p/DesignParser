@@ -13,15 +13,27 @@ import designParser.model.impl.DesignModel;
 
 public class DesignParser {
     private final static String[] CLASS_NAMES = { 
-            "designParser.model.api.IObject",
-            "designParser.asm.visitor.ClassDeclarationVisitor",
-            "appLauncher.AppLauncher",
-            "appLauncher.HtmlFileInfo",
-            "appLauncher.IDirectoryEventHandler",
-            "appLauncher.ILaunchableFileInfo",
-            "designParser.model.impl.AccessLevel",
-            "designParser.model.api.PrimitiveDataType",
-            "designParser.model.api.IModelComponent"
+            "appLauncherSltn.AppLauncherApplication",
+            "appLauncherSltn.ApplicationLauncher",
+            "appLauncherSltn.DataFileRunner",
+            "appLauncherSltn.DirectoryChangeLogger",
+            "appLauncherSltn.DirectoryEvent",
+            "appLauncherSltn.DirectoryMonitorService",
+            "appLauncherSltn.ExecutableFileRunner",
+            "appLauncherSltn.IApplicationLauncher",
+            "appLauncherSltn.IDirectoryListener",
+            "appLauncherSltn.IDirectoryMonitorService",
+            "appLauncherSltn.ProcessRunner"
+
+//            "designParser.model.api.IObject",
+//            "designParser.asm.visitor.ClassDeclarationVisitor",
+//            "appLauncher.AppLauncher",
+//            "appLauncher.HtmlFileInfo",
+//            "appLauncher.IDirectoryEventHandler",
+//            "appLauncher.ILaunchableFileInfo",
+//            "designParser.model.impl.AccessLevel",
+//            "designParser.model.api.PrimitiveDataType",
+//            "designParser.model.api.IModelComponent"
     };
     
     /**
