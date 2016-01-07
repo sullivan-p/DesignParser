@@ -1,13 +1,9 @@
-package designParser.model.impl;
+package designParser.model.visitor;
 
 import java.util.List;
 
 import designParser.model.api.IDesignModel;
 import designParser.model.api.IUmlGenerator;
-import designParser.model.visitor.UmlAssociationVisitor;
-import designParser.model.visitor.UmlInheritanceVisitor;
-import designParser.model.visitor.UmlModelVisitor;
-import designParser.model.visitor.UmlObjVisitor;
 
 public class UmlGenerator implements IUmlGenerator {
 	private StringBuilder stringBuilder;

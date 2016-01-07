@@ -7,12 +7,13 @@
       <x>150</x>
       <y>942</y>
       <w>282</w>
-      <h>42</h>
+      <h>48</h>
     </coordinates>
     <panel_attributes>&lt;&lt;abstract&gt;&gt;
 ModelBuilderClassVisitor
 --
-+ abstract IModel getModel()</panel_attributes>
++ abstract IDesignModel getModel()
++ abstract ICustomObject getCurrentEntity()</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -66,19 +67,19 @@ ClassVisitor
 ClassVisitorDecorator
 --
 + abstract ModelBuilderClassVisitorgetDecoratedVisitor()
-+ IModel getModel()</panel_attributes>
++ IDesignModel getModel()</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>372</x>
-      <y>978</y>
+      <y>984</y>
       <w>18</w>
-      <h>42</h>
+      <h>36</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
@@ -91,21 +92,22 @@ ClassVisitorDecorator
     <panel_attributes>ClassDeclarationVisitor
 --
 --
++ IDesignModel getModel()
 + void visit(int version, int access, String name, String signature, 
     String superName, String[] interfaces)
-+ IModel getModel()</panel_attributes>
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>198</x>
-      <y>978</y>
+      <y>984</y>
       <w>18</w>
-      <h>42</h>
+      <h>36</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
@@ -219,8 +221,7 @@ ClassVisitorDecorator
     <panel_attributes>&lt;&lt;Interface&gt;&gt;
 IModelComponent
 --
-+ String getName()
-+ void accept(IModelVisitor)</panel_attributes>
++ String getName()</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -306,7 +307,7 @@ IVariable
       <x>840</x>
       <y>660</y>
       <w>252</w>
-      <h>114</h>
+      <h>126</h>
     </coordinates>
     <panel_attributes>DesignModel
 --
@@ -410,7 +411,7 @@ IField
 --
 + String getName()
 + Collection&lt;String&gt; getTypeNames()
-+ void accept(IModelVisitor)</panel_attributes>
++ void accept(IModelVisitor visitor)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -448,7 +449,7 @@ IField
 - AccessLevel accessLevel
 --
 + AccessLevel getAccessLevel()
-+ void accept(IModelVisitor)</panel_attributes>
++ void accept(IModelVisitor visitor)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -487,7 +488,7 @@ IField
 + String getName()
 + AccessLevel getAccessLevel()
 + Collection&lt;IVariable&gt; getParams()
-+ void accept(IModelVisitor)</panel_attributes>
++ void accept(IModelVisitor visitor)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -583,7 +584,7 @@ IObject
 + void setInterfaces(
     Collection&lt;IIInterface&gt; interfaces)
 + void setIsConcrete(bool isConcrete)
-+ void accept(IModelVisitor)
++ void accept(IModelVisitor visitor)
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -592,14 +593,14 @@ IObject
     <coordinates>
       <x>918</x>
       <y>930</y>
-      <w>150</w>
+      <w>156</w>
       <h>48</h>
     </coordinates>
     <panel_attributes>/PrimitiveDataType/
 --
 --
 + String getName()
-+ void accept(IModelVisitor)</panel_attributes>
++ void accept(IModelVisitor visitor)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -621,7 +622,7 @@ IObject
 + void setMethods(Collection&lt;IMethod&gt; methods)
 + void setExtendedInterfaces(
     Collection&lt;IInterface&gt; interfaces)
-+ void accept(IModelVisitor)</panel_attributes>
++ void accept(IModelVisitor visitor)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -961,7 +962,7 @@ IEnum
 + void setMethods(Collection&lt;IMethod&gt; methods)
 + void setInterfaces(
     Collection&lt;IIInterface&gt; interfaces)
-+ void accept(IModelVisitor)
++ void accept(IModelVisitor visitor)
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -1024,7 +1025,7 @@ IEnum
 + Collection&lt;IField&gt; getFields()
 + Collection&lt;IMethod&gt; getMethods()
 + Collection&lt;IIInterface&gt; getInterfaces()
-+ void accept(IModelVisitor)
++ void accept(IModelVisitor visitor)
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -1139,14 +1140,13 @@ IModelVisitor
     <coordinates>
       <x>1416</x>
       <y>672</y>
-      <w>150</w>
+      <w>156</w>
       <h>54</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Interface&gt;&gt;
 ITraversable
 --
-+ String getName()
-+ void accept(IModelVisitor)</panel_attributes>
++ void accept(IModelVisitor visitor)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -1411,12 +1411,12 @@ UmlModelVisitor
     <id>Relation</id>
     <coordinates>
       <x>282</x>
-      <y>978</y>
+      <y>984</y>
       <w>18</w>
-      <h>264</h>
+      <h>258</h>
     </coordinates>
     <panel_attributes>lt=&lt;.</panel_attributes>
-    <additional_attributes>10.0;420.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;410.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
