@@ -57,5 +57,7 @@ public class FactoryTest {
         IUmlGenerator umlGenerator = new UmlGenerator("AbstractPizzaFactory", designModel, OBJECT_NAMES);
         String outPut = umlGenerator.getUmlMarkup();
         System.out.println(umlGenerator.getUmlMarkup());
+        
+        assertEquals(outPut, umlGenerator);
     }
 }
