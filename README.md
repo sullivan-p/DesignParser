@@ -21,7 +21,7 @@ The UML generator contains a list of `UmlModelVisitor` objects.  Each visitor ge
 
 ## Contributions
 
-Patrick and Navine both made contributions to the code base and made updates to the UML diagram. 
+Patrick and Navine both made contributions to the code base and made updates to the UML diagram. Navine worked on the tests. Patrick worked on the high level design of the application.
 (See the commit log for more specific contributions.)
 
 ## Instructions
