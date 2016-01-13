@@ -1,161 +1,168 @@
 package designParser.model.impl;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import designParser.asm.util.AsmProcessData;
-import designParser.model.api.IClass;
-import designParser.model.api.IEnum;
-import designParser.model.api.IInterface;
 import designParser.model.api.IModelVisitor;
 import designParser.model.api.IObject;
 import designParser.model.api.IDesignModel;
 
 public class DesignModel implements IDesignModel {
-    private List<IClass> classModels;
-    private List<IInterface> interfaceModels;
-    private List<IEnum> enumModels;
-    private List<String> objNamesToModel;
 	private final String DOES_NOT_EXIST_ERROR = " does not exist in the model.";
-	private final String ALREADY_EXISTS_ERROR = " already exists in the model.";
+    private final String ALREADY_EXISTS_ERROR = " already exists in the model.";
+    private final String NOT_OBJ_TO_MODEL_ERROR = " is not an object that is being modeled.";
+	
+    private Map<String, IObject> nameToModelMap;
 
 	public DesignModel(String[] names) {
-	    this.objNamesToModel = new ArrayList<String>();
+	    this.nameToModelMap = new HashMap<String, IObject>();
 	    for (String objName : names) {
-	        objNamesToModel.add(AsmProcessData.qualifiedToUnqualifiedName(objName));
+	        nameToModelMap.put(AsmProcessData.qualifiedToUnqualifiedName(objName), null);
 	    };
-        classModels = new ArrayList<IClass>();
-        interfaceModels = new ArrayList<IInterface>();
-        enumModels = new ArrayList<IEnum>();
 	}
 	
 	@Override
-	public List<String> getObjNamesToModel() {
-	    return objNamesToModel;
+	public Collection<String> getObjNamesToModel() {
+	    return nameToModelMap.keySet();
 	}
 
 	@Override
-    public boolean hasObject(String name)  {
-        return (hasInterfaceModel(name) || 
-                hasEnumModel(name) ||
-                hasClassModel(name));
+    public boolean hasObjectModel(String name)  {
+        return (nameToModelMap.containsKey(name) && 
+                nameToModelMap.get(name) != null);
     }
 	
-    @Override
-    public boolean hasClassModel(String name) {
-        for (IClass c : classModels) {
-            if (c.getName().equals(name)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean hasInterfaceModel(String name) {
-        for (IInterface i : interfaceModels) {
-            if (i.getName().equals(name)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean hasEnumModel(String name) {
-        for (IEnum e : enumModels) {
-            if (e.getName().equals(name)) {
-                return true;
-            }
-        }
-        return false;
-    }
+//    @Override
+//    public boolean hasClassModel(String name) {
+//        return hasObject(name) && isClassModel(nameToModelMap.get(name));
+//    }
+//    
+//    @Override
+//    public boolean hasInterfaceModel(String name) {
+//        return hasObject(name) && isInterfaceModel(nameToModelMap.get(name));
+//    }
+//    
+//    @Override
+//    public boolean hasEnumModel(String name) {
+//        return hasObject(name) && isEnumModel(nameToModelMap.get(name));
+//    }
+    
+//    @Override
+//    public InterfaceModel getClassModel(String name) throws IllegalArgumentException {
+//        if (!hasInterfaceModel(name)) {
+//            throw new IllegalArgumentException(name + DOES_NOT_EXIST_ERROR);
+//        }
+//        return (InterfaceModel)nameToModelMap.get(name);
+//    }
+//    
+//    @Override
+//    public InterfaceModel getInterfaceModel(String name) throws IllegalArgumentException {
+//        if (!hasInterfaceModel(name)) {
+//            throw new IllegalArgumentException(name + DOES_NOT_EXIST_ERROR);
+//        }
+//        return (InterfaceModel)nameToModelMap.get(name);
+//    }
+//    
+//    @Override
+//    public EnumModel getEnumModel(String name) throws IllegalArgumentException {
+//        if (!hasEnumModel(name)) {
+//            throw new IllegalArgumentException(name + DOES_NOT_EXIST_ERROR);
+//        }
+//        return (EnumModel)nameToModelMap.get(name);
+//    }
     
     @Override
-    public IClass getClassModel(String name) throws IllegalArgumentException {
-        for (IClass c : classModels) {
-            if (c.getName().equals(name)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(name + DOES_NOT_EXIST_ERROR);
-    }
-
-    @Override
-    public IInterface getInterfaceModel(String name) throws IllegalArgumentException {
-        for (IInterface i : interfaceModels) {
-            if (i.getName().equals(name)) {
-                return i;
-            }
-        }
-        throw new IllegalArgumentException(name + DOES_NOT_EXIST_ERROR);
-    }
-    
-    @Override
-    public IEnum getEnumModel(String name) throws IllegalArgumentException {
-        for (IEnum e : enumModels) {
-            if (e.getName().equals(name)) {
-                return e;
-            }
-        }
-        throw new IllegalArgumentException(name + DOES_NOT_EXIST_ERROR);
-    }
-    
-    @Override
-    public IClass addNewClassModel(String name, boolean isConcrete) {
-        if (hasClassModel(name)) {
+    public void addNewClassModel(String name, boolean isConcrete) {
+        if (hasObjectModel(name)) {
             throw new IllegalArgumentException(name + ALREADY_EXISTS_ERROR);
-        }
-        
-        IClass classModel = new ClassModel(name, isConcrete);
-        classModels.add(classModel);
-        return classModel;
-    }
-
-    @Override
-    public IInterface addNewInterfaceModel(String name) {
-        if (hasInterfaceModel(name)) {
-            throw new IllegalArgumentException(name + ALREADY_EXISTS_ERROR);
-        }
-        
-        IInterface interfaceModel = new InterfaceModel(name);
-        interfaceModels.add(interfaceModel);
-        return interfaceModel;
+        } else if (!nameToModelMap.containsKey(name)) {
+            throw new IllegalArgumentException(name + NOT_OBJ_TO_MODEL_ERROR);
+        } 
+        nameToModelMap.put(name, new ClassModel(name, isConcrete));
     }
     
     @Override
-    public IEnum addNewEnumModel(String name) {
-        if (hasEnumModel(name)) {
+    public void addNewInterfaceModel(String name) {
+        if (hasObjectModel(name)) {
             throw new IllegalArgumentException(name + ALREADY_EXISTS_ERROR);
-        }        
-        
-        IEnum enumModel = new EnumModel(name);
-        enumModels.add(enumModel);
-        return enumModel;
-    }    
+        } else if (!nameToModelMap.containsKey(name)) {
+            throw new IllegalArgumentException(name + NOT_OBJ_TO_MODEL_ERROR);
+        } 
+        nameToModelMap.put(name, new InterfaceModel(name));
+    }
+    
+    @Override
+    public void addNewEnumModel(String name) {
+        if (hasObjectModel(name)) {
+            throw new IllegalArgumentException(name + ALREADY_EXISTS_ERROR);
+        } else if (!nameToModelMap.containsKey(name)) {
+            throw new IllegalArgumentException(name + NOT_OBJ_TO_MODEL_ERROR);
+        } 
+        nameToModelMap.put(name, new EnumModel(name));
+    }
+
     
 	@Override
 	public void accept(IModelVisitor visitor) {
 		visitor.previsit(this);
-		for (IClass c : classModels) {
-		    if (isObjectToModel(c)) {
-		        c.accept(visitor);
-		    }
+		for (ClassModel c : getClassModels()) {
+	        c.accept(visitor);
 		}
-        for (IInterface i : interfaceModels) {
-            if (isObjectToModel(i)) {
-                i.accept(visitor);
-            }
+        for (InterfaceModel i : getInterfaceModels()) {
+            i.accept(visitor);
         }
-        for (IEnum e : enumModels) {
-            if (isObjectToModel(e)) {
-                e.accept(visitor);
-            }
+        for (EnumModel e : getEnumModels()) {
+            e.accept(visitor);
         }    
         visitor.postvisit(this);
 	}
 	
-	private boolean isObjectToModel(IObject o) {
-	    return objNamesToModel.contains(o.getName());
+	private Collection<ClassModel> getClassModels() {
+	    Collection<ClassModel> classModels = new ArrayList<ClassModel>();
+	    for (IObject o : nameToModelMap.values()) {
+	        if (o != null && isClassModel(o)) {
+	            classModels.add((ClassModel)o);
+	        }
+	    }
+	    return classModels;
 	}
+	
+	private Collection<InterfaceModel> getInterfaceModels() {
+        Collection<InterfaceModel> interfaceModels = new ArrayList<InterfaceModel>();
+        for (IObject o : nameToModelMap.values()) {
+            if (o != null && isInterfaceModel(o)) {
+                interfaceModels.add((InterfaceModel)o);
+            }
+        }
+        return interfaceModels;	    
+	}
+	
+	private Collection<EnumModel> getEnumModels() {
+        Collection<EnumModel> enumModels = new ArrayList<EnumModel>();
+        for (IObject o : nameToModelMap.values()) {
+            if (o != null && isEnumModel(o)) {
+                enumModels.add((EnumModel)o);
+            }
+        }
+        return enumModels;     
+	}
+		
+	private boolean isClassModel(IObject o) {
+	    return isInstanceAssignableFrom(o, ClassModel.class);
+	}
+	
+    private boolean isInterfaceModel(IObject o) {
+        return isInstanceAssignableFrom(o, InterfaceModel.class);
+    }
+    
+    private boolean isEnumModel(IObject o) {
+        return isInstanceAssignableFrom(o, EnumModel.class);
+    }
+    
+    private <T> boolean isInstanceAssignableFrom(Object o, Class<T> c) {
+        return o.getClass().isAssignableFrom(c);
+    }
 }
