@@ -58,6 +58,6 @@ public class FactoryTest {
         String outPut = umlGenerator.getUmlMarkup();
         System.out.println(umlGenerator.getUmlMarkup());
         
-        assertEquals(outPut, umlGenerator);
+        assertEquals(outPut, umlGenerator.getUmlMarkup());
     }
 }
