@@ -6,9 +6,9 @@ public class AssociatesWithRelation extends AbstractObjectRelation {
     private IObject sourceModel;
     private IObject associatedModel;
 
-    public AssociatesWithRelation(ClassModel sourceModel, ClassModel associatedModel) {
-        this.sourceModel = sourceModel;
-        this.associatedModel = associatedModel;
+    public AssociatesWithRelation(IObject src, IObject dst) {
+        this.sourceModel = src;
+        this.associatedModel = dst;
     }
 
     @Override

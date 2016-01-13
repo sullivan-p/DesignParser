@@ -6,9 +6,9 @@ public class ReferencesRelation extends AbstractObjectRelation {
     private IObject sourceModel;
     private IObject referencedModel;
 
-    public ReferencesRelation(ClassModel sourceModel, ClassModel referencedModel) {
-        this.sourceModel = sourceModel;
-        this.referencedModel = referencedModel;
+    public ReferencesRelation(IObject x, IObject y) {
+        this.sourceModel = x;
+        this.referencedModel = y;
     }
 
     @Override

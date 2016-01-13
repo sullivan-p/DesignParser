@@ -3,17 +3,17 @@ package designParser.model.impl;
 import designParser.model.api.IObject;
 
 public class ImplementsRelation extends AbstractObjectRelation {
-    private ClassModel implementationModel;
-    private InterfaceModel interfaceModel;
+    private IObject sourceModel;
+    private IObject interfaceModel;
 
-    public ImplementsRelation(ClassModel implementationModel, InterfaceModel interfaceModel) {
-        this.implementationModel = implementationModel;
-        this.interfaceModel = interfaceModel;
+    public ImplementsRelation(IObject src, IObject dst) {
+        this.sourceModel = src;
+        this.interfaceModel = dst;
     }
 
     @Override
     public IObject getSource() {
-        return implementationModel;
+        return sourceModel;
     }
 
     @Override

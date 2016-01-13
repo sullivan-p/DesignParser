@@ -3,21 +3,21 @@ package designParser.model.impl;
 import designParser.model.api.IObject;
 
 public class ExtendsRelation extends AbstractObjectRelation {
-    private ClassModel subclassModel;
-    private ClassModel superclassModel;
+    private IObject sourceModel;
+    private IObject extendedModel;
 
-    public ExtendsRelation(ClassModel subclassModel, ClassModel superclassModel) {
-        this.subclassModel = subclassModel;
-        this.superclassModel = superclassModel;
+    public ExtendsRelation(IObject sourceModel, IObject extendedModel) {
+        this.sourceModel = sourceModel;
+        this.extendedModel = extendedModel;
     }
 
     @Override
     public IObject getSource() {
-        return subclassModel;
+        return sourceModel;
     }
 
     @Override
     public IObject getDestination() {
-        return superclassModel;
+        return extendedModel;
     }
 }
