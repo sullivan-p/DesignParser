@@ -1,7 +1,7 @@
 package designParser.umlGen.impl;
 
 import designParser.model.impl.AssociatesWithRelation;
-import designParser.model.impl.ImplementsRelation;
+import designParser.model.impl.ReferencesRelation;
 import designParser.umlGen.api.UmlModelVisitor;
 import designParser.umlGen.util.UmlArrowMarkup;
 
@@ -20,7 +20,7 @@ public class UmlAssociationVisitor extends UmlModelVisitor{
         sb.append(UmlArrowMarkup.getAssociatesArrow(r.getSourceName(), r.getDestinationName()));
     }
 
-    public void visit(ImplementsRelation r) {
+    public void visit(ReferencesRelation r) {
         sb.append(UmlArrowMarkup.getReferencesArrow(r.getSourceName(), r.getDestinationName()));
     }   
 }

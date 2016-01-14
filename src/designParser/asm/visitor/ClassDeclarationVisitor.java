@@ -35,10 +35,6 @@ public class ClassDeclarationVisitor extends ModelBuilderClassVisitor {
 		name = AsmProcessData.qualifiedToUnqualifiedName(
 		        AsmProcessData.convertAsmToJavaName(name));
 		this.currentObjectName = name;
-		
-		if (name.equals("IApplicationLauncher")) {
-		    System.out.println("TEST");
-		}
 
 		// Convert interface names from ASM format to unqualified Java names.
 		List<String> interfaceNames = new ArrayList<String>();
