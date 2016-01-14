@@ -1,48 +1,8 @@
 digraph AbstractPizzaFactory{
 rankdir=BT;
-ChicagoPizzaIngredientFactory [
-shape = "record",
-label = "{ChicagoPizzaIngredientFactory| ThickCrustDough dough\l PlumTomatoSauce sauce\l MozzarellaCheese cheese\l FrozenClams clams\l|+ ChicagoPizzaIngredientFactory()\l+ Dough createDough()\l+ Sauce createSauce()\l+ Cheese createCheese()\l+ void createVeggies()\l+ void createPepperoni()\l+ Clams createClam()\l}"
-];
-FreshClams [
-shape = "record",
-label = "{FreshClams||+ FreshClams()\l}"
-];
-FrozenClams [
-shape = "record",
-label = "{FrozenClams||+ FrozenClams()\l}"
-];
 MarinaraSauce [
 shape = "record",
 label = "{MarinaraSauce||+ MarinaraSauce()\l}"
-];
-MozzarellaCheese [
-shape = "record",
-label = "{MozzarellaCheese||+ MozzarellaCheese()\l}"
-];
-NYPizzaIngredientFactory [
-shape = "record",
-label = "{NYPizzaIngredientFactory|- ThinCrustDough dough\l- MarinaraSauce sauce\l- ReggianoCheese cheese\l- FreshClams clams\l|+ NYPizzaIngredientFactory()\l+ Dough createDough()\l+ Sauce createSauce()\l+ Cheese createCheese()\l+ void createVeggies()\l+ void createPepperoni()\l+ Clams createClam()\l}"
-];
-NYPizzaStore [
-shape = "record",
-label = "{NYPizzaStore|- Dough dough\l- Sauce sauce\l- Cheese cheese\l- Clams clams\l- PizzaIngredientFactory ingredientFactory\l|+ NYPizzaStore()\l+ void createPizza()\l}"
-];
-PlumTomatoSauce [
-shape = "record",
-label = "{PlumTomatoSauce||+ PlumTomatoSauce()\l}"
-];
-ReggianoCheese [
-shape = "record",
-label = "{ReggianoCheese||+ ReggianoCheese()\l}"
-];
-ThickCrustDough [
-shape = "record",
-label = "{ThickCrustDough||+ ThickCrustDough()\l}"
-];
-ThinCrustDough [
-shape = "record",
-label = "{ThinCrustDough||+ ThinCrustDough()\l}"
 ];
 Cheese [
 shape = "record",
@@ -50,53 +10,93 @@ label = "{\<\<interface\>\>\nCheese|}"
 ];
 PizzaIngredientFactory [
 shape = "record",
-label = "{\<\<interface\>\>\nPizzaIngredientFactory|+ Dough createDough()\l+ Sauce createSauce()\l+ Cheese createCheese()\l+ void createVeggies()\l+ void createPepperoni()\l+ Clams createClam()\l}"
+label = "{\<\<interface\>\>\nPizzaIngredientFactory|+ Clams createClam()\l+ void createVeggies()\l+ Dough createDough()\l+ void createPepperoni()\l+ Sauce createSauce()\l+ Cheese createCheese()\l}"
 ];
-Clams [
+ThickCrustDough [
 shape = "record",
-label = "{\<\<interface\>\>\nClams|}"
+label = "{ThickCrustDough||+ ThickCrustDough()\l}"
 ];
-Dough [
+NYPizzaIngredientFactory [
 shape = "record",
-label = "{\<\<interface\>\>\nDough|}"
+label = "{NYPizzaIngredientFactory|- MarinaraSauce sauce\l- FreshClams clams\l- ThinCrustDough dough\l- ReggianoCheese cheese\l|+ Clams createClam()\l+ void createVeggies()\l+ Dough createDough()\l+ NYPizzaIngredientFactory()\l+ void createPepperoni()\l+ Sauce createSauce()\l+ Cheese createCheese()\l}"
+];
+PlumTomatoSauce [
+shape = "record",
+label = "{PlumTomatoSauce||+ PlumTomatoSauce()\l}"
+];
+ThinCrustDough [
+shape = "record",
+label = "{ThinCrustDough||+ ThinCrustDough()\l}"
+];
+ChicagoPizzaIngredientFactory [
+shape = "record",
+label = "{ChicagoPizzaIngredientFactory| PlumTomatoSauce sauce\l FrozenClams clams\l ThickCrustDough dough\l MozzarellaCheese cheese\l|+ Clams createClam()\l+ void createVeggies()\l+ Dough createDough()\l+ ChicagoPizzaIngredientFactory()\l+ void createPepperoni()\l+ Sauce createSauce()\l+ Cheese createCheese()\l}"
 ];
 Sauce [
 shape = "record",
 label = "{\<\<interface\>\>\nSauce|}"
 ];
-ChicagoPizzaIngredientFactory -> PizzaIngredientFactory [arrowhead="onormal", style="dashed"];
-FreshClams -> Clams [arrowhead="onormal", style="dashed"];
-FrozenClams -> Clams [arrowhead="onormal", style="dashed"];
-MarinaraSauce -> Sauce [arrowhead="onormal", style="dashed"];
-MozzarellaCheese -> Cheese [arrowhead="onormal", style="dashed"];
-NYPizzaIngredientFactory -> PizzaIngredientFactory [arrowhead="onormal", style="dashed"];
+MozzarellaCheese [
+shape = "record",
+label = "{MozzarellaCheese||+ MozzarellaCheese()\l}"
+];
+Dough [
+shape = "record",
+label = "{\<\<interface\>\>\nDough|}"
+];
+NYPizzaStore [
+shape = "record",
+label = "{NYPizzaStore|- Sauce sauce\l- Clams clams\l- PizzaIngredientFactory ingredientFactory\l- Dough dough\l- Cheese cheese\l|+ void createPizza()\l+ NYPizzaStore()\l}"
+];
+ReggianoCheese [
+shape = "record",
+label = "{ReggianoCheese||+ ReggianoCheese()\l}"
+];
+FrozenClams [
+shape = "record",
+label = "{FrozenClams||+ FrozenClams()\l}"
+];
+Clams [
+shape = "record",
+label = "{\<\<interface\>\>\nClams|}"
+];
+FreshClams [
+shape = "record",
+label = "{FreshClams||+ FreshClams()\l}"
+];
 PlumTomatoSauce -> Sauce [arrowhead="onormal", style="dashed"];
-ReggianoCheese -> Cheese [arrowhead="onormal", style="dashed"];
-ThickCrustDough -> Dough [arrowhead="onormal", style="dashed"];
+NYPizzaIngredientFactory -> PizzaIngredientFactory [arrowhead="onormal", style="dashed"];
 ThinCrustDough -> Dough [arrowhead="onormal", style="dashed"];
-ChicagoPizzaIngredientFactory -> PlumTomatoSauce [arrowhead="vee", style="solid"];
+ChicagoPizzaIngredientFactory -> PizzaIngredientFactory [arrowhead="onormal", style="dashed"];
+ThickCrustDough -> Dough [arrowhead="onormal", style="dashed"];
+FrozenClams -> Clams [arrowhead="onormal", style="dashed"];
+MozzarellaCheese -> Cheese [arrowhead="onormal", style="dashed"];
+FreshClams -> Clams [arrowhead="onormal", style="dashed"];
+MarinaraSauce -> Sauce [arrowhead="onormal", style="dashed"];
+ReggianoCheese -> Cheese [arrowhead="onormal", style="dashed"];
 ChicagoPizzaIngredientFactory -> MozzarellaCheese [arrowhead="vee", style="solid"];
-ChicagoPizzaIngredientFactory -> FrozenClams [arrowhead="vee", style="solid"];
-ChicagoPizzaIngredientFactory -> ThickCrustDough [arrowhead="vee", style="solid"];
-ChicagoPizzaIngredientFactory -> Sauce [arrowhead="vee", style="dashed"];
 ChicagoPizzaIngredientFactory -> Dough [arrowhead="vee", style="dashed"];
-ChicagoPizzaIngredientFactory -> Cheese [arrowhead="vee", style="dashed"];
-ChicagoPizzaIngredientFactory -> Clams [arrowhead="vee", style="dashed"];
-NYPizzaIngredientFactory -> ThinCrustDough [arrowhead="vee", style="solid"];
+ChicagoPizzaIngredientFactory -> Sauce [arrowhead="vee", style="dashed"];
 NYPizzaIngredientFactory -> MarinaraSauce [arrowhead="vee", style="solid"];
-NYPizzaIngredientFactory -> ReggianoCheese [arrowhead="vee", style="solid"];
-NYPizzaIngredientFactory -> FreshClams [arrowhead="vee", style="solid"];
-NYPizzaIngredientFactory -> Sauce [arrowhead="vee", style="dashed"];
-NYPizzaIngredientFactory -> Dough [arrowhead="vee", style="dashed"];
-NYPizzaIngredientFactory -> Cheese [arrowhead="vee", style="dashed"];
-NYPizzaIngredientFactory -> Clams [arrowhead="vee", style="dashed"];
-NYPizzaStore -> Sauce [arrowhead="vee", style="solid"];
-NYPizzaStore -> Dough [arrowhead="vee", style="solid"];
-NYPizzaStore -> Cheese [arrowhead="vee", style="solid"];
-NYPizzaStore -> PizzaIngredientFactory [arrowhead="vee", style="solid"];
-NYPizzaStore -> Clams [arrowhead="vee", style="solid"];
 PizzaIngredientFactory -> Sauce [arrowhead="vee", style="dashed"];
+NYPizzaIngredientFactory -> FreshClams [arrowhead="vee", style="solid"];
+NYPizzaIngredientFactory -> Clams [arrowhead="vee", style="dashed"];
+ChicagoPizzaIngredientFactory -> Cheese [arrowhead="vee", style="dashed"];
+NYPizzaIngredientFactory -> Dough [arrowhead="vee", style="dashed"];
+NYPizzaStore -> Sauce [arrowhead="vee", style="solid"];
+ChicagoPizzaIngredientFactory -> FrozenClams [arrowhead="vee", style="solid"];
+NYPizzaIngredientFactory -> ThinCrustDough [arrowhead="vee", style="solid"];
+NYPizzaIngredientFactory -> Cheese [arrowhead="vee", style="dashed"];
+NYPizzaStore -> PizzaIngredientFactory [arrowhead="vee", style="solid"];
+ChicagoPizzaIngredientFactory -> Clams [arrowhead="vee", style="dashed"];
+NYPizzaStore -> Cheese [arrowhead="vee", style="solid"];
+NYPizzaStore -> Clams [arrowhead="vee", style="solid"];
+NYPizzaStore -> Dough [arrowhead="vee", style="solid"];
 PizzaIngredientFactory -> Dough [arrowhead="vee", style="dashed"];
+ChicagoPizzaIngredientFactory -> PlumTomatoSauce [arrowhead="vee", style="solid"];
 PizzaIngredientFactory -> Cheese [arrowhead="vee", style="dashed"];
+ChicagoPizzaIngredientFactory -> ThickCrustDough [arrowhead="vee", style="solid"];
+NYPizzaIngredientFactory -> Sauce [arrowhead="vee", style="dashed"];
 PizzaIngredientFactory -> Clams [arrowhead="vee", style="dashed"];
+NYPizzaIngredientFactory -> ReggianoCheese [arrowhead="vee", style="solid"];
 }

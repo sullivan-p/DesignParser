@@ -6,6 +6,21 @@ public enum AccessLevel {
     Protected,
     Default;
     
+    public static AccessLevel fromString(String s) {
+        switch (s) {
+        case "public":
+            return Public;
+        case "private":
+            return Private;
+        case "protected":
+            return Protected;
+        case "":
+            return Default;
+        default:
+            throw new IllegalArgumentException();
+        }
+    }
+    
     @Override
     public String toString() {
         switch (this) {

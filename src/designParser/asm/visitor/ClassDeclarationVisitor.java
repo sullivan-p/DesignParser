@@ -4,17 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import designParser.asm.util.AsmProcessData;
-import designParser.model.api.IClass;
-import designParser.model.api.ICustomObject;
-import designParser.model.api.IEnum;
-import designParser.model.api.IInterface;
 import designParser.model.api.IDesignModel;
 
 public class ClassDeclarationVisitor extends ModelBuilderClassVisitor {
 	private IDesignModel model;
 
-	// The current class, interface, or enum that the visitor is visiting.
-	private ICustomObject currentEntity;
+	// Name of the class, interface, or enum that the visitor is visiting.
+	private String currentObjectName;
 
 	public ClassDeclarationVisitor(int api, IDesignModel model) {
 		super(api);
@@ -27,119 +23,59 @@ public class ClassDeclarationVisitor extends ModelBuilderClassVisitor {
 	}
 
 	@Override
-	public ICustomObject getCurrentEntity() {
-		return currentEntity;
+	public String getCurrentObjectName() {
+		return currentObjectName;
 	}
 
 	@Override
 	public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
 
-		// Convert names from ASM format to Java fully qualified names.
+		// Convert object name from ASM format to unqualified Java name, and set
+	    // the currently visited object's name.
 		name = AsmProcessData.qualifiedToUnqualifiedName(
 		        AsmProcessData.convertAsmToJavaName(name));
-		String javaName, unqualifiedName;
+		this.currentObjectName = name;
+
+		// Convert interface names from ASM format to unqualified Java names.
 		List<String> interfaceNames = new ArrayList<String>();
 		for (String i : interfaces) {
-		    javaName = AsmProcessData.convertAsmToJavaName(i);
-		    unqualifiedName = AsmProcessData.qualifiedToUnqualifiedName(javaName);
-		    // Only record interfaces that should be included in the model.
-			if (model.getObjNamesToModel().contains(unqualifiedName)) {
-			    interfaceNames.add(unqualifiedName);
-			}
+		    String javaName = AsmProcessData.convertAsmToJavaName(i);
+		    String unqualifiedName = AsmProcessData.qualifiedToUnqualifiedName(javaName);
+		    interfaceNames.add(unqualifiedName);
 		}
+		
+		// Convert superclass name from ASM format to unqualified Java name.
 		if (superName != null) {
-            javaName = AsmProcessData.convertAsmToJavaName(superName);
-            unqualifiedName = AsmProcessData.qualifiedToUnqualifiedName(javaName);
-            // Only record super class if that class should be included in the model.
-            if (model.getObjNamesToModel().contains(unqualifiedName)) {
-                superName = unqualifiedName;
+            String javaName = AsmProcessData.convertAsmToJavaName(superName);
+            String unqualifiedName = AsmProcessData.qualifiedToUnqualifiedName(javaName);
+            superName = unqualifiedName;
+		}
+
+		// Model the object that is being visited.
+        if (AsmProcessData.isInterface(access)) {
+            model.putInterfaceModel(name);
+        } else if (AsmProcessData.isEnum(access)) {
+            model.putEnumModel(name);
+        } else {
+            boolean isConcrete = !AsmProcessData.isAbstract(access);
+            model.putClassModel(name, isConcrete);
+        }
+        
+        // Add a relation for each of the model's interfaces.
+        for (String iName : interfaceNames) {           
+            
+            // Interfaces extend other interfaces, whereas classes and enums
+            // implement interfaces.
+            if (AsmProcessData.isInterface(access)) {
+                model.putExtendsRelation(name, iName);
             } else {
-                superName = null;
+                model.putImplementsRelation(name, iName);
             }
-		}
-
-		// The models of the interfaces that the current entity extends or
-		// implements.
-		ArrayList<IInterface> interfaceModels = addInterfacesToModel(interfaceNames);
-
-		// Determine whether the entity being visited is a class, interface, or
-		// enum, and handle the visit appropriately.
-		if (AsmProcessData.isInterface(access)) {
-			handleInterfaceVisit(name, interfaceModels);
-		} else if (AsmProcessData.isEnum(access)) {
-			handleEnumVisit(name, interfaceModels);
-		} else {
-			handleClassVisit(name, !AsmProcessData.isAbstract(access), superName, interfaceModels);
-		}
-
-		super.visit(version, access, name, signature, superName, interfaces);
-	}
-
-	private void handleClassVisit(String name, boolean isConcrete, String superName,
-			ArrayList<IInterface> interfaceModels) {
-		IClass classModel;
-		if (!model.hasClassModel(name)) {
-			model.addNewClassModel(name, isConcrete);
-		}
-		classModel = model.getClassModel(name);
-
-		if (superName != null) {
-			if (!model.hasClassModel(superName)) {
-				// Note: This makes the assumption that all superclasses are
-				// concrete. This may be overwritten if the class is visited
-				// later and more information becomes available.
-				model.addNewClassModel(superName, true);
-			}
-			IClass superClassModel = model.getClassModel(superName);
-			classModel.setExtendedClass(superClassModel);
-		}
-	
-		classModel.setInterfaces(interfaceModels);
-		classModel.setIsConcrete(isConcrete);
-		currentEntity = classModel;
-	}
-
-	private void handleInterfaceVisit(String name, ArrayList<IInterface> interfaceModels) {
-		IInterface interfaceModel;
-		if (!model.hasInterfaceModel(name)) {
-			model.addNewInterfaceModel(name);
-		}
-		interfaceModel = model.getInterfaceModel(name);
-
-		interfaceModel.setExtendedInterfaces(interfaceModels);
-		currentEntity = interfaceModel;
-	}
-
-	private void handleEnumVisit(String name, ArrayList<IInterface> interfaceModels) {
-		IEnum enumModel;
-		if (!model.hasEnumModel(name)) {
-			model.addNewEnumModel(name);
-		}
-		enumModel = model.getEnumModel(name);
-
-		enumModel.setInterfaces(interfaceModels);
-		currentEntity = enumModel;
-	}
-
-	/**
-	 * Read the string of interface names, and add a model for each interface to
-	 * the IModel if such an interface model does not already exist.
-	 * 
-	 * @param interfaces
-	 *            List of fully qualified names of interfaces
-	 * @return A list of the interface models in the IModel that match the given
-	 *         interface names
-	 */
-	private ArrayList<IInterface> addInterfacesToModel(List<String> interfaceNames) {
-		ArrayList<IInterface> interfaceModels = new ArrayList<IInterface>();
-		for (String name : interfaceNames) {
-			IInterface interfaceModel;
-			if (!model.hasInterfaceModel(name)) {
-				model.addNewInterfaceModel(name);
-			}
-			interfaceModel = model.getInterfaceModel(name);
-			interfaceModels.add(interfaceModel);
-		}
-		return interfaceModels;
+        }
+        
+        // Classes may have a superclass.
+        if (!AsmProcessData.isInterface(access) && !AsmProcessData.isEnum(access) && superName != null) {
+            model.putExtendsRelation(name, superName);
+        }
 	}
 }

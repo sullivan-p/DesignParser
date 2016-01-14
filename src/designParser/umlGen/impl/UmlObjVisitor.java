@@ -1,11 +1,11 @@
 package designParser.umlGen.impl;
 
-import designParser.model.api.IClass;
-import designParser.model.api.IEnum;
 import designParser.model.api.IField;
-import designParser.model.api.IInterface;
 import designParser.model.api.IMethod;
 import designParser.model.api.IObject;
+import designParser.model.impl.ClassModel;
+import designParser.model.impl.EnumModel;
+import designParser.model.impl.InterfaceModel;
 import designParser.umlGen.api.UmlModelVisitor;
 import designParser.umlGen.util.UmlProcessString;
 
@@ -20,7 +20,7 @@ public class UmlObjVisitor extends UmlModelVisitor {
 		return sb.toString();
 	}
 	
-	public void previsit(IClass c) {
+	public void previsit(ClassModel c) {
 	    String header;
 	    if (c.getIsConcrete()) {
 	        header = "";
@@ -30,20 +30,20 @@ public class UmlObjVisitor extends UmlModelVisitor {
         appendObjPrevisitStr(sb, c, header);
 	}    
 
-	public void previsit(IInterface i) {
+	public void previsit(InterfaceModel i) {
 	    appendObjPrevisitStr(sb, i, "\\<\\<interface\\>\\>");
 	}	
 	
-	public void previsit(IEnum e) {
+	public void previsit(EnumModel e) {
         appendObjPrevisitStr(sb, e, "\\<\\<enum\\>\\>");
 	}	
 	
-	public void visit(IClass c) {
+	public void visit(ClassModel c) {
 	    sb.append("|");
 	}
 
 	public void visit(IMethod m) {
-	    String signature = UmlProcessString.escapeAngleBraces(m.getMethodSignature());
+	    String signature = UmlProcessString.escapeAngleBraces(m.getSignature());
 	    sb.append(signature);
 	    sb.append("\\l");
 	}
@@ -54,15 +54,15 @@ public class UmlObjVisitor extends UmlModelVisitor {
         sb.append("\\l");
 	}
 	
-	public void postvisit(IClass c) {
+	public void postvisit(ClassModel c) {
 	    appendObjPostvisitStr(sb);
 	}
 
-	public void postvisit(IInterface i) {
+	public void postvisit(InterfaceModel i) {
 	    appendObjPostvisitStr(sb);
 	}
 
-	public void postvisit(IEnum e) {
+	public void postvisit(EnumModel e) {
 	    appendObjPostvisitStr(sb);
 	}
 	
