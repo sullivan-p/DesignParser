@@ -5,10 +5,10 @@ import designParser.model.impl.ImplementsRelation;
 import designParser.umlGen.api.UmlModelVisitor;
 import designParser.umlGen.util.UmlArrowMarkup;
 
-public class UmlInheritanceVisitor extends UmlModelVisitor{
+public class UmlHierarchyVisitor extends UmlModelVisitor{
     private StringBuilder sb;
 
-    public UmlInheritanceVisitor() {
+    public UmlHierarchyVisitor() {
         sb = new StringBuilder();
     }
 

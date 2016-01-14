@@ -15,10 +15,6 @@ public class ClassModel extends AbstractObjectModel {
 	public boolean getIsConcrete() {
 		return isConcrete;
 	}
-
-	public void setIsConcrete(boolean isConcrete) {
-		this.isConcrete = isConcrete;
-	}
 	
     @Override
     public void accept(IModelVisitor visitor) {

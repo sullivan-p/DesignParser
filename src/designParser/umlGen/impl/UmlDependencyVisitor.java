@@ -5,10 +5,10 @@ import designParser.model.impl.ReferencesRelation;
 import designParser.umlGen.api.UmlModelVisitor;
 import designParser.umlGen.util.UmlArrowMarkup;
 
-public class UmlAssociationVisitor extends UmlModelVisitor{
+public class UmlDependencyVisitor extends UmlModelVisitor{
     private StringBuilder sb;
 
-    public UmlAssociationVisitor() {
+    public UmlDependencyVisitor() {
         sb = new StringBuilder();
     }
 

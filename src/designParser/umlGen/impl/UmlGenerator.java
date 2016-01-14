@@ -20,8 +20,8 @@ public class UmlGenerator implements IUmlGenerator {
 		
 		visitorList = new ArrayList<UmlModelVisitor>();
 		visitorList.add(new UmlObjVisitor());
-		visitorList.add(new UmlInheritanceVisitor());
-		visitorList.add(new UmlAssociationVisitor());
+		visitorList.add(new UmlHierarchyVisitor());
+		visitorList.add(new UmlDependencyVisitor());
 	}
 
 

@@ -13,7 +13,5 @@ public abstract class PrimitiveDataType implements IDataType {
     }
     
     @Override
-    public void accept(IModelVisitor visitor) {
-        // TODO Auto-generated method stub
-    }
+    public void accept(IModelVisitor visitor) {}
 }
