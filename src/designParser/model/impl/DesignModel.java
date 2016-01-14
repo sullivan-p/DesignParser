@@ -30,6 +30,24 @@ public class DesignModel implements IDesignModel {
 	    hierarchyRelations = new HashMap<Pair<String, String>, AbstractHierarchyRelation>();
         dependencyRelations = new HashMap<Pair<String, String>, AbstractDependencyRelation>();
 	}
+		
+	@Override
+	public void accept(IModelVisitor visitor) {
+		visitor.previsit(this);
+		for (IObject o : nameToModelMap.values()) {
+		    if (o != null) {
+		        o.accept(visitor);
+		    }
+		}
+        for (AbstractHierarchyRelation r : hierarchyRelations.values()) {
+            r.accept(visitor);
+        }        
+        for (AbstractDependencyRelation r : dependencyRelations.values()) {
+            r.accept(visitor);
+        }
+
+        visitor.postvisit(this);
+	}
 	
 	@Override
 	public Collection<String> getObjNamesToModel() {
@@ -141,33 +159,6 @@ public class DesignModel implements IDesignModel {
         }
     }
     
-	@Override
-	public void accept(IModelVisitor visitor) {
-		visitor.previsit(this);
-		for (IObject o : nameToModelMap.values()) {
-		    if (o != null) {
-		        o.accept(visitor);
-		    }
-		}
-//		for (ClassModel c : getClassModels()) {
-//	        c.accept(visitor);
-//		}
-//        for (InterfaceModel i : getInterfaceModels()) {
-//            i.accept(visitor);
-//        }
-//        for (EnumModel e : getEnumModels()) {
-//            e.accept(visitor);
-//        }    
-        for (AbstractHierarchyRelation r : hierarchyRelations.values()) {
-            r.accept(visitor);
-        }        
-        for (AbstractDependencyRelation r : dependencyRelations.values()) {
-            r.accept(visitor);
-        }
-
-        visitor.postvisit(this);
-	}
-
     @Override
     public void putMethodModel(String objName, String methodName, 
             AccessLevel accessLevel, String methodSig) {
@@ -209,49 +200,4 @@ public class DesignModel implements IDesignModel {
         IObject objModel = nameToModelMap.get(objName);
         objModel.putFieldModel(fieldName, accessLevel, fieldSig);
     }
-//	private Collection<ClassModel> getClassModels() {
-//	    Collection<ClassModel> classModels = new ArrayList<ClassModel>();
-//	    for (IObject o : nameToModelMap.values()) {
-//	        if (o != null && isClassModel(o)) {
-//	            classModels.add((ClassModel)o);
-//	        }
-//	    }
-//	    return classModels;
-//	}
-//	
-//	private Collection<InterfaceModel> getInterfaceModels() {
-//        Collection<InterfaceModel> interfaceModels = new ArrayList<InterfaceModel>();
-//        for (IObject o : nameToModelMap.values()) {
-//            if (o != null && isInterfaceModel(o)) {
-//                interfaceModels.add((InterfaceModel)o);
-//            }
-//        }
-//        return interfaceModels;	    
-//	}
-//	
-//	private Collection<EnumModel> getEnumModels() {
-//        Collection<EnumModel> enumModels = new ArrayList<EnumModel>();
-//        for (IObject o : nameToModelMap.values()) {
-//            if (o != null && isEnumModel(o)) {
-//                enumModels.add((EnumModel)o);
-//            }
-//        }
-//        return enumModels;     
-//	}
-		
-//	private boolean isClassModel(IObject o) {
-//	    return isInstanceAssignableFrom(o, ClassModel.class);
-//	}
-//	
-//    private boolean isInterfaceModel(IObject o) {
-//        return isInstanceAssignableFrom(o, InterfaceModel.class);
-//    }
-//    
-//    private boolean isEnumModel(IObject o) {
-//        return isInstanceAssignableFrom(o, EnumModel.class);
-//    }
-//    
-//    private <T> boolean isInstanceAssignableFrom(Object o, Class<T> c) {
-//        return o.getClass().isAssignableFrom(c);
-//    }
 }
