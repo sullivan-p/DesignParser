@@ -24,18 +24,16 @@ public class AsmProcessDataTest {
 	}
 
 	@Test
-	public void testGetPrettyTypeNames() {
+	public void testGetTypeNamesFromDescriptor2() {
+		Set<String> expected = new HashSet<String>();
 		String testStr = "LtestClass/TestObject;";
-		String expected = "TestObject";
-		String actual = AsmProcessData.getPrettyTypeNames(testStr);
-		assertEquals(expected, actual);
-		testStr = "LtestClass-TestObject;";
-		actual = AsmProcessData.getPrettyTypeNames(testStr);
-		assertNotEquals(expected, actual);
+		expected.add("TestObject");
+		Set<String> actual = AsmProcessData.getTypeNamesFromDescriptor(testStr);
+		
 	}
-	
+
 	@Test
-	public void testGetPrettyTypeNamesArray() {
+	public void testGetPrettyTypeNames() {
 		String testStr = "LtestClass/TestObject;";
 		String expected = "TestObject";
 		String actual = AsmProcessData.getPrettyTypeNames(testStr);
