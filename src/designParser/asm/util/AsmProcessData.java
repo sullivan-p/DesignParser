@@ -84,6 +84,38 @@ public final class AsmProcessData {
         }
     }
     
+    public static String prettyRetTypeFromMthdDesc(String mthdDescriptor) {
+        int paramsEnd = mthdDescriptor.indexOf(')');
+        String returnSubStr = mthdDescriptor.substring(paramsEnd+1);
+        return AsmProcessData.getPrettyTypeNames(returnSubStr);    
+    }
+    
+    public static String[] prettyParamTypesFromMthdDesc(String mthdDescriptor) {
+        int paramsEnd = mthdDescriptor.indexOf(')');
+        String paramsSubStr = mthdDescriptor.substring(1, paramsEnd);
+        String prettyParamTypes = AsmProcessData.getPrettyTypeNames(paramsSubStr);
+        return prettyParamTypes.split(", ");
+    }
+    
+    public static String getMethodSignature(String className, String methodName, String descriptor) {      
+        String prettyParamTypes = String.join(", ", prettyParamTypesFromMthdDesc(descriptor));
+        String prettyReturnType = prettyRetTypeFromMthdDesc(descriptor);
+        
+        // Special case for constructor methods.
+        if (methodName.equals("<init>")) {
+            String objName = className;
+            methodName = AsmProcessData.qualifiedToUnqualifiedName(objName);
+            return methodName + "(" + prettyParamTypes + ")";
+        }
+        
+        return prettyReturnType + " " + methodName + "(" + prettyParamTypes + ")";
+    }
+    
+    public static String getMethodSignature(String className, String methodName, String descriptor, AccessLevel al) {      
+        return al.toUmlString() + " " + getMethodSignature(className, methodName, descriptor);
+    }
+    
+    
     /**
      * Return the names of all data types that are described in the descriptor.
      * If a type is a generic type, include type parameter names as well.

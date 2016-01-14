@@ -200,4 +200,36 @@ public class DesignModel implements IDesignModel {
         IObject objModel = nameToModelMap.get(objName);
         objModel.putFieldModel(fieldName, accessLevel, fieldSig);
     }
+    
+    @Override
+    public void putMethodCall(String callerClassName, String callerMethodName,
+            String calleeClassName, String calleeMethodName,
+            String[] paramTypeNames, String returnTypeName, boolean isConstructor) {
+        
+        // The object to which the caller method belongs should not be modeled,
+        // so do nothing.
+        if (!nameToModelMap.containsKey(callerClassName)) {
+            return;  
+        }
+        
+        if (nameToModelMap.get(callerClassName) == null) {
+            StringBuilder error = new StringBuilder();
+            error.append("The class model to which the caller method belongs ");
+            error.append("must be created before methods can be assigned to it.");
+            throw new IllegalArgumentException(error.toString());
+        }
+        
+        IObject objModel = nameToModelMap.get(callerClassName);
+        if (!objModel.getClass().isAssignableFrom(ClassModel.class)) {
+            StringBuilder error = new StringBuilder();
+            error.append("The object model to which the caller method must ");
+            error.append("be a class model.");
+            throw new IllegalArgumentException(error.toString());
+        }
+        
+        ClassModel classModel = (ClassModel) nameToModelMap.get(callerClassName);
+        classModel.putMethodCall(callerClassName, callerMethodName,
+            calleeClassName, calleeMethodName, paramTypeNames, returnTypeName, 
+            isConstructor);
+    }
 }
