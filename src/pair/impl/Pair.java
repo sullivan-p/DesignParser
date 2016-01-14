@@ -62,4 +62,9 @@ public class Pair<T, U> implements IPair<T, U> {
             return false;
         return true;
     }
+    
+    @Override
+    public String toString() {
+        return "(" + getFirst().toString() + ", " + getSecond().toString() + ")";
+    }
 }

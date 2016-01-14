@@ -5,9 +5,7 @@ import java.util.Set;
 import org.objectweb.asm.MethodVisitor;
 
 import designParser.asm.util.AsmProcessData;
-import designParser.model.api.IMethod;
 import designParser.model.impl.AccessLevel;
-import designParser.model.impl.MethodModel;
 
 public class ClassMethodVisitor extends ClassVisitorDecorator {
 	ModelBuilderClassVisitor decoratedVisitor;
@@ -25,8 +23,16 @@ public class ClassMethodVisitor extends ClassVisitorDecorator {
         Set<String> typeNames = AsmProcessData.getTypeNamesFromDescriptor(typeDescriptor);
         AccessLevel accessLevel = AsmProcessData.getAccessLevel(access);
         String methodSig = getMethodSignature(name, accessLevel, typeDescriptor);
-        IMethod methodModel = new MethodModel(name, typeNames, accessLevel, methodSig);
-        this.getCurrentEntity().getMethods().add(methodModel);
+        
+        // Add the method model to the design model.
+        String objName = this.getCurrentObjectName();
+        this.getModel().putMethodModel(objName, name, accessLevel, methodSig);
+        
+        // The currently visited object has a references relation with the 
+        // method's parameter types and return type.
+        for (String tName : typeNames) {
+            this.getModel().putReferencesRelation(objName, tName);
+        }
 		
 		return toDecorate;
 	}
@@ -46,7 +52,7 @@ public class ClassMethodVisitor extends ClassVisitorDecorator {
         
         // Special case for constructor methods.
         if (name.equals("<init>")) {
-            String objName = this.getCurrentEntity().getName();
+            String objName = this.getCurrentObjectName();
             name = AsmProcessData.qualifiedToUnqualifiedName(objName);
             return al.toUmlString() + " " + name + "(" + prettyParamTypes + ")";
         }

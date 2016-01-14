@@ -1,12 +1,10 @@
 package designParser.model.impl;
 
-import designParser.model.api.IObject;
-
-public class AbstractDependencyRelation extends AbstractObjectRelation 
+public abstract class AbstractDependencyRelation extends AbstractObjectRelation 
     implements Comparable<AbstractDependencyRelation> {
 
-    public AbstractDependencyRelation(IObject srcModel, IObject dstModel) {
-        super(srcModel, dstModel);
+    public AbstractDependencyRelation(String srcNamel, String dstName) {
+        super(srcNamel, dstName);
     }
     
     @Override
@@ -14,10 +12,10 @@ public class AbstractDependencyRelation extends AbstractObjectRelation
         
         // Order relations alphabetically by the source object and then the
         // destination object names.
-        String thisSrcName = this.getSource().getName();
-        String thisDestName = this.getDestination().getName();
-        String rltnSrcName = rltn.getSource().getName();
-        String rltnDestName = rltn.getSource().getName();
+        String thisSrcName = this.getSourceName();
+        String thisDestName = this.getDestinationName();
+        String rltnSrcName = rltn.getSourceName();
+        String rltnDestName = rltn.getDestinationName();
         if (thisSrcName.compareTo(rltnSrcName) != 0) {
             return thisSrcName.compareTo(rltnSrcName);
         } else if (thisDestName.compareTo(rltnDestName) != 0) {

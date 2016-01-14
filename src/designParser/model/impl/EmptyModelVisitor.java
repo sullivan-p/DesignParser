@@ -1,10 +1,7 @@
 package designParser.model.impl;
 
-import designParser.model.api.IClass;
 import designParser.model.api.IDesignModel;
-import designParser.model.api.IEnum;
 import designParser.model.api.IField;
-import designParser.model.api.IInterface;
 import designParser.model.api.IMethod;
 import designParser.model.api.IModelVisitor;
 
@@ -20,31 +17,31 @@ public class EmptyModelVisitor implements IModelVisitor {
 	public void postvisit(IDesignModel d) {}
 
 	@Override
-	public void previsit(IClass c) {}
+	public void previsit(ClassModel c) {}
 
 	@Override
-	public void visit(IClass c) {}
+	public void visit(ClassModel c) {}
 
 	@Override
-	public void postvisit(IClass c) {}
+	public void postvisit(ClassModel c) {}
 
 	@Override
-	public void previsit(IInterface i) {}
+	public void previsit(InterfaceModel i) {}
 
 	@Override
-	public void visit(IInterface i) {}
+	public void visit(InterfaceModel i) {}
 
 	@Override
-	public void postvisit(IInterface i) {}
+	public void postvisit(InterfaceModel i) {}
 
 	@Override
-	public void previsit(IEnum e) {}
+	public void previsit(EnumModel e) {}
 
 	@Override
-	public void visit(IEnum e) {}
+	public void visit(EnumModel e) {}
 
 	@Override
-	public void postvisit(IEnum e) {}
+	public void postvisit(EnumModel e) {}
 
 	@Override
 	public void previsit(IMethod m) {}
@@ -64,4 +61,39 @@ public class EmptyModelVisitor implements IModelVisitor {
 	@Override
 	public void postvisit(IField f) {}
 
+    @Override
+    public void previsit(ExtendsRelation r) {}
+
+    @Override
+    public void visit(ExtendsRelation r) {}
+
+    @Override
+    public void postvisit(ExtendsRelation r) {}
+
+    @Override
+    public void previsit(ImplementsRelation r) {}
+
+    @Override
+    public void visit(ImplementsRelation r) {}
+
+    @Override
+    public void postvisit(ImplementsRelation r) {}
+
+    @Override
+    public void previsit(AssociatesWithRelation r) {}
+
+    @Override
+    public void visit(AssociatesWithRelation r) {}
+
+    @Override
+    public void postvisit(AssociatesWithRelation r) {}
+
+    @Override
+    public void previsit(ReferencesRelation r) {}
+
+    @Override
+    public void visit(ReferencesRelation r) {}
+
+    @Override
+    public void postvisit(ReferencesRelation r) {}
 }

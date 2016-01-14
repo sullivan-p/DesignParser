@@ -5,9 +5,7 @@ import java.util.Set;
 import org.objectweb.asm.FieldVisitor;
 
 import designParser.asm.util.AsmProcessData;
-import designParser.model.api.IField;
 import designParser.model.impl.AccessLevel;
-import designParser.model.impl.FieldModel;
 
 public class ClassFieldVisitor extends ClassVisitorDecorator {
 	ModelBuilderClassVisitor decoratedVisitor;
@@ -24,8 +22,16 @@ public class ClassFieldVisitor extends ClassVisitorDecorator {
 		Set<String> typeNames = AsmProcessData.getTypeNamesFromDescriptor(typeDescriptor);
         AccessLevel accessLevel = AsmProcessData.getAccessLevel(access);
         String fieldSig = getFieldSignature(name, accessLevel, typeDescriptor);
-		IField fieldModel = new FieldModel(name, fieldSig, typeNames, accessLevel);
-		this.getCurrentEntity().getFields().add(fieldModel);
+        
+        // Add the field model to the design model.
+        String objName = this.getCurrentObjectName();
+        this.getModel().putFieldModel(objName, name, accessLevel, fieldSig);
+        
+        // The currently visited object has associates-with relations with the 
+        // field's types.
+        for (String tName : typeNames) {
+            this.getModel().putAssociatesWithRelation(objName, tName);
+        }
 		
 		return toDecorate;
 	}

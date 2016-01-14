@@ -1,28 +1,23 @@
 package designParser.model.impl;
 
-import designParser.model.api.IModelVisitor;
-import designParser.model.api.IObject;
 import designParser.model.api.IObjectRelation;
 
 public abstract class AbstractObjectRelation implements IObjectRelation {
-    private IObject srcModel;
-    private IObject dstModel;
+    private String srcName;
+    private String dstName;
 
-    public AbstractObjectRelation(IObject srcModel, IObject dstModel) {
-        this.srcModel = srcModel;
-        this.dstModel = dstModel;
+    public AbstractObjectRelation(String srcName, String dstName) {
+        this.srcName = srcName;
+        this.dstName = dstName;
     }
 
     @Override
-    public IObject getSource() {
-        return srcModel;
+    public String getSourceName() {
+        return srcName;
     }
 
     @Override
-    public IObject getDestination() {
-        return dstModel;
+    public String getDestinationName() {
+        return dstName;
     }
-    
-    @Override
-    public void accept(IModelVisitor visitor) {}
 }

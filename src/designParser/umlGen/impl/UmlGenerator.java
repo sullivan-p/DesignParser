@@ -3,7 +3,6 @@ package designParser.umlGen.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import designParser.asm.util.AsmProcessData;
 import designParser.model.api.IDesignModel;
 import designParser.umlGen.api.IUmlGenerator;
 import designParser.umlGen.api.UmlModelVisitor;
@@ -19,15 +18,10 @@ public class UmlGenerator implements IUmlGenerator {
 		this.model = model;
 		stringBuilder = new StringBuilder();
 		
-		List<String> objs = new ArrayList<String>();
-		for (String objName : objNamesToModel) {
-		    objs.add(AsmProcessData.qualifiedToUnqualifiedName(objName));
-		}
-		
 		visitorList = new ArrayList<UmlModelVisitor>();
 		visitorList.add(new UmlObjVisitor());
-		visitorList.add(new UmlInheritanceVisitor(objs));
-		visitorList.add(new UmlAssociationVisitor(objs));
+		visitorList.add(new UmlInheritanceVisitor());
+		visitorList.add(new UmlAssociationVisitor());
 	}
 
 

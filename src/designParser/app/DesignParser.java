@@ -14,40 +14,40 @@ import designParser.umlGen.api.IUmlGenerator;
 import designParser.umlGen.impl.UmlGenerator;
 
 public class DesignParser {
-//    private final static String MODEL_NAME = "AppLauncher";
-//    private final static String[] OBJECT_NAMES = { 
-//            "appLauncherSltn.AppLauncherApplication",
-//            "appLauncherSltn.ApplicationLauncher",
-//            "appLauncherSltn.DataFileRunner",
-//            "appLauncherSltn.DirectoryChangeLogger",
-//            "appLauncherSltn.DirectoryEvent",
-//            "appLauncherSltn.DirectoryMonitorService",
-//            "appLauncherSltn.ExecutableFileRunner",
-//            "appLauncherSltn.IApplicationLauncher",
-//            "appLauncherSltn.IDirectoryListener",
-//            "appLauncherSltn.IDirectoryMonitorService",
-//            "appLauncherSltn.ProcessRunner"
-//    };
-    
-    private final static String MODEL_NAME = "AbstractPizzaFactory";
+    private final static String MODEL_NAME = "AppLauncher";
     private final static String[] OBJECT_NAMES = { 
-            "pizzaStore.Cheese",
-            "pizzaStore.ChicagoPizzaIngredientFactory",
-            "pizzaStore.Clams",
-            "pizzaStore.Dough",
-            "pizzaStore.FreshClams",
-            "pizzaStore.FrozenClams",
-            "pizzaStore.MarinaraSauce",
-            "pizzaStore.MozzarellaCheese",
-            "pizzaStore.NYPizzaIngredientFactory",
-            "pizzaStore.NYPizzaStore",
-            "pizzaStore.PizzaIngredientFactory",
-            "pizzaStore.PlumTomatoSauce",
-            "pizzaStore.ReggianoCheese",
-            "pizzaStore.Sauce",
-            "pizzaStore.ThickCrustDough",
-            "pizzaStore.ThinCrustDough"
-    };    
+            "appLauncherSltn.AppLauncherApplication",
+            "appLauncherSltn.ApplicationLauncher",
+            "appLauncherSltn.DataFileRunner",
+            "appLauncherSltn.DirectoryChangeLogger",
+            "appLauncherSltn.DirectoryEvent",
+            "appLauncherSltn.DirectoryMonitorService",
+            "appLauncherSltn.ExecutableFileRunner",
+            "appLauncherSltn.IApplicationLauncher",
+            "appLauncherSltn.IDirectoryListener",
+            "appLauncherSltn.IDirectoryMonitorService",
+            "appLauncherSltn.ProcessRunner"
+    };
+    
+//    private final static String MODEL_NAME = "AbstractPizzaFactory";
+//    private final static String[] OBJECT_NAMES = { 
+//            "pizzaStore.Cheese",
+//            "pizzaStore.ChicagoPizzaIngredientFactory",
+//            "pizzaStore.Clams",
+//            "pizzaStore.Dough",
+//            "pizzaStore.FreshClams",
+//            "pizzaStore.FrozenClams",
+//            "pizzaStore.MarinaraSauce",
+//            "pizzaStore.MozzarellaCheese",
+//            "pizzaStore.NYPizzaIngredientFactory",
+//            "pizzaStore.NYPizzaStore",
+//            "pizzaStore.PizzaIngredientFactory",
+//            "pizzaStore.PlumTomatoSauce",
+//            "pizzaStore.ReggianoCheese",
+//            "pizzaStore.Sauce",
+//            "pizzaStore.ThickCrustDough",
+//            "pizzaStore.ThinCrustDough"
+//    };    
     
 //    private final static String MODEL_NAME = "AbstractPizzaFactory";
 //    private final static String[] OBJECT_NAMES = { 

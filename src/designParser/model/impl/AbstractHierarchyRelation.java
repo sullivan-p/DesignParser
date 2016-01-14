@@ -1,10 +1,8 @@
 package designParser.model.impl;
 
-import designParser.model.api.IObject;
+public abstract class AbstractHierarchyRelation extends AbstractObjectRelation {
 
-public class AbstractHierarchyRelation extends AbstractObjectRelation {
-
-    public AbstractHierarchyRelation(IObject srcModel, IObject dstModel) {
-        super(srcModel, dstModel);
+    public AbstractHierarchyRelation(String srcName, String dstName) {
+        super(srcName, dstName);
     }
 }
