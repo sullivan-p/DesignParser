@@ -1,4 +1,12 @@
-# Design Parser
+# Milestone 3 Update
+
+Between Milestones 2 and 3 we refactored a large portion of the codebase. As part of this refactoring, relations between object models are now represented using IRelation objects.
+
+We have also changed the structure of the design model significantly in an attempt to make the project addhere closely to the Principle of Least Knowledge. Previously, in order to create new model components in the design model, the ASM parser was responsible for performing complicated logic to create model components and insert them into the design model. This has been changed, and the IDesign model now implements the Facade pattern and largely hides the inner workings of the model components from clients. 
+
+We have not yet completed Milestone 3, so the design may continue to change as features for Milestone 3. However, this simplification of the design model API already seems to have made it easier to add functionality to the project.  The logic for populating the design model with objects that model method calls is far simpler than it would have been without the change.
+
+# Milestone 2
 
 ## Design
 
