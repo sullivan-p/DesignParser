@@ -2,22 +2,9 @@ package designParser.model.impl;
 
 import designParser.model.api.IObject;
 
-public class ReferencesRelation extends AbstractObjectRelation {
-    private IObject sourceModel;
-    private IObject referencedModel;
+public class ReferencesRelation extends AbstractDependencyRelation {
 
-    public ReferencesRelation(IObject x, IObject y) {
-        this.sourceModel = x;
-        this.referencedModel = y;
-    }
-
-    @Override
-    public IObject getSource() {
-        return sourceModel;
-    }
-
-    @Override
-    public IObject getDestination() {
-        return referencedModel;
+    public ReferencesRelation(IObject src, IObject dst) {
+        super(src, dst);
     }
 }

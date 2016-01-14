@@ -20,14 +20,16 @@ public class DesignModel implements IDesignModel {
     private final String NOT_BOTH_OBJ_TO_MODEL_ERROR = "Both object must be modeled by the design model.";
 	
     private Map<String, IObject> nameToModelMap;
-    private Map<Pair<String, String>, IObjectRelation> relations;
+    private Map<Pair<String, String>, AbstractHierarchyRelation> hierarchyRelations;
+    private Map<Pair<String, String>, AbstractDependencyRelation> dependencyRelations;
 
 	public DesignModel(String[] names) {
 	    nameToModelMap = new HashMap<String, IObject>();
 	    for (String objName : names) {
 	        nameToModelMap.put(AsmProcessData.qualifiedToUnqualifiedName(objName), null);
 	    }
-	    relations = new HashMap<Pair<String, String>, IObjectRelation>();
+	    hierarchyRelations = new HashMap<Pair<String, String>, AbstractHierarchyRelation>();
+        dependencyRelations = new HashMap<Pair<String, String>, AbstractDependencyRelation>();
 	}
 	
 	@Override
@@ -35,6 +37,11 @@ public class DesignModel implements IDesignModel {
 	    return nameToModelMap.keySet();
 	}
 
+	@Override
+	public boolean isObjectToModel(String name) {
+	    return nameToModelMap.containsKey(name);
+	}
+	
 	@Override
     public boolean hasObjectModel(String name)  {
         return (nameToModelMap.containsKey(name) && 
@@ -73,53 +80,74 @@ public class DesignModel implements IDesignModel {
     
     @Override
     public void addExtendsRelation(String srcName, String dstName) {
-        addRelation(srcName, dstName, (s, d) -> {
+        addHierarchyRelationRelation(srcName, dstName, (s, d) -> {
             return new ExtendsRelation(s, d);
         });    
     }
     
     @Override
     public void addImplementsRelation(String srcName, String dstName) {
-        addRelation(srcName, dstName, (s, d) -> {
+        addHierarchyRelationRelation(srcName, dstName, (s, d) -> {
             return new ImplementsRelation(s, d);
         });    
     }
     
     @Override
     public void addAssociatesWithRelation(String srcName, String dstName) {
-        addRelation(srcName, dstName, (s, d) -> {
+        addDependencyRelation(srcName, dstName, (s, d) -> {
             return new AssociatesWithRelation(s, d);
         });        
     }
     
     @Override
     public void addReferencesRelation(String srcName, String dstName) {
-        addRelation(srcName, dstName, (s, d) -> {
+        addDependencyRelation(srcName, dstName, (s, d) -> {
             return new ReferencesRelation(s, d);
         });    
     }
     
     /**
-     * Use the given source and destination object names and the given relation
-     * constructor to create a new relation. Add the relation if no relation for 
-     * the source to destination exists yet or if the new relation takes
-     * precedence over the existing one.
+     * Use the given source and destination object names and the given 
+     * hierarchy relation constructor to create a new hierarchy relation. 
+     * Map the source-destination name pair to the new relation.
      */
-    private void addRelation(String srcName, String dstName, 
-            BiFunction<IObject, IObject, IObjectRelation> rltnConstructor) {
+    private void addHierarchyRelationRelation(String srcName, String dstName, 
+            BiFunction<IObject, IObject, AbstractHierarchyRelation> rltnConstructor) {
         
-        if (hasObjectModel(srcName) || !hasObjectModel(dstName)) {
+        if (!hasObjectModel(srcName) || !hasObjectModel(dstName)) {
             throw new IllegalArgumentException(NOT_BOTH_OBJ_TO_MODEL_ERROR);
         }        
         
         Pair<String, String> objNames = new Pair<String, String>(srcName, dstName);
         IObject src = nameToModelMap.get(srcName);
         IObject dst = nameToModelMap.get(dstName);
-        IObjectRelation rltn = rltnConstructor.apply(src, dst);
+        AbstractHierarchyRelation rltn = rltnConstructor.apply(src, dst);
                 
-        if (!relations.keySet().contains(objNames) ||
-            rltn.compareTo(relations.get(objNames)) > 0) {
-            relations.put(objNames, rltn);
+        hierarchyRelations.put(objNames, rltn);
+    }
+    
+    
+    /**
+     * Use the given source and destination object names and the given 
+     * dependency relation constructor to create a new dependency relation. 
+     * Add the relation if no relation for the source to destination exists yet 
+     * or if the new relation takes precedence over the existing one.
+     */
+    private void addDependencyRelation(String srcName, String dstName, 
+            BiFunction<IObject, IObject, AbstractDependencyRelation> rltnConstructor) {
+        
+        if (!hasObjectModel(srcName) || !hasObjectModel(dstName)) {
+            throw new IllegalArgumentException(NOT_BOTH_OBJ_TO_MODEL_ERROR);
+        }        
+        
+        Pair<String, String> objNames = new Pair<String, String>(srcName, dstName);
+        IObject src = nameToModelMap.get(srcName);
+        IObject dst = nameToModelMap.get(dstName);
+        AbstractDependencyRelation rltn = rltnConstructor.apply(src, dst);
+                
+        if (!dependencyRelations.keySet().contains(objNames) ||
+            rltn.compareTo(dependencyRelations.get(objNames)) > 0) {
+            dependencyRelations.put(objNames, rltn);
         }
     }
     
@@ -135,7 +163,7 @@ public class DesignModel implements IDesignModel {
         for (EnumModel e : getEnumModels()) {
             e.accept(visitor);
         }    
-        for (IObjectRelation r : relations.values()) {
+        for (IObjectRelation r : dependencyRelations.values()) {
             r.accept(visitor);
         }
         visitor.postvisit(this);
