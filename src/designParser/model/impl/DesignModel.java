@@ -6,7 +6,8 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import designParser.asm.util.AsmProcessData;
-import designParser.model.api.IModelVisitor;
+import designParser.markupGen.api.IModelVisitor;
+import designParser.markupGen.impl.SdModelVisitor;
 import designParser.model.api.IObject;
 import pair.impl.Pair;
 import designParser.model.api.IDesignModel;
@@ -28,6 +29,11 @@ public class DesignModel implements IDesignModel {
 		
 	@Override
 	public void accept(IModelVisitor visitor) {
+//	    if (IModelVisitor.class.isAssignableFrom(SdModelVisitor.class)) {
+//	        traverseMethodCalls((SdModelVisitor) visitor);
+//	        return;
+//	    }
+	    
 		visitor.previsit(this);
 		for (IObject o : nameToModelMap.values()) {
 		    if (o != null) {
@@ -41,6 +47,10 @@ public class DesignModel implements IDesignModel {
             r.accept(visitor);
         }
         visitor.postvisit(this);
+	}
+	
+	private void traverseMethodCalls(SdModelVisitor v) {
+	    
 	}
 	
 	@Override

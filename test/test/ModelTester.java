@@ -9,6 +9,7 @@ import org.objectweb.asm.Opcodes;
 
 import designParser.asm.util.AsmProcessData;
 import designParser.asm.visitor.ClassDeclarationVisitor;
+import designParser.markupGen.impl.TypesVisitor;
 import designParser.model.api.IDesignModel;
 import designParser.model.impl.ClassModel;
 import designParser.model.impl.DesignModel;
@@ -17,7 +18,6 @@ import designParser.model.impl.ImplementsRelation;
 import designParser.model.impl.InterfaceModel;
 import designParser.model.impl.MethodCall;
 import designParser.model.impl.MethodModel;
-import designParser.model.impl.TypesVisitor;
 
 public class ModelTester {
 	private String[] NAMES = { "appLauncherSltn.ApplicationLauncher", "appLauncherSltn.IApplicationLauncher" };

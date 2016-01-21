@@ -1,9 +1,8 @@
-package designParser.umlGen.impl;
+package designParser.markupGen.impl;
 
+import designParser.markupGen.util.UmlArrowMarkup;
 import designParser.model.impl.AssociatesWithRelation;
 import designParser.model.impl.ReferencesRelation;
-import designParser.umlGen.api.UmlModelVisitor;
-import designParser.umlGen.util.UmlArrowMarkup;
 
 public class UmlDependencyVisitor extends UmlModelVisitor{
     private StringBuilder sb;

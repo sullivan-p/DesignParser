@@ -1,4 +1,4 @@
-package designParser.umlGen.api;
+package designParser.markupGen.api;
 
 public interface IUmlGenerator {
 	public String getUmlMarkup();

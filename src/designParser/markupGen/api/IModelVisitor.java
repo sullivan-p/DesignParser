@@ -1,4 +1,6 @@
-package designParser.model.api;
+package designParser.markupGen.api;
+
+import designParser.model.api.ITraversable;
 
 public interface IModelVisitor {
     public void previsit(ITraversable t);

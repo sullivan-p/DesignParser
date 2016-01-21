@@ -1,5 +1,6 @@
-package designParser.umlGen.impl;
+package designParser.markupGen.impl;
 
+import designParser.markupGen.util.UmlProcessString;
 import designParser.model.api.IField;
 import designParser.model.api.IMethod;
 import designParser.model.api.IObject;
@@ -8,8 +9,6 @@ import designParser.model.impl.EnumModel;
 import designParser.model.impl.FieldModel;
 import designParser.model.impl.InterfaceModel;
 import designParser.model.impl.MethodModel;
-import designParser.umlGen.api.UmlModelVisitor;
-import designParser.umlGen.util.UmlProcessString;
 
 public class UmlObjVisitor extends UmlModelVisitor {
     private StringBuilder sb;

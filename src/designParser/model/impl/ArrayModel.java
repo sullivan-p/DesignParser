@@ -1,6 +1,6 @@
 package designParser.model.impl;
 
-import designParser.model.api.IModelVisitor;
+import designParser.markupGen.api.IModelVisitor;
 
 public class ArrayModel extends AbstractObjectModel {
     private final static String ARRAY_STR_REPRESENTATION = "[]";

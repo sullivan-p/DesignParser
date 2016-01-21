@@ -1,6 +1,6 @@
 package designParser.model.impl;
 
-import designParser.model.api.IModelVisitor;
+import designParser.markupGen.api.IModelVisitor;
 import designParser.model.api.IVariable;
 
 public class VariableModel implements IVariable {

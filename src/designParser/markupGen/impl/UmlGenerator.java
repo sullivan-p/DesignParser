@@ -1,11 +1,10 @@
-package designParser.umlGen.impl;
+package designParser.markupGen.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import designParser.markupGen.api.IUmlGenerator;
 import designParser.model.api.IDesignModel;
-import designParser.umlGen.api.IUmlGenerator;
-import designParser.umlGen.api.UmlModelVisitor;
 
 public class UmlGenerator implements IUmlGenerator {
     private String modelName;

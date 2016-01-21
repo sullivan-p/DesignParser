@@ -1,4 +1,4 @@
-package designParser.umlGen.util;
+package designParser.markupGen.util;
 
 public final class UmlProcessString {
     private UmlProcessString() {}

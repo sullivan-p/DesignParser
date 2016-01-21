@@ -1,9 +1,10 @@
-package designParser.model.impl;
+package designParser.markupGen.impl;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
-import designParser.model.api.IModelVisitor;
+
+import designParser.markupGen.api.IModelVisitor;
 import designParser.model.api.ITraversable;
 
 public class TypesVisitor implements IModelVisitor {

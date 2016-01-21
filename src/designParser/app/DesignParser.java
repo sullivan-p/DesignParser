@@ -8,10 +8,10 @@ import designParser.asm.visitor.ClassDeclarationVisitor;
 import designParser.asm.visitor.ClassFieldVisitor;
 import designParser.asm.visitor.ClassMethodVisitor;
 import designParser.asm.visitor.ModelBuilderClassVisitor;
+import designParser.markupGen.api.IUmlGenerator;
+import designParser.markupGen.impl.UmlGenerator;
 import designParser.model.api.IDesignModel;
 import designParser.model.impl.DesignModel;
-import designParser.umlGen.api.IUmlGenerator;
-import designParser.umlGen.impl.UmlGenerator;
 
 public class DesignParser {
 	private final static String MODEL_NAME = "AppLauncher";

@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import designParser.umlGen.util.UmlArrowMarkup;
+import designParser.markupGen.util.UmlArrowMarkup;
 
 public class UmlArrowMarkupTest {
 

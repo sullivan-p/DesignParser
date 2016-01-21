@@ -1,8 +1,8 @@
 package designParser.model.impl;
 
+import designParser.markupGen.api.IModelVisitor;
 import designParser.model.api.IField;
 import designParser.model.api.IMethod;
-import designParser.model.api.IModelVisitor;
 
 public class InterfaceModel extends AbstractObjectModel {
 

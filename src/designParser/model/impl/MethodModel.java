@@ -1,11 +1,13 @@
 package designParser.model.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import designParser.markupGen.api.IModelVisitor;
+import designParser.markupGen.impl.SdModelVisitor;
 import designParser.model.api.IMethod;
 import designParser.model.api.IMethodCall;
-import designParser.model.api.IModelVisitor;
 
 public class MethodModel implements IMethod {
     private String objName;
@@ -27,6 +29,16 @@ public class MethodModel implements IMethod {
     
     @Override
     public void accept(IModelVisitor visitor) {
+        if (visitor.getClass().isAssignableFrom(SdModelVisitor.class)) {
+            SdModelVisitor sdv = (SdModelVisitor) visitor;
+            for (int i = methodCalls.size()-1; i >= 0; --i) {
+                IMethodCall m = methodCalls.get(i);
+                sdv.pushMethodToCall(m);
+                sdv.visit(m);
+            }
+            return;
+        }
+        
         visitor.visit(this);
     }
     
@@ -46,9 +58,11 @@ public class MethodModel implements IMethod {
     }
 
     @Override
-    public void putMethodCall(String calleeClassName, String calleeMethodName, 
+    public void putMethodCall(String callerClassName, String callerMethodName, 
+            String calleeClassName, String calleeMethodName, 
             String[] calleeParamTypeNames, String calleeReturnTypeName, boolean isConstructor) {
-        methodCalls.add(new MethodCall(calleeClassName, calleeMethodName, 
+        methodCalls.add(new MethodCall(callerClassName, callerMethodName, 
+                calleeClassName, calleeMethodName, 
                 calleeParamTypeNames, calleeReturnTypeName, isConstructor));
     }
     

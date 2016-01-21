@@ -1,8 +1,8 @@
 package designParser.model.impl;
 
+import designParser.markupGen.api.IModelVisitor;
 import designParser.model.api.IField;
 import designParser.model.api.IMethod;
-import designParser.model.api.IModelVisitor;
 
 public class ClassModel extends AbstractObjectModel {
 	protected boolean isConcrete;
@@ -30,7 +30,8 @@ public class ClassModel extends AbstractObjectModel {
         }
         
         IMethod mthdModel = abbrevSigToMethod.get(sig);
-        mthdModel.putMethodCall(calleeClassName, calleeMethodName, 
+        mthdModel.putMethodCall(callerClassName, callerMethodName,
+                calleeClassName, calleeMethodName, 
                 calleeParamTypeNames, calleeReturnTypeName, isConstructor);
     }
 	
