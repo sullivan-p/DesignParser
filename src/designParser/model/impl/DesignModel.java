@@ -158,9 +158,30 @@ public class DesignModel implements IDesignModel {
         }
     }
     
+//    @Override
+//    public void putMethodModel(String objName, String methodName, 
+//            AccessLevel accessLevel, String methodSig) {
+//        
+//        // The object to which the method belongs should not be modeled, so do 
+//        // nothing.
+//        if (!nameToModelMap.containsKey(objName)) {
+//            return;  
+//        }
+//     
+//        if (nameToModelMap.get(objName) == null) {
+//            StringBuilder error = new StringBuilder();
+//            error.append("The object model to which this method belongs must ");
+//            error.append("be created before methods can be assigned to it.");
+//            throw new IllegalArgumentException(error.toString());
+//        }
+//        
+//        IObject objModel = nameToModelMap.get(objName);
+//        objModel.putMethodModel(methodName, accessLevel, methodSig);
+//    }
+    
     @Override
     public void putMethodModel(String objName, String methodName, 
-            AccessLevel accessLevel, String methodSig) {
+            AccessLevel accessLevel, String retTypeName, String[] paramTypeNames) {
         
         // The object to which the method belongs should not be modeled, so do 
         // nothing.
@@ -176,9 +197,9 @@ public class DesignModel implements IDesignModel {
         }
         
         IObject objModel = nameToModelMap.get(objName);
-        objModel.putMethodModel(methodName, accessLevel, methodSig);
+        objModel.putMethodModel(objName, methodName, accessLevel, retTypeName, paramTypeNames);
     }
-
+    
     @Override
     public void putFieldModel(String objName, String fieldName, 
             AccessLevel accessLevel, String fieldSig) {

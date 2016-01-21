@@ -23,15 +23,17 @@ public class ClassMethodVisitor extends ClassVisitorDecorator {
 		MethodVisitor codeVisitor = new MethodCodeVisitor(this.getModel(), objName, name, Opcodes.ASM5, toDecorate);
 		
         String typeDescriptor = (signature != null) ? signature : desc;
-        Set<String> typeNames = AsmProcessData.getTypeNamesFromDescriptor(typeDescriptor);
+        
+        String retTypeName = AsmProcessData.prettyRetTypeFromMthdDesc(typeDescriptor);
+        String[] paramTypeNames = AsmProcessData.prettyParamTypesFromMthdDesc(typeDescriptor);
         AccessLevel accessLevel = AsmProcessData.getAccessLevel(access);
-        String methodSig = AsmProcessData.getMethodSignature(objName, name, typeDescriptor, accessLevel);
         
         // Add the method model to the design model.
-        this.getModel().putMethodModel(objName, name, accessLevel, methodSig);
+        this.getModel().putMethodModel(objName, name, accessLevel, retTypeName, paramTypeNames);
         
         // The currently visited object has a references relation with the 
         // method's parameter types and return type.
+        Set<String> typeNames = AsmProcessData.getTypeNamesFromDescriptor(typeDescriptor);
         for (String tName : typeNames) {
             this.getModel().putReferencesRelation(objName, tName);
         }

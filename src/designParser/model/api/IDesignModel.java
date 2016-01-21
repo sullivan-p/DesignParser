@@ -34,11 +34,15 @@ public interface IDesignModel extends ITraversable {
 
     public void putExtendsRelation(String srcName, String dstName);
 
-    public void putMethodModel(String objName, String methodName, AccessLevel accessLevel, String methodSig);
+//    public void putMethodModel(String objName, String methodName, AccessLevel accessLevel, String methodSig);
 
+    public void putMethodModel(String objName, String methodName, AccessLevel accessLevel, String retTypeName,
+            String[] paramTypeNames);
+    
     public void putFieldModel(String objName, String fieldName, AccessLevel accessLevel, String fieldSig);
 
     public void putMethodCall(String callerClassName, String callerMethodName,
             String calleeClassName, String calleeMethodName,
             String[] paramTypeNames, String returnTypeName, boolean isConstructor);
+
 }

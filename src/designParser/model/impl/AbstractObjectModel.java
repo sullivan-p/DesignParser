@@ -33,11 +33,13 @@ public abstract class AbstractObjectModel implements IObject {
     }
     
     @Override
-    public void putMethodModel(String methodName, AccessLevel accessLevel, String methodSig) {
+    public void putMethodModel(String objName, String methodName, AccessLevel accessLevel, 
+            String retTypeName, String[] paramTypeNames) {
         // Instantiate the model if no model has been created for this 
         // signature.
-        if (sigToMethodMap.get(methodSig) == null) {
-            sigToMethodMap.put(methodSig, new MethodModel(methodName, accessLevel, methodSig));
+        String sig = MethodModel.getSignature(methodName, accessLevel, retTypeName, paramTypeNames);
+        if (sigToMethodMap.get(sig) == null) {
+            sigToMethodMap.put(sig, new MethodModel(objName, methodName, accessLevel, retTypeName, paramTypeNames));
         }
     }
 }
