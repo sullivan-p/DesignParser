@@ -34,7 +34,7 @@ public class TypesVisitor implements IModelVisitor {
     
     protected void addPrevisitMethod(Class<?> c, Consumer<ITraversable> mthd) {
         typeNameToPrevisitMethod.put(c, mthd);
-    }    
+    }
 
     protected void addVisitMethod(Class<?> c, Consumer<ITraversable> mthd) {
         typeNameToVisitMethod.put(c, mthd);
