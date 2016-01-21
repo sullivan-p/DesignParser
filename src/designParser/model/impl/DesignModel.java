@@ -11,12 +11,7 @@ import designParser.model.api.IObject;
 import pair.impl.Pair;
 import designParser.model.api.IDesignModel;
 
-public class DesignModel implements IDesignModel {
-//	private final String DOES_NOT_EXIST_ERROR = " does not exist in the model.";
-//    private final String ALREADY_EXISTS_ERROR = " already exists in the model.";
-//    private final String NOT_OBJ_TO_MODEL_ERROR = " is not an object that is being modeled.";
-//    private final String NOT_BOTH_OBJ_TO_MODEL_ERROR = "Both object must be modeled by the design model.";
-	
+public class DesignModel implements IDesignModel {	
     private Map<String, IObject> nameToModelMap;
     private Map<Pair<String, String>, AbstractHierarchyRelation> hierarchyRelations;
     private Map<Pair<String, String>, AbstractDependencyRelation> dependencyRelations;
@@ -157,27 +152,6 @@ public class DesignModel implements IDesignModel {
             dependencyRelations.put(objNames, rltn);
         }
     }
-    
-//    @Override
-//    public void putMethodModel(String objName, String methodName, 
-//            AccessLevel accessLevel, String methodSig) {
-//        
-//        // The object to which the method belongs should not be modeled, so do 
-//        // nothing.
-//        if (!nameToModelMap.containsKey(objName)) {
-//            return;  
-//        }
-//     
-//        if (nameToModelMap.get(objName) == null) {
-//            StringBuilder error = new StringBuilder();
-//            error.append("The object model to which this method belongs must ");
-//            error.append("be created before methods can be assigned to it.");
-//            throw new IllegalArgumentException(error.toString());
-//        }
-//        
-//        IObject objModel = nameToModelMap.get(objName);
-//        objModel.putMethodModel(methodName, accessLevel, methodSig);
-//    }
     
     @Override
     public void putMethodModel(String objName, String methodName, 

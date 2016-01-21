@@ -41,10 +41,14 @@ public class MethodModel implements IMethod {
     
     public static String getSignature(String methodName, AccessLevel accessLevel, String retTypeName, 
             String[] paramTypeNames) {
-        String sig = retTypeName + " " + methodName + " (" + String.join(", ", paramTypeNames) + ")";
+        String sig = getSignatureNoAccessLvl(methodName, retTypeName, paramTypeNames);
         if (accessLevel != AccessLevel.Default) {
-            sig = accessLevel.toString() + " " + sig;
+            sig = accessLevel.toUmlString() + " " + sig;
         }
         return sig;
+    }
+    
+    public static String getSignatureNoAccessLvl(String methodName, String retTypeName, String[] paramTypeNames) {
+        return retTypeName + " " + methodName + " (" + String.join(", ", paramTypeNames) + ")";
     }
 }

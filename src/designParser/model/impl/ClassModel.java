@@ -33,11 +33,11 @@ public class ClassModel extends AbstractObjectModel {
     @Override
     public void accept(IModelVisitor visitor) {
         visitor.previsit(this);
-        for (IField f : nameToFieldMap.values()) {
+        for (IField f : nameToField.values()) {
             f.accept(visitor);
         }
         visitor.visit(this);
-        for (IMethod m : sigToMethodMap.values()) {
+        for (IMethod m : sigNoAccessLvlToMethod.values()) {
             m.accept(visitor);
         }
         visitor.postvisit(this);

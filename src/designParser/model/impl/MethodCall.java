@@ -28,7 +28,6 @@ public class MethodCall implements IMethodCall {
     @Override
     public void accept(IModelVisitor visitor) {
         // Check depth of visitor and if so visit...
-        
     }
 
     @Override
