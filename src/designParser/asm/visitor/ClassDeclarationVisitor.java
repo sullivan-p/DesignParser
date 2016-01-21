@@ -43,7 +43,7 @@ public class ClassDeclarationVisitor extends ModelBuilderClassVisitor {
 		    String unqualifiedName = AsmProcessData.qualifiedToUnqualifiedName(javaName);
 		    interfaceNames.add(unqualifiedName);
 		}
-		
+
 		// Convert superclass name from ASM format to unqualified Java name.
 		if (superName != null) {
             String javaName = AsmProcessData.convertAsmToJavaName(superName);
