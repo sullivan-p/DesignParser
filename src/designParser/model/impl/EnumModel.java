@@ -17,7 +17,7 @@ public class EnumModel extends AbstractObjectModel {
             f.accept(visitor);
         }
         visitor.visit(this);
-        for (IMethod m : sigNoAccessLvlToMethod.values()) {
+        for (IMethod m : abbrevSigToMethod.values()) {
             m.accept(visitor);
         }
         visitor.postvisit(this);

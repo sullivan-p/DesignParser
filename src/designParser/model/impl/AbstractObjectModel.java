@@ -11,13 +11,14 @@ public abstract class AbstractObjectModel implements IObject {
     private String name;
     protected Map<String, IField> nameToField;
     
-    // Use signatures without access levels as keys that map to method models.
-    protected Map<String, IMethod> sigNoAccessLvlToMethod;
+    // Use abbreviated signature (method name and parameter type names only) as 
+    // keys that map to method models.
+    protected Map<String, IMethod> abbrevSigToMethod;
     
     public AbstractObjectModel(String name) {
         this.name = name;
         this.nameToField = new HashMap<String, IField>();
-        this.sigNoAccessLvlToMethod = new HashMap<String, IMethod>();
+        this.abbrevSigToMethod = new HashMap<String, IMethod>();
     }
     
     @Override
@@ -39,9 +40,9 @@ public abstract class AbstractObjectModel implements IObject {
             String retTypeName, String[] paramTypeNames) {
         // Instantiate the model if no model has been created for this 
         // signature.
-        String sig = MethodModel.getSignatureNoAccessLvl(methodName, retTypeName, paramTypeNames);
-        if (sigNoAccessLvlToMethod.get(sig) == null) {
-            sigNoAccessLvlToMethod.put(sig, new MethodModel(objName, methodName, accessLevel, 
+        String sig = MethodModel.getAbbrevSignature(methodName, paramTypeNames);
+        if (abbrevSigToMethod.get(sig) == null) {
+            abbrevSigToMethod.put(sig, new MethodModel(objName, methodName, accessLevel, 
                     retTypeName, paramTypeNames));
         }
     }

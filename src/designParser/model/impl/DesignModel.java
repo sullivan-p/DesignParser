@@ -196,9 +196,10 @@ public class DesignModel implements IDesignModel {
     }
     
     @Override
-    public void putMethodCall(String callerClassName, String callerMethodName,
+    public void putMethodCall(
+            String callerClassName, String callerMethodName, String[] callerParamTypeNames,
             String calleeClassName, String calleeMethodName,
-            String[] paramTypeNames, String returnTypeName, boolean isConstructor) {
+            String[] calleeParamTypeNames, String calleeReturnTypeName, boolean isConstructor) {
         
         // The object to which the caller method belongs should not be modeled,
         // so do nothing.
@@ -222,8 +223,8 @@ public class DesignModel implements IDesignModel {
         }
         
         ClassModel classModel = (ClassModel) nameToModelMap.get(callerClassName);
-        classModel.putMethodCall(callerClassName, callerMethodName,
-            calleeClassName, calleeMethodName, paramTypeNames, returnTypeName, 
+        classModel.putMethodCall(callerClassName, callerMethodName, callerParamTypeNames,
+            calleeClassName, calleeMethodName, calleeParamTypeNames, calleeReturnTypeName, 
             isConstructor);
     }
 }

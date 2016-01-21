@@ -7,14 +7,17 @@ import designParser.model.api.IDesignModel;
 
 public class MethodCodeVisitor extends MethodVisitor {
     private IDesignModel model;
-    private String objectName;
-    private String methodName;
+    private String callerClassName;
+    private String callerMethodName;
+    private String[] callerParamTypeNames;
 
-    public MethodCodeVisitor(IDesignModel m, String objectName, String methodName, int api, MethodVisitor mv) {
+    public MethodCodeVisitor(IDesignModel m, String callerClassName, String callerMethodName, 
+            String[] callerParamTypeNames, int api, MethodVisitor mv) {
         super(api, mv);
         this.model = m;
-        this.objectName = objectName;
-        this.methodName = methodName;
+        this.callerClassName = callerClassName;
+        this.callerMethodName = callerMethodName;
+        this.callerParamTypeNames = callerParamTypeNames;
     }
     
     @Override
@@ -22,12 +25,11 @@ public class MethodCodeVisitor extends MethodVisitor {
         String calleeClassName = AsmProcessData.qualifiedToUnqualifiedName(
                 AsmProcessData.convertAsmToJavaName(owner));
         String calleeMethodName = name;
-        String callerClassName = objectName;
-        String callerMethodName = methodName;
-        String[] paramTypesNames = AsmProcessData.prettyParamTypesFromMthdDesc(desc);
-        String returnTypeName = AsmProcessData.prettyRetTypeFromMthdDesc(desc);
-        model.putMethodCall(callerClassName, callerMethodName, calleeClassName, calleeMethodName, 
-                paramTypesNames, returnTypeName, (calleeMethodName.equals("<init>")));
+        String[] calleeParamTypesNames = AsmProcessData.prettyParamTypesFromMthdDesc(desc);
+        String calleeReturnTypeName = AsmProcessData.prettyRetTypeFromMthdDesc(desc);
+        boolean isConstructor = calleeMethodName.equals("<init>");
+        model.putMethodCall(callerClassName, callerMethodName, callerParamTypeNames, 
+                calleeClassName, calleeMethodName, calleeParamTypesNames, calleeReturnTypeName, isConstructor);
     }    
     
     @Override

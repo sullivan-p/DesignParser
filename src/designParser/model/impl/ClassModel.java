@@ -1,33 +1,37 @@
 package designParser.model.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import designParser.model.api.IField;
 import designParser.model.api.IMethod;
-import designParser.model.api.IMethodCall;
 import designParser.model.api.IModelVisitor;
 
 public class ClassModel extends AbstractObjectModel {
 	protected boolean isConcrete;
-    protected List<IMethodCall> methodCalls;
 
 	public ClassModel(String name, boolean isConcrete) {
 		super(name);
 		this.isConcrete = isConcrete;
-        this.methodCalls = new ArrayList<IMethodCall>();
 	}
 
 	public boolean getIsConcrete() {
 		return isConcrete;
 	}
 	
-    public void putMethodCall(String callerClassName, String callerMethodName,
+    public void putMethodCall(
+            String callerClassName, String callerMethodName, String[] callerParamTypeNames,
             String calleeClassName, String calleeMethodName,
-            String[] paramTypeNames, String returnTypeName, boolean isConstructor) {
-        methodCalls.add(new MethodCall(callerClassName, callerMethodName,
-                calleeClassName, calleeMethodName, 
-                paramTypeNames, returnTypeName, isConstructor));
+            String[] calleeParamTypeNames, String calleeReturnTypeName, boolean isConstructor) {
+        
+        String sig = MethodModel.getAbbrevSignature(callerMethodName, callerParamTypeNames);
+        if (!abbrevSigToMethod.containsKey(sig) || abbrevSigToMethod.get(sig) == null) {
+            StringBuilder error = new StringBuilder();
+            error.append("The caller method model must be created before ");
+            error.append("method calls can be assigned to it.");
+            throw new IllegalArgumentException(error.toString());
+        }
+        
+        IMethod mthdModel = abbrevSigToMethod.get(sig);
+        mthdModel.putMethodCall(calleeClassName, calleeMethodName, 
+                calleeParamTypeNames, calleeReturnTypeName, isConstructor);
     }
 	
     @Override
@@ -37,7 +41,7 @@ public class ClassModel extends AbstractObjectModel {
             f.accept(visitor);
         }
         visitor.visit(this);
-        for (IMethod m : sigNoAccessLvlToMethod.values()) {
+        for (IMethod m : abbrevSigToMethod.values()) {
             m.accept(visitor);
         }
         visitor.postvisit(this);

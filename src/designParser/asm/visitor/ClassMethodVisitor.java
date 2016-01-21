@@ -19,14 +19,14 @@ public class ClassMethodVisitor extends ClassVisitorDecorator {
 	@Override
 	public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
 		MethodVisitor toDecorate = super.visitMethod(access, name, desc, signature, exceptions);
-        String objName = this.getCurrentObjectName();
-		MethodVisitor codeVisitor = new MethodCodeVisitor(this.getModel(), objName, name, Opcodes.ASM5, toDecorate);
 		
+        String objName = this.getCurrentObjectName();
         String typeDescriptor = (signature != null) ? signature : desc;
-        
         String retTypeName = AsmProcessData.prettyRetTypeFromMthdDesc(typeDescriptor);
         String[] paramTypeNames = AsmProcessData.prettyParamTypesFromMthdDesc(typeDescriptor);
-        AccessLevel accessLevel = AsmProcessData.getAccessLevel(access);
+        AccessLevel accessLevel = AsmProcessData.getAccessLevel(access);        
+        
+		MethodVisitor codeVisitor = new MethodCodeVisitor(this.getModel(), objName, name, paramTypeNames, Opcodes.ASM5, toDecorate);
         
         // Add the method model to the design model.
         this.getModel().putMethodModel(objName, name, accessLevel, retTypeName, paramTypeNames);
