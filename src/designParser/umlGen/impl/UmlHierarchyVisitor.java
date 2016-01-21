@@ -10,18 +10,17 @@ public class UmlHierarchyVisitor extends UmlModelVisitor{
 
     public UmlHierarchyVisitor() {
         super();
-        sb = new StringBuilder();
-    }
-
-    @Override
-    protected void initVisitMethods() {
+        
+        // Set visit methods.
         addVisitMethod(ExtendsRelation.class, (r) -> {
             visitExtendsRelation((ExtendsRelation) r); 
         });
         addVisitMethod(ImplementsRelation.class, (r) -> {
             visitImplementsRelation((ImplementsRelation) r); 
-        });         
-    }	
+        });      
+        
+        sb = new StringBuilder();
+    }
     
 	public String getUmlMarkup() {
         return sb.toString();

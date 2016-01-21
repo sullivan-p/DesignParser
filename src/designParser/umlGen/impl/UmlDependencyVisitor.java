@@ -10,18 +10,17 @@ public class UmlDependencyVisitor extends UmlModelVisitor{
 
     public UmlDependencyVisitor() {
         super();
-        sb = new StringBuilder();
-    }
-
-    @Override
-    protected void initVisitMethods() {
+        
+        // Set visit methods.
         addVisitMethod(AssociatesWithRelation.class, (r) -> {
             visitAssociatesWithRelation((AssociatesWithRelation) r); 
         });
         addVisitMethod(ReferencesRelation.class, (r) -> {
             visitReferencesRelation((ReferencesRelation) r); 
         });     
-    }   
+        
+        sb = new StringBuilder();
+    }
     
     public String getUmlMarkup() {
         return sb.toString();

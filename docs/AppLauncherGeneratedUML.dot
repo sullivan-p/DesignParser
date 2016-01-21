@@ -60,3 +60,4 @@ IApplicationLauncher -> ProcessRunner [arrowhead="vee", style="dashed"];
 DirectoryMonitorService -> DirectoryEvent [arrowhead="vee", style="dashed"];
 IDirectoryListener -> DirectoryEvent [arrowhead="vee", style="dashed"];
 }
+

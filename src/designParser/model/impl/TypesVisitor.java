@@ -6,7 +6,7 @@ import java.util.function.Consumer;
 import designParser.model.api.IModelVisitor;
 import designParser.model.api.ITraversable;
 
-public abstract class TypesVisitor implements IModelVisitor {
+public class TypesVisitor implements IModelVisitor {
     private Map<Class<?>, Consumer<ITraversable>> typeNameToPrevisitMethod;
     private Map<Class<?>, Consumer<ITraversable>> typeNameToVisitMethod;
     private Map<Class<?>, Consumer<ITraversable>> typeNameToPostvisitMethod;
@@ -15,14 +15,7 @@ public abstract class TypesVisitor implements IModelVisitor {
         typeNameToPrevisitMethod = new  HashMap<Class<?>, Consumer<ITraversable>>();
         typeNameToVisitMethod = new  HashMap<Class<?>, Consumer<ITraversable>>();
         typeNameToPostvisitMethod = new  HashMap<Class<?>, Consumer<ITraversable>>();
-        initVisitMethods();
     }
-
-    /**
-     * Set the actions that the visitor performs when visiting various class
-     * types.
-     */
-    protected abstract void initVisitMethods();
     
     @Override
     public void previsit(ITraversable t) {

@@ -16,11 +16,6 @@ public class UmlObjVisitor extends UmlModelVisitor {
 
     public UmlObjVisitor() {
         super();
-        sb = new StringBuilder();
-    }
-    
-    @Override
-    protected void initVisitMethods() {
         
         // Set previsit methods.
         addPrevisitMethod(ClassModel.class, (c) -> {
@@ -54,6 +49,8 @@ public class UmlObjVisitor extends UmlModelVisitor {
         addPostvisitMethod(EnumModel.class, (e) -> {
             postvisitEnumModel((EnumModel) e); 
         });    
+        
+        sb = new StringBuilder();
     }
 	
 	public String getUmlMarkup() {
