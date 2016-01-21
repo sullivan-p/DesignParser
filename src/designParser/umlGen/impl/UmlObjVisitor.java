@@ -5,7 +5,9 @@ import designParser.model.api.IMethod;
 import designParser.model.api.IObject;
 import designParser.model.impl.ClassModel;
 import designParser.model.impl.EnumModel;
+import designParser.model.impl.FieldModel;
 import designParser.model.impl.InterfaceModel;
+import designParser.model.impl.MethodModel;
 import designParser.umlGen.api.UmlModelVisitor;
 import designParser.umlGen.util.UmlProcessString;
 
@@ -13,14 +15,52 @@ public class UmlObjVisitor extends UmlModelVisitor {
     private StringBuilder sb;
 
     public UmlObjVisitor() {
+        super();
         sb = new StringBuilder();
+    }
+    
+    @Override
+    protected void initVisitMethods() {
+        
+        // Set previsit methods.
+        addPrevisitMethod(ClassModel.class, (c) -> {
+           previsitClassModel((ClassModel) c); 
+        });
+        addPrevisitMethod(InterfaceModel.class, (i) -> {
+            previsitInterfaceModel((InterfaceModel) i); 
+        });
+        addPrevisitMethod(EnumModel.class, (e) -> {
+            previsitEnumModel((EnumModel) e); 
+        });
+        
+        // Set visit methods.
+        addVisitMethod(ClassModel.class, (c) -> {
+            visitClassModel((ClassModel) c); 
+        });
+        addVisitMethod(MethodModel.class, (i) -> {
+            visitIMethod((MethodModel) i); 
+        });
+        addVisitMethod(FieldModel.class, (f) -> {
+            visitIField((FieldModel) f); 
+        });
+        
+        // Set postvisit methods.
+        addPostvisitMethod(ClassModel.class, (c) -> {
+            postvisitClassModel((ClassModel) c); 
+        });
+        addPostvisitMethod(InterfaceModel.class, (i) -> {
+            postvisitInterfaceModel((InterfaceModel) i); 
+        });
+        addPostvisitMethod(EnumModel.class, (e) -> {
+            postvisitEnumModel((EnumModel) e); 
+        });    
     }
 	
 	public String getUmlMarkup() {
 		return sb.toString();
 	}
 	
-	public void previsit(ClassModel c) {
+	private void previsitClassModel(ClassModel c) {
 	    String header;
 	    if (c.getIsConcrete()) {
 	        header = "";
@@ -30,39 +70,39 @@ public class UmlObjVisitor extends UmlModelVisitor {
         appendObjPrevisitStr(sb, c, header);
 	}    
 
-	public void previsit(InterfaceModel i) {
+	private void previsitInterfaceModel(InterfaceModel i) {
 	    appendObjPrevisitStr(sb, i, "\\<\\<interface\\>\\>");
 	}	
 	
-	public void previsit(EnumModel e) {
+	private void previsitEnumModel(EnumModel e) {
         appendObjPrevisitStr(sb, e, "\\<\\<enum\\>\\>");
 	}	
 	
-	public void visit(ClassModel c) {
+	private void visitClassModel(ClassModel c) {
 	    sb.append("|");
 	}
 
-	public void visit(IMethod m) {
+	private void visitIMethod(IMethod m) {
 	    String signature = UmlProcessString.escapeAngleBraces(m.getSignature());
 	    sb.append(signature);
 	    sb.append("\\l");
 	}
 
-	public void visit(IField f) {
+	private void visitIField(IField f) {
         String signature = UmlProcessString.escapeAngleBraces(f.getSignature());
         sb.append(signature);
         sb.append("\\l");
 	}
 	
-	public void postvisit(ClassModel c) {
+	private void postvisitClassModel(ClassModel c) {
 	    appendObjPostvisitStr(sb);
 	}
 
-	public void postvisit(InterfaceModel i) {
+	private void postvisitInterfaceModel(InterfaceModel i) {
 	    appendObjPostvisitStr(sb);
 	}
 
-	public void postvisit(EnumModel e) {
+	private void postvisitEnumModel(EnumModel e) {
 	    appendObjPostvisitStr(sb);
 	}
 	

@@ -45,7 +45,6 @@ public class DesignModel implements IDesignModel {
         for (AbstractDependencyRelation r : dependencyRelations.values()) {
             r.accept(visitor);
         }
-
         visitor.postvisit(this);
 	}
 	
