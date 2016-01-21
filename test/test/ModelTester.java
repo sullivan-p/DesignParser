@@ -103,7 +103,7 @@ class DesignVisitorTester extends TypesVisitor {
 	}
 
 	void addMethodCalls(MethodCall c) {
-		methdCalls.add(c.getCallerClassName() + "." + c.getCallerMethodName() + " " + c.getCalleeClassName() + "."
-				+ c.getCalleeMethodName());
+		methdCalls.add(//c.getCallerClassName() + "." + c.getCallerMethodName() + " " + 
+		        c.getCalleeClassName() + "." + c.getCalleeMethodName());
 	}
 }
