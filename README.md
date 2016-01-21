@@ -1,3 +1,9 @@
+# Week 6 Update
+
+Since last week, the design of the model visitors has been modified. The EmptyModelVisitor has been removed. Instead the model visitors use lamda expressions to set visit actions for different types of objects.
+
+We are still working on tasks for Milestone 3, and have modified the way in which method call models are stored in the design model. Otherwise, however, there have not been major design changes.
+
 # Milestone 3 Update
 
 Between Milestones 2 and 3 we refactored a large portion of the codebase. As part of this refactoring, relations between object models are now represented using IRelation objects.
