@@ -12,7 +12,7 @@ import designParser.asm.visitor.ClassDeclarationVisitor;
 import designParser.asm.visitor.ClassFieldVisitor;
 import designParser.asm.visitor.ClassMethodVisitor;
 import designParser.asm.visitor.ModelBuilderClassVisitor;
-import designParser.markupGen.api.IUmlGenerator;
+import designParser.markupGen.api.MarkupGenerator;
 import designParser.markupGen.impl.UmlGenerator;
 import designParser.model.api.IDesignModel;
 import designParser.model.impl.DesignModel;
@@ -44,10 +44,10 @@ public class ClassDeclarationVisitorTest {
 			designModel = methodVisitor.getModel();
 		}
 
-		IUmlGenerator umlGenerator = new UmlGenerator("AppLauncher", designModel, OBJECT_NAMES);
+		MarkupGenerator umlGenerator = new UmlGenerator("AppLauncher", designModel);
 		
-		System.out.println(umlGenerator.getUmlMarkup());
-		assertEquals(res, (umlGenerator.getUmlMarkup().substring(0, res.length()+5).replace("\n", "")));
+		System.out.println(umlGenerator.getMarkup());
+		assertEquals(res, (umlGenerator.getMarkup().substring(0, res.length()+5).replace("\n", "")));
 		//+5 because of the escape (\) characters we had to use
 	}
 }

@@ -6,9 +6,7 @@ import designParser.model.api.IMethod;
 import designParser.model.api.IObject;
 import designParser.model.impl.ClassModel;
 import designParser.model.impl.EnumModel;
-import designParser.model.impl.FieldModel;
 import designParser.model.impl.InterfaceModel;
-import designParser.model.impl.MethodModel;
 
 public class UmlObjVisitor extends UmlModelVisitor {
     private StringBuilder sb;
@@ -31,11 +29,11 @@ public class UmlObjVisitor extends UmlModelVisitor {
         addVisitMethod(ClassModel.class, (c) -> {
             visitClassModel((ClassModel) c); 
         });
-        addVisitMethod(MethodModel.class, (i) -> {
-            visitIMethod((MethodModel) i); 
+        addVisitMethod(InterfaceModel.class, (i) -> {
+            visitInterfaceModel((InterfaceModel) i); 
         });
-        addVisitMethod(FieldModel.class, (f) -> {
-            visitIField((FieldModel) f); 
+        addVisitMethod(EnumModel.class, (e) -> {
+            visitEnumModel((EnumModel) e); 
         });
         
         // Set postvisit methods.
@@ -75,20 +73,22 @@ public class UmlObjVisitor extends UmlModelVisitor {
 	}	
 	
 	private void visitClassModel(ClassModel c) {
-	    sb.append("|");
+	    for (IField f : c.getAllFieldModels()) {
+	        String fieldSig = UmlProcessString.escapeAngleBraces(f.getSignature());
+	        sb.append(fieldSig);
+	        sb.append("\\l");
+        }
+	    sb.append("|");	    
+	    appendMethodDeclarations(sb, c);
 	}
-
-	private void visitIMethod(IMethod m) {
-	    String signature = UmlProcessString.escapeAngleBraces(m.getSignature());
-	    sb.append(signature);
-	    sb.append("\\l");
-	}
-
-	private void visitIField(IField f) {
-        String signature = UmlProcessString.escapeAngleBraces(f.getSignature());
-        sb.append(signature);
-        sb.append("\\l");
-	}
+	
+   private void visitInterfaceModel(InterfaceModel i) {     
+        appendMethodDeclarations(sb, i);
+    }
+   
+    private void visitEnumModel(EnumModel e) {
+        appendMethodDeclarations(sb, e);
+    }
 	
 	private void postvisitClassModel(ClassModel c) {
 	    appendObjPostvisitStr(sb);
@@ -100,6 +100,14 @@ public class UmlObjVisitor extends UmlModelVisitor {
 
 	private void postvisitEnumModel(EnumModel e) {
 	    appendObjPostvisitStr(sb);
+	}
+	
+	private static void appendMethodDeclarations(StringBuilder s, IObject o) {
+       for (IMethod m : o.getAllMethodModels()) {
+            String mthdSig = UmlProcessString.escapeAngleBraces(m.getSignature());
+            s.append(mthdSig);
+            s.append("\\l");
+        }
 	}
 	
 	private static void appendObjPrevisitStr(StringBuilder s, IObject o,

@@ -12,10 +12,21 @@ public class TypesVisitor implements IModelVisitor {
     private Map<Class<?>, Consumer<ITraversable>> typeNameToVisitMethod;
     private Map<Class<?>, Consumer<ITraversable>> typeNameToPostvisitMethod;
     
+    protected String targetMethodName;
+    protected String targetMethodClassName;
+    protected String[] targetMethodParamTypeNames;
+    protected int callDepth;
+    protected int maxCallDepth;
+    
     public TypesVisitor() {
         typeNameToPrevisitMethod = new  HashMap<Class<?>, Consumer<ITraversable>>();
         typeNameToVisitMethod = new  HashMap<Class<?>, Consumer<ITraversable>>();
         typeNameToPostvisitMethod = new  HashMap<Class<?>, Consumer<ITraversable>>();
+        targetMethodName = "";
+        targetMethodClassName = "";
+        targetMethodParamTypeNames = new String[0];
+        callDepth = 0;
+        maxCallDepth = 0;
     }
     
     @Override
@@ -60,5 +71,40 @@ public class TypesVisitor implements IModelVisitor {
                 mthd.accept(t);
             }
         }
+    }
+
+    @Override
+    public String getTargetMethodName() {
+        return targetMethodName;
+    }
+    
+    @Override
+    public String getTargetMethodClassName() {
+        return targetMethodClassName;
+    }
+
+    @Override
+    public String[] getTargetMethodParamTypeNames() {
+        return targetMethodParamTypeNames;
+    }
+
+    @Override
+    public int getCallDepth() {
+        return callDepth;
+    }
+
+    @Override
+    public int getMaxCallDepth() {
+        return maxCallDepth;
+    }
+
+    @Override
+    public void incrementCallDepth() {
+        callDepth++;
+    }
+
+    @Override
+    public void decrementCallDepth() {
+        callDepth--;        
     }
 }

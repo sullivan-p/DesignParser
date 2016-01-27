@@ -3,16 +3,16 @@ package designParser.markupGen.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import designParser.markupGen.api.IUmlGenerator;
+import designParser.markupGen.api.MarkupGenerator;
 import designParser.model.api.IDesignModel;
 
-public class UmlGenerator implements IUmlGenerator {
+public class UmlGenerator implements MarkupGenerator {
     private String modelName;
 	private IDesignModel model;	
 	private StringBuilder stringBuilder;
 	private List<UmlModelVisitor> visitorList;
 
-	public UmlGenerator(String modelName, IDesignModel model, String[] objNamesToModel) {
+	public UmlGenerator(String modelName, IDesignModel model) {
 	    this.modelName = modelName;
 		this.model = model;
 		stringBuilder = new StringBuilder();
@@ -23,11 +23,8 @@ public class UmlGenerator implements IUmlGenerator {
 		visitorList.add(new UmlDependencyVisitor());
 	}
 
-
-
 	@Override
-	public String getUmlMarkup() {
-	    
+	public String getMarkup() {
 	    stringBuilder.append("digraph " + modelName + "{\n");
 	    stringBuilder.append("rankdir=BT;\n");
 	    

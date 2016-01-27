@@ -12,7 +12,7 @@ import designParser.asm.visitor.ClassDeclarationVisitor;
 import designParser.asm.visitor.ClassFieldVisitor;
 import designParser.asm.visitor.ClassMethodVisitor;
 import designParser.asm.visitor.ModelBuilderClassVisitor;
-import designParser.markupGen.api.IUmlGenerator;
+import designParser.markupGen.api.MarkupGenerator;
 import designParser.markupGen.impl.UmlGenerator;
 import designParser.model.api.IDesignModel;
 import designParser.model.impl.DesignModel;
@@ -54,10 +54,10 @@ public class FactoryTest {
             designModel = methodVisitor.getModel();
         }
         
-        IUmlGenerator umlGenerator = new UmlGenerator("AbstractPizzaFactory", designModel, OBJECT_NAMES);
-        String outPut = umlGenerator.getUmlMarkup();
-        System.out.println(umlGenerator.getUmlMarkup());
+        MarkupGenerator umlGenerator = new UmlGenerator("AbstractPizzaFactory", designModel);
+        String outPut = umlGenerator.getMarkup();
+        System.out.println(umlGenerator.getMarkup());
         
-        assertEquals(outPut, umlGenerator.getUmlMarkup());
+        assertEquals(outPut, umlGenerator.getMarkup());
     }
 }

@@ -1,16 +1,16 @@
 package designParser.model.impl;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import designParser.asm.util.AsmProcessData;
 import designParser.markupGen.api.IModelVisitor;
-import designParser.markupGen.impl.SdModelVisitor;
 import designParser.model.api.IObject;
 import pair.impl.Pair;
 import designParser.model.api.IDesignModel;
+import designParser.model.api.IMethod;
 
 public class DesignModel implements IDesignModel {	
     private Map<String, IObject> nameToModelMap;
@@ -28,12 +28,7 @@ public class DesignModel implements IDesignModel {
 	}
 		
 	@Override
-	public void accept(IModelVisitor visitor) {
-//	    if (IModelVisitor.class.isAssignableFrom(SdModelVisitor.class)) {
-//	        traverseMethodCalls((SdModelVisitor) visitor);
-//	        return;
-//	    }
-	    
+	public void accept(IModelVisitor visitor) {    
 		visitor.previsit(this);
 		for (IObject o : nameToModelMap.values()) {
 		    if (o != null) {
@@ -49,49 +44,189 @@ public class DesignModel implements IDesignModel {
         visitor.postvisit(this);
 	}
 	
-	private void traverseMethodCalls(SdModelVisitor v) {
-	    
-	}
 	
-	@Override
-	public Collection<String> getObjNamesToModel() {
-	    return nameToModelMap.keySet();
-	}
-    
+    //--------------------------------------------------------------------------
+    // Object models
+    //--------------------------------------------------------------------------
+	
     @Override
     public void putClassModel(String name, boolean isConcrete) {
-        putObjectModel(name, () -> { 
+        putObjectModel(name, ClassModel.class, () -> { 
             return new ClassModel(name, isConcrete);
         });    
+        
+        // Update the class's isConcrete value, because if the class already 
+        // existed, then its isConcrete value won't have been updated in the 
+        // previous method call.
+        ((ClassModel) nameToModelMap.get(name)).setIsConcrete(isConcrete);
     }
     
     @Override
     public void putInterfaceModel(String name) {
-        putObjectModel(name, () -> { 
+        putObjectModel(name, InterfaceModel.class, () -> { 
             return new InterfaceModel(name);
         });    
     }
     
     @Override
     public void putEnumModel(String name) {
-        putObjectModel(name, () -> { 
+        putObjectModel(name, EnumModel.class, () -> { 
             return new EnumModel(name);
         });    
     }
     
-    private void putObjectModel(String name, 
+    private void putObjectModel(String name, Class<?> objType,
             Supplier<IObject> modelConstructor) {
         
         // The object should not be modeled, so do nothing.
         if (!nameToModelMap.containsKey(name)) {
             return;  
         }
-        
-        // Instantiate the model if no model has been created for this name.
-        if (nameToModelMap.get(name) == null) {
+
+        IObject existingModel = nameToModelMap.get(name);
+        if (existingModel == null) {
+            // Instantiate the model if no model has been created for this name.
             nameToModelMap.put(name, modelConstructor.get());
-        }        
+        } else if (!existingModel.getClass().isAssignableFrom(objType)) {
+            // The existing object model does not have the desired type. Copy
+            // the values from the existing model into a new model of the
+            // correct type.
+            IObject replacementModel = modelConstructor.get();
+            replacementModel.setFieldModels(existingModel.getAllFieldModels());
+            replacementModel.setMethodModels(existingModel.getAllMethodModels());
+            nameToModelMap.put(name, replacementModel);
+        }
     }
+    
+    
+    //--------------------------------------------------------------------------
+    // Field and method models
+    //--------------------------------------------------------------------------
+    
+    @Override
+    public void putFieldModel(String objName, String fieldName, 
+            AccessLevel accessLevel, String fieldSig) {
+        
+        StringBuilder error = new StringBuilder();
+        error.append("The object model to which this field belongs must ");
+        error.append("be created before methods can be assigned to it.");
+
+        getObjModelThenDo(objName, error.toString(), (objModel) -> {
+            objModel.putFieldModel(fieldName, accessLevel, fieldSig);
+        });
+    }
+    
+    @Override
+    public void putMethodModel(String objName, String methodName, 
+            AccessLevel accessLevel, String retTypeName, String[] paramTypeNames) {
+        
+        StringBuilder error = new StringBuilder();
+        error.append("The object model to which this method belongs must ");
+        error.append("be created before methods can be assigned to it.");
+        
+        if (accessLevel == null) {
+            putMethodModel(objName, methodName, retTypeName, paramTypeNames);
+        } else {
+            getObjModelThenDo(objName, error.toString(), (objModel) -> {
+                objModel.putMethodModel(methodName, accessLevel, retTypeName, paramTypeNames);
+            });
+        }
+    }    
+    
+    /**
+     * Add a model for a method with incomplete information about the method's 
+     * access level.
+     */
+    private void putMethodModel(String objName, String methodName, 
+            String retTypeName, String[] paramTypeNames) {
+        
+        StringBuilder error = new StringBuilder();
+        error.append("The object model to which this method belongs must ");
+        error.append("be created before methods can be assigned to it.");
+
+        getObjModelThenDo(objName, error.toString(), (objModel) -> {
+            objModel.putMethodModel( methodName, retTypeName, paramTypeNames);
+        });
+    }    
+   
+    /**
+     * Get the object model by its name, and then use the object model to
+     * execute the given function.
+     * @param objName Unqualified name of the object.
+     * @param errorMsg Error message to include in the exception if the object 
+     *        cannot be found.
+     * @param f Function to perform using the retrieved object model.
+     */
+    private void getObjModelThenDo(String objName, String errorMsg, Consumer<IObject> f) {
+        
+        // The object to which the method belongs should not be modeled, so do 
+        // nothing.
+        if (!nameToModelMap.containsKey(objName)) {
+            return;  
+        }
+     
+        if (nameToModelMap.get(objName) == null) {
+            throw new IllegalArgumentException(errorMsg.toString());
+        }
+        
+        IObject objModel = nameToModelMap.get(objName);
+        f.accept(objModel);
+    }
+    
+    
+    //--------------------------------------------------------------------------
+    // Method call models
+    //--------------------------------------------------------------------------
+   
+    @Override
+    public void putMethodCall(
+            String callerClassName, String callerMethodName, String[] callerParamTypeNames,
+            String calleeClassName, String calleeMethodName, String[] calleeParamTypeNames, 
+            String calleeReturnTypeName, boolean isConstructor) {
+                
+        // The object to which the caller method belongs should not be modeled,
+        // so do nothing.
+        if (!nameToModelMap.containsKey(callerClassName)) {
+            return;  
+        }
+        
+        // The caller object should already exists.
+        IObject callerObjModel = nameToModelMap.get(callerClassName);
+        if (callerObjModel == null) {
+            StringBuilder error = new StringBuilder();
+            error.append("The object model to which the caller method belongs ");
+            error.append("must be created before methods can be assigned to it.");
+            throw new IllegalArgumentException(error.toString());
+        }
+        
+        // Get a model for the method that is called.
+        IMethod calleeMethodModel;
+        if (nameToModelMap.containsKey(calleeClassName)) {
+            IObject calleeObjModel = nameToModelMap.get(calleeClassName);
+            if (calleeObjModel == null) {
+                // Assume that the callee object is a concrete class. If this is
+                // not the case, then it can be modified later when a particular
+                // object type is specified.
+                putClassModel(calleeClassName, true);
+                calleeObjModel = nameToModelMap.get(calleeClassName);
+            }
+            calleeObjModel.putMethodModel(calleeMethodName, calleeReturnTypeName, calleeParamTypeNames);
+            calleeMethodModel = calleeObjModel.getMethodModel(calleeMethodName, calleeParamTypeNames);
+        } else {
+            // The model for the called method does not belong to an object 
+            // model, since the object is not being modeled.
+            calleeMethodModel = new MethodModel(calleeClassName, calleeMethodName, null,
+                    calleeReturnTypeName, calleeParamTypeNames);
+        }
+
+        // Add the method model to the caller method's list of method calls.
+        callerObjModel.putMethodCall(callerMethodName, callerParamTypeNames, calleeMethodModel);
+    }
+
+    
+    //--------------------------------------------------------------------------
+    // Relation models
+    //--------------------------------------------------------------------------
     
     @Override
     public void putExtendsRelation(String srcName, String dstName) {
@@ -139,7 +274,6 @@ public class DesignModel implements IDesignModel {
         hierarchyRelations.put(objNames, rltn);
     }
     
-    
     /**
      * Use the given source and destination object names and the given 
      * dependency relation constructor to create a new dependency relation. 
@@ -161,80 +295,5 @@ public class DesignModel implements IDesignModel {
             rltn.compareTo(dependencyRelations.get(objNames)) > 0) {
             dependencyRelations.put(objNames, rltn);
         }
-    }
-    
-    @Override
-    public void putMethodModel(String objName, String methodName, 
-            AccessLevel accessLevel, String retTypeName, String[] paramTypeNames) {
-        
-        // The object to which the method belongs should not be modeled, so do 
-        // nothing.
-        if (!nameToModelMap.containsKey(objName)) {
-            return;  
-        }
-     
-        if (nameToModelMap.get(objName) == null) {
-            StringBuilder error = new StringBuilder();
-            error.append("The object model to which this method belongs must ");
-            error.append("be created before methods can be assigned to it.");
-            throw new IllegalArgumentException(error.toString());
-        }
-        
-        IObject objModel = nameToModelMap.get(objName);
-        objModel.putMethodModel(objName, methodName, accessLevel, retTypeName, paramTypeNames);
-    }
-    
-    @Override
-    public void putFieldModel(String objName, String fieldName, 
-            AccessLevel accessLevel, String fieldSig) {
-        
-        // The object to which the field belongs should not be modeled, so do 
-        // nothing.
-        if (!nameToModelMap.containsKey(objName)) {
-            return;  
-        }
-     
-        if (nameToModelMap.get(objName) == null) {
-            StringBuilder error = new StringBuilder();
-            error.append("The object model to which this field belongs must ");
-            error.append("be created before fields can be assigned to it.");
-            throw new IllegalArgumentException(error.toString());
-        }
-        
-        IObject objModel = nameToModelMap.get(objName);
-        objModel.putFieldModel(fieldName, accessLevel, fieldSig);
-    }
-    
-    @Override
-    public void putMethodCall(
-            String callerClassName, String callerMethodName, String[] callerParamTypeNames,
-            String calleeClassName, String calleeMethodName,
-            String[] calleeParamTypeNames, String calleeReturnTypeName, boolean isConstructor) {
-        
-        // The object to which the caller method belongs should not be modeled,
-        // so do nothing.
-        if (!nameToModelMap.containsKey(callerClassName)) {
-            return;  
-        }
-        
-        if (nameToModelMap.get(callerClassName) == null) {
-            StringBuilder error = new StringBuilder();
-            error.append("The class model to which the caller method belongs ");
-            error.append("must be created before methods can be assigned to it.");
-            throw new IllegalArgumentException(error.toString());
-        }
-        
-        IObject objModel = nameToModelMap.get(callerClassName);
-        if (!objModel.getClass().isAssignableFrom(ClassModel.class)) {
-            StringBuilder error = new StringBuilder();
-            error.append("The object model to which the caller method must ");
-            error.append("be a class model.");
-            throw new IllegalArgumentException(error.toString());
-        }
-        
-        ClassModel classModel = (ClassModel) nameToModelMap.get(callerClassName);
-        classModel.putMethodCall(callerClassName, callerMethodName, callerParamTypeNames,
-            calleeClassName, calleeMethodName, calleeParamTypeNames, calleeReturnTypeName, 
-            isConstructor);
     }
 }

@@ -21,14 +21,17 @@ public class ClassMethodVisitor extends ClassVisitorDecorator {
 		MethodVisitor toDecorate = super.visitMethod(access, name, desc, signature, exceptions);
 		
         String objName = this.getCurrentObjectName();
-        String typeDescriptor = (signature != null) ? signature : desc;
+     
+		String typeDescriptor = (signature != null) ? signature : desc;
         String retTypeName = AsmProcessData.prettyRetTypeFromMthdDesc(typeDescriptor);
         String[] paramTypeNames = AsmProcessData.prettyParamTypesFromMthdDesc(typeDescriptor);
         AccessLevel accessLevel = AsmProcessData.getAccessLevel(access);        
-        
-		MethodVisitor codeVisitor = new MethodCodeVisitor(this.getModel(), objName, name, paramTypeNames, Opcodes.ASM5, toDecorate);
-        
-        // Add the method model to the design model.
+ 		if (name.equals(AsmProcessData.CONSTRUCTOR_NAME)) {
+		    name = objName;
+		    retTypeName = objName;
+		}          
+ 		
+        // Add a model for this method to the design model.
         this.getModel().putMethodModel(objName, name, accessLevel, retTypeName, paramTypeNames);
         
         // The currently visited object has a references relation with the 
@@ -37,7 +40,8 @@ public class ClassMethodVisitor extends ClassVisitorDecorator {
         for (String tName : typeNames) {
             this.getModel().putReferencesRelation(objName, tName);
         }
-		
+        
+		MethodVisitor codeVisitor = new MethodCodeVisitor(this.getModel(), objName, name, paramTypeNames, Opcodes.ASM5, toDecorate);
 		return codeVisitor;
 	}
 

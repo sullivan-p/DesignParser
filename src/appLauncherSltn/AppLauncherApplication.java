@@ -3,6 +3,7 @@ package appLauncherSltn;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 public class AppLauncherApplication {
 	// Setting up the logger for the application
@@ -10,6 +11,7 @@ public class AppLauncherApplication {
 	public static final String LOG_FILE = IN_OUT_DIR + "/" + "monitor.log";
 
 	public static void main(String[] args) throws IOException, InterruptedException {
+	    
 		// Register directory to be monitored
 		Path dir = Paths.get(IN_OUT_DIR);
 		

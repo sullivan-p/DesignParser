@@ -20,6 +20,8 @@ import designParser.model.impl.PrimitiveLongDataType;
 import designParser.model.impl.PrimitiveShortDataType;
 
 public final class AsmProcessData {    
+    public final static String CONSTRUCTOR_NAME = "<init>";
+    
     private AsmProcessData() {}
     
     /**

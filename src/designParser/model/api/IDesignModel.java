@@ -1,11 +1,8 @@
 package designParser.model.api;
 
-import java.util.Collection;
-
 import designParser.model.impl.AccessLevel;
 
 public interface IDesignModel extends ITraversable {
-    Collection<String> getObjNamesToModel();
         
     /**
      * Add a model for the class with the given name.

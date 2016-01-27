@@ -10,7 +10,7 @@ import designParser.asm.visitor.ClassDeclarationVisitor;
 import designParser.asm.visitor.ClassFieldVisitor;
 import designParser.asm.visitor.ClassMethodVisitor;
 import designParser.asm.visitor.ModelBuilderClassVisitor;
-import designParser.markupGen.api.IUmlGenerator;
+import designParser.markupGen.api.MarkupGenerator;
 import designParser.markupGen.impl.UmlGenerator;
 import designParser.model.api.IDesignModel;
 import designParser.model.impl.DesignModel;
@@ -35,7 +35,7 @@ public class TestUsesAndAssociation {
             designModel = methodVisitor.getModel();
         }
         
-        IUmlGenerator umlGenerator = new UmlGenerator("TestUsesAndAsc", designModel, OBJECT_NAMES);
-        System.out.println(umlGenerator.getUmlMarkup());
+        MarkupGenerator umlGenerator = new UmlGenerator("TestUsesAndAsc", designModel);
+        System.out.println(umlGenerator.getMarkup());
     }
 }
