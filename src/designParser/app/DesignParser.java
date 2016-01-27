@@ -15,8 +15,8 @@ import designParser.model.api.IDesignModel;
 import designParser.model.impl.DesignModel;
 
 public class DesignParser {
-	private final static String MODEL_NAME = "AppLauncher";
-	private final static String[] OBJECT_NAMES = { "appLauncherSltn.AppLauncherApplication",
+	public final static String MODEL_NAME = "AppLauncher";
+	public final static String[] OBJECT_NAMES = { "appLauncherSltn.AppLauncherApplication",
 			"appLauncherSltn.ApplicationLauncher", "appLauncherSltn.DataFileRunner",
 			"appLauncherSltn.DirectoryChangeLogger", "appLauncherSltn.DirectoryEvent",
 			"appLauncherSltn.DirectoryMonitorService", "appLauncherSltn.ExecutableFileRunner",

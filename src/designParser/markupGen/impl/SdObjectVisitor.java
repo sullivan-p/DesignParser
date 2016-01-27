@@ -52,7 +52,7 @@ public class SdObjectVisitor extends SdModelVisitor {
         objs.add(new SdObject(m.getObjectName(), !m.isConstructor()));
     }
     
-    private String getObjDeclaration(String typeName) {
+    private static String getObjDeclaration(String typeName) {
         String instanceName = typeToInstanceName(typeName);
         return instanceName + ":" + typeName + "[a]";
     }

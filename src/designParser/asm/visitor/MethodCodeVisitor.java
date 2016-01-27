@@ -76,6 +76,13 @@ public class MethodCodeVisitor extends MethodVisitor {
         // Reset the first type in the sequence of consecutive variable loads.
         firstLoadedType = null;
         
+        // Do not add calls to the Object superconstructor that are made from 
+        // within other constructors.
+        if (callerClassName.equals(callerMethodName) && !callerClassName.equals("Object") &&
+            isConstructor && calleeClassName.equals("Object")) {
+            return;
+        }
+        
         model.putMethodCall(callerClassName, callerMethodName, callerParamTypeNames, 
                 calleeClassName, calleeMethodName, calleeParamTypesNames, calleeReturnTypeName, isConstructor);
     }    

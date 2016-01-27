@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.Stack;
 import java.util.TreeSet;
 
-import designParser.model.impl.ClassModel;
 import designParser.model.impl.MethodModel;
 
 public class SdMessageVisitor extends SdModelVisitor {

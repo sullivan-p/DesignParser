@@ -8,7 +8,7 @@ import designParser.asm.util.AsmProcessData;
 import designParser.model.impl.AccessLevel;
 
 public class ClassFieldVisitor extends ClassVisitorDecorator {
-	ModelBuilderClassVisitor decoratedVisitor;
+	private ModelBuilderClassVisitor decoratedVisitor;
 
 	public ClassFieldVisitor(int api, ModelBuilderClassVisitor decorated) {
 		super(api, decorated);

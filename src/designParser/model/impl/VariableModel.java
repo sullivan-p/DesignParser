@@ -23,7 +23,5 @@ public class VariableModel implements IVariable {
     }
     
     @Override
-    public void accept(IModelVisitor visitor) {
-        throw new UnsupportedOperationException();
-    }
+    public void accept(IModelVisitor visitor) {}
 }

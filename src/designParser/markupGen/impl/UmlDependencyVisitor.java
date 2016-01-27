@@ -25,11 +25,11 @@ public class UmlDependencyVisitor extends UmlModelVisitor{
         return sb.toString();
     }
 
-    public void visitAssociatesWithRelation(AssociatesWithRelation r) {
+    private void visitAssociatesWithRelation(AssociatesWithRelation r) {
         sb.append(UmlArrowMarkup.getAssociatesArrow(r.getSourceName(), r.getDestinationName()));
     }
 
-    public void visitReferencesRelation(ReferencesRelation r) {
+    private void visitReferencesRelation(ReferencesRelation r) {
         sb.append(UmlArrowMarkup.getReferencesArrow(r.getSourceName(), r.getDestinationName()));
     }
 }
