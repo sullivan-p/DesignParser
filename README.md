@@ -1,3 +1,9 @@
+# Week 7 Update 1
+
+Since the last update, I have worked on implementing the sequence diagram generation functionality. The DesignParser can now generate markup for SDEdit, although I have not checked the validity of the output. The UML diagram below shows the design of the application at the time of this writing.
+
+![DesignParser UML](/docs/DesignParserUML-w7-1.png)
+
 # Week 6 Update
 
 Since last week, the design of the model visitors has been modified. The EmptyModelVisitor has been removed. Instead the model visitors use lamda expressions to set visit actions for different types of objects.
