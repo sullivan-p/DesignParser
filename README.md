@@ -1,3 +1,13 @@
+# Week 7 Update 2
+
+Not many changes were made to the design to implement singelton detection. Various models, the `ClassMethodVisitor`, and the `MethodCodeVisitor` were modified so that method models could be marked as static or not. The `UmlObjVisitor` was also modified and is where singleton detection is performed. When the `UmlObjVisitor` is visiting a class model it checks for the following conditions:
+- The class is concrete.
+- The class has at least one private or protected constructor and no public constructors.
+- The class has a public, static method that returns an instance of the class.
+If the `UmlObjVisitor` detects a singleton it outputs markup to indicate that a class is a singleton. The UML diagram below shows the state of the design after the implementation of singleton detection.
+
+![DesignParser UML](/docs/DesignParserUML-w7-2.png)
+
 # Week 7 Update 1
 
 Since the last update, I have worked on implementing the sequence diagram generation functionality. The DesignParser can now generate markup for SDEdit, although I have not checked the validity of the output. The UML diagram below shows the design of the application at the time of this writing.
@@ -30,7 +40,7 @@ The project makes use of the ASM library to parse Java byte code.  The `ModelBui
 
 ### 2. Design Model
 
-As the byte code is parsed, a model of the design is built.  This model includes objects from a hierarchy of model components, which implement the `IModelComponent` interface.  The type hierarchy of model components is intended to capture various concepts of the Java language and variuos relations between those concepts. Object models, for instance, are composed of method and field models. The hierarchy of object models includes models for classes, interfaces, and enums.  Certain object models can reference other object models to show extension or implementation.  
+As the byte code is parsed, a model of the design is built.  This model includes objects from a hierarchy of model components, which implement the `IModelComponent` interface.  The type hierarchy of model components is intended to capture various concepts of the Java language and variuos relations between those concepts. Object models, for instance, are composed of method and field models. The hierarchy of object models includes models for classes, interfaces, and enums.  Certain object models can reference other object models to show extension or implementation. 
 
 The design model and model components implement the `ITraversable` interface so that an `IModelVisitor` can be guided through the structure of a design model.
 

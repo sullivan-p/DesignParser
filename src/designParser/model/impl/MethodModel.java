@@ -42,7 +42,7 @@ public class MethodModel implements IMethod {
     
     @Override
     public String getSignature() {
-        return getSignature(mthdName, accessLevel, retTypeName, paramTypeNames, isStatic);
+        return getSignature(mthdName, accessLevel, retTypeName, paramTypeNames, isConstructor(), isStatic);
     }
     
     @Override
@@ -58,6 +58,11 @@ public class MethodModel implements IMethod {
     @Override
     public String getObjectName() {
         return objName;
+    }
+    
+    @Override
+    public String getReturnTypeName() {
+        return retTypeName;
     }
     
     @Override
@@ -96,15 +101,18 @@ public class MethodModel implements IMethod {
     }
 
     public static String getSignature(String methodName, AccessLevel accessLevel, String retTypeName, 
-            String[] paramTypeNames, boolean isStat) {
+            String[] paramTypeNames, boolean isConstr, boolean isStat) {
         String sig = "";
+        if (accessLevel != null && accessLevel != AccessLevel.Default) {
+            sig = accessLevel.toUmlString() + " ";
+        }        
         if (isStat) {
             sig += "static ";
+        } 
+        if (!isConstr) {
+            sig += retTypeName + " ";
         }
-        sig += retTypeName + " " + getAbbrevSignature(methodName, paramTypeNames);
-        if (accessLevel != AccessLevel.Default && accessLevel != null) {
-            sig = accessLevel.toUmlString() + " " + sig;
-        }
+        sig += getAbbrevSignature(methodName, paramTypeNames);
         return sig;
     }
     

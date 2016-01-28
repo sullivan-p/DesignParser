@@ -4,12 +4,14 @@ import designParser.markupGen.util.UmlProcessString;
 import designParser.model.api.IField;
 import designParser.model.api.IMethod;
 import designParser.model.api.IObject;
+import designParser.model.impl.AccessLevel;
 import designParser.model.impl.ClassModel;
 import designParser.model.impl.EnumModel;
 import designParser.model.impl.InterfaceModel;
 
 public class UmlObjVisitor extends UmlModelVisitor {
     private StringBuilder sb;
+    private boolean isSingletonClass;
 
     public UmlObjVisitor() {
         super();
@@ -47,6 +49,7 @@ public class UmlObjVisitor extends UmlModelVisitor {
             postvisitEnumModel((EnumModel) e); 
         });    
         
+        isSingletonClass = false;
         sb = new StringBuilder();
     }
 	
@@ -55,21 +58,44 @@ public class UmlObjVisitor extends UmlModelVisitor {
 	}
 	
 	private void previsitClassModel(ClassModel c) {
-	    String header;
-	    if (c.getIsConcrete()) {
-	        header = "";
-	    } else {
+	    String header = "";
+	    if (!c.getIsConcrete()) {
 	        header = "\\<\\<abstract\\>\\>";
 	    }
-        appendObjPrevisitStr(sb, c, header);
+	    
+	    // Determine whether the currently visited class is a singleton.
+	    boolean hasGetInstMthd = false;
+	    boolean hiddenContructors = false;
+	    for (IMethod m : c.getAllMethodModels()) {
+	        if (m.getReturnTypeName().equals(c.getName()) &&
+                m.isStatic() && m.getAccessLevel() == AccessLevel.Public) {
+	            hasGetInstMthd = true;
+	        }
+	        if (m.isConstructor()) {        
+                if (m.getAccessLevel() == AccessLevel.Private || m.getAccessLevel() == AccessLevel.Protected) {
+                    hiddenContructors = true;
+                } else {
+                    // Having even one public constructor breaks the singleton pattern.
+                    hiddenContructors = false;
+                    break;
+                }
+	        }
+	    }
+	    isSingletonClass = hasGetInstMthd && hiddenContructors && c.getIsConcrete();
+	    
+	    String stereotype = "";
+	    if (isSingletonClass) {
+	        stereotype = "\\<\\<singleton\\>\\>";
+	    }
+        appendObjPrevisitStr(sb, c, header, stereotype);
 	}    
 
 	private void previsitInterfaceModel(InterfaceModel i) {
-	    appendObjPrevisitStr(sb, i, "\\<\\<interface\\>\\>");
+	    appendObjPrevisitStr(sb, i, "\\<\\<interface\\>\\>", "");
 	}	
 	
 	private void previsitEnumModel(EnumModel e) {
-        appendObjPrevisitStr(sb, e, "\\<\\<enum\\>\\>");
+        appendObjPrevisitStr(sb, e, "\\<\\<enum\\>\\>", "");
 	}	
 	
 	private void visitClassModel(ClassModel c) {
@@ -91,15 +117,15 @@ public class UmlObjVisitor extends UmlModelVisitor {
     }
 	
 	private void postvisitClassModel(ClassModel c) {
-	    appendObjPostvisitStr(sb);
+	    appendObjPostvisitStr(sb, isSingletonClass);
 	}
 
 	private void postvisitInterfaceModel(InterfaceModel i) {
-	    appendObjPostvisitStr(sb);
+	    appendObjPostvisitStr(sb, false);
 	}
 
 	private void postvisitEnumModel(EnumModel e) {
-	    appendObjPostvisitStr(sb);
+	    appendObjPostvisitStr(sb, false);
 	}
 	
 	private static void appendMethodDeclarations(StringBuilder s, IObject o) {
@@ -111,7 +137,7 @@ public class UmlObjVisitor extends UmlModelVisitor {
 	}
 	
 	private static void appendObjPrevisitStr(StringBuilder s, IObject o,
-	        String extraHeader) {
+	        String extraHeader, String stereotype) {
         s.append(o.getName());
         s.append(" [\n");
         s.append("shape = \"record\",\n");
@@ -121,11 +147,18 @@ public class UmlObjVisitor extends UmlModelVisitor {
             s.append("\\n");
         }
         s.append(o.getName());
+        if (stereotype != null && stereotype != "") {
+             s.append("\\n");           
+             s.append(stereotype);
+        }
         s.append("|");
     }
 
-	private static void appendObjPostvisitStr(StringBuilder s) {
+	private static void appendObjPostvisitStr(StringBuilder s, boolean isSingleton) {
         s.append("}\"\n");
+        if (isSingleton) {
+            s.append("color = blue\n");
+        }
         s.append("];\n");	
     }
 }

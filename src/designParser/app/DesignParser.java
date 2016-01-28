@@ -15,17 +15,17 @@ import designParser.model.api.IDesignModel;
 import designParser.model.impl.DesignModel;
 
 public class DesignParser {
-	public final static String MODEL_NAME = "AppLauncher";
-	public final static String[] OBJECT_NAMES = { "appLauncherSltn.AppLauncherApplication",
-			"appLauncherSltn.ApplicationLauncher", "appLauncherSltn.DataFileRunner",
-			"appLauncherSltn.DirectoryChangeLogger", "appLauncherSltn.DirectoryEvent",
-			"appLauncherSltn.DirectoryMonitorService", "appLauncherSltn.ExecutableFileRunner",
-			"appLauncherSltn.IApplicationLauncher", "appLauncherSltn.IDirectoryListener",
-			"appLauncherSltn.IDirectoryMonitorService", "appLauncherSltn.ProcessRunner" };
+//	public final static String MODEL_NAME = "AppLauncher";
+//	public final static String[] OBJECT_NAMES = { "appLauncherSltn.AppLauncherApplication",
+//			"appLauncherSltn.ApplicationLauncher", "appLauncherSltn.DataFileRunner",
+//			"appLauncherSltn.DirectoryChangeLogger", "appLauncherSltn.DirectoryEvent",
+//			"appLauncherSltn.DirectoryMonitorService", "appLauncherSltn.ExecutableFileRunner",
+//			"appLauncherSltn.IApplicationLauncher", "appLauncherSltn.IDirectoryListener",
+//			"appLauncherSltn.IDirectoryMonitorService", "appLauncherSltn.ProcessRunner" };
 
-//    public final static String MODEL_NAME = "ChocolateBoiler";
-//    public final static String[] OBJECT_NAMES = { "headfirst.singleton.chocolate.ChocolateBoiler",
-//            "headfirst.singleton.chocolate.ChocolateController" };
+    public final static String MODEL_NAME = "ChocolateBoiler";
+    public final static String[] OBJECT_NAMES = { "headfirst.singleton.chocolate.ChocolateBoiler",
+            "headfirst.singleton.chocolate.ChocolateController" };
     
 //	 private final static String MODEL_NAME = "AbstractPizzaFactory";
 //	 private final static String[] OBJECT_NAMES = {
