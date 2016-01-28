@@ -32,11 +32,11 @@ public interface IDesignModel extends ITraversable {
     public void putExtendsRelation(String srcName, String dstName);
 
     public void putMethodModel(String objName, String methodName, AccessLevel accessLevel, String retTypeName,
-            String[] paramTypeNames);
+            String[] paramTypeNames, boolean isStatic);
     
     public void putFieldModel(String objName, String fieldName, AccessLevel accessLevel, String fieldSig);
 
     public void putMethodCall(String callerClassName, String callerMethodName, String[] callerParamTypeNames,
             String calleeClassName, String calleeMethodName, String[] calleeParamTypeNames, String calleeReturnTypeName,
-            boolean isConstructor);
+            boolean isConstructor, boolean isStatic);
 }

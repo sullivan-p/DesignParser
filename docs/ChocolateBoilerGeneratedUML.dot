@@ -1,0 +1,19 @@
+digraph ChocolateBoiler{
+rankdir=BT;
+
+ChocolateController [
+shape = "record",
+label = "{ChocolateController||+ void main(String[])\l+ ChocolateController ChocolateController()\l}"
+];
+
+ChocolateBoiler [
+shape = "record",
+label = "{ChocolateBoiler|- boolean boiled\l- ChocolateBoiler uniqueInstance\l- boolean empty\l|+ boolean isEmpty()\l- ChocolateBoiler ChocolateBoiler()\l+ void drain()\l+ boolean isBoiled()\l+ ChocolateBoiler getInstance()\l+ void boil()\l+ void fill()\l}"
+];
+
+ChocolateBoiler -> ChocolateBoiler [arrowhead="vee", style="solid"];
+
+ChocolateBoiler [
+color = blue
+];
+}

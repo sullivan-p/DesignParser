@@ -13,14 +13,16 @@ public class MethodModel implements IMethod {
     private String retTypeName;
     private String[] paramTypeNames;   
     private List<IMethod> methodCalls;
+    private boolean isStatic;
 
     public MethodModel(String objName, String mthdName, AccessLevel accessLevel,
-            String retTypeName, String[] paramTypeNames) {
+            String retTypeName, String[] paramTypeNames, boolean isStatic) {
         this.objName = objName;
         this.mthdName = mthdName;
         this.accessLevel = accessLevel;
         this.retTypeName = retTypeName;
         this.paramTypeNames = paramTypeNames;
+        this.isStatic = isStatic;
         this.methodCalls = new ArrayList<IMethod>();
     }
     
@@ -40,7 +42,7 @@ public class MethodModel implements IMethod {
     
     @Override
     public String getSignature() {
-        return getSignature(mthdName, accessLevel, retTypeName, paramTypeNames);
+        return getSignature(mthdName, accessLevel, retTypeName, paramTypeNames, isStatic);
     }
     
     @Override
@@ -69,6 +71,11 @@ public class MethodModel implements IMethod {
     }
     
     @Override
+    public boolean isStatic() {
+        return isStatic;
+    }
+    
+    @Override
     public void setAccessLevel(AccessLevel accessLevel) {
         this.accessLevel = accessLevel;
     }
@@ -89,8 +96,12 @@ public class MethodModel implements IMethod {
     }
 
     public static String getSignature(String methodName, AccessLevel accessLevel, String retTypeName, 
-            String[] paramTypeNames) {
-        String sig = retTypeName + " " + getAbbrevSignature(methodName, paramTypeNames);
+            String[] paramTypeNames, boolean isStat) {
+        String sig = "";
+        if (isStat) {
+            sig += "static ";
+        }
+        sig += retTypeName + " " + getAbbrevSignature(methodName, paramTypeNames);
         if (accessLevel != AccessLevel.Default && accessLevel != null) {
             sig = accessLevel.toUmlString() + " " + sig;
         }

@@ -6,9 +6,9 @@ import designParser.model.impl.AccessLevel;
 
 public interface IObject extends IDataType {
     public void putMethodModel(String methodName, AccessLevel accessLevel, 
-            String retTypeName, String[] paramTypeNames);    
+            String retTypeName, String[] paramTypeNames, boolean isStatic);    
     public void putMethodModel(String methodName, String retTypeName, 
-            String[] paramTypeNames);
+            String[] paramTypeNames, boolean isStatic);
     public void putFieldModel(String fieldName, AccessLevel accessLevel, String fieldSig);
     public void putMethodCall(String callerMethodName, String[] callerParamTypeNames, IMethod calleeMethodModel);
     public IMethod getMethodModel(String methodName, String[] paramTypeNames);

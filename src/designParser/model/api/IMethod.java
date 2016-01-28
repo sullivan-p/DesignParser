@@ -6,6 +6,7 @@ public interface IMethod extends IModelComponent {
     public String getObjectName();
     public AccessLevel getAccessLevel();
     public boolean isConstructor();
+    public boolean isStatic();
     public String getSignature();
     public String getAbbrevSignature();
     public void setAccessLevel(AccessLevel accessLevel);

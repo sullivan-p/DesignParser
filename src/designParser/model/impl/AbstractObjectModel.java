@@ -47,10 +47,10 @@ public abstract class AbstractObjectModel implements IObject {
     
     @Override
     public void putMethodModel(String methodName, AccessLevel accessLevel, 
-            String retTypeName, String[] paramTypeNames) {
+            String retTypeName, String[] paramTypeNames, boolean isStatic) {
         
         // Create or update model using no information about access level.
-        putMethodModel(methodName, retTypeName, paramTypeNames);
+        putMethodModel(methodName, retTypeName, paramTypeNames, isStatic);
         
         // If access level is provided, update access level information.
         String sig = MethodModel.getAbbrevSignature(methodName, paramTypeNames);
@@ -61,13 +61,13 @@ public abstract class AbstractObjectModel implements IObject {
     }
     
     @Override
-    public void putMethodModel(String methodName, String retTypeName, String[] paramTypeNames) {
+    public void putMethodModel(String methodName, String retTypeName, String[] paramTypeNames, boolean isStatic) {
         String sig = MethodModel.getAbbrevSignature(methodName, paramTypeNames);
         IMethod maybeMethod = abbrevSigToMethod.get(sig);
         if (maybeMethod == null) {
             // Instantiate the model if no model has been created for this 
             // signature.
-            IMethod methodModel = new MethodModel(name, methodName, null, retTypeName, paramTypeNames);
+            IMethod methodModel = new MethodModel(name, methodName, null, retTypeName, paramTypeNames, isStatic);
             abbrevSigToMethod.put(sig, methodModel);
         } else {
             // Update the existing method model.

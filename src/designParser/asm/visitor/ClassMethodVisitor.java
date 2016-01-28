@@ -30,9 +30,10 @@ public class ClassMethodVisitor extends ClassVisitorDecorator {
 		    name = objName;
 		    retTypeName = objName;
 		}          
+ 		boolean isStatic = AsmProcessData.isStatic(access);
  		
         // Add a model for this method to the design model.
-        this.getModel().putMethodModel(objName, name, accessLevel, retTypeName, paramTypeNames);
+        this.getModel().putMethodModel(objName, name, accessLevel, retTypeName, paramTypeNames, isStatic);
         
         // The currently visited object has a references relation with the 
         // method's parameter types and return type.

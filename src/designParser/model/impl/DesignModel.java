@@ -118,17 +118,17 @@ public class DesignModel implements IDesignModel {
     
     @Override
     public void putMethodModel(String objName, String methodName, 
-            AccessLevel accessLevel, String retTypeName, String[] paramTypeNames) {
+            AccessLevel accessLevel, String retTypeName, String[] paramTypeNames, boolean isStatic) {
         
         StringBuilder error = new StringBuilder();
         error.append("The object model to which this method belongs must ");
         error.append("be created before methods can be assigned to it.");
         
         if (accessLevel == null) {
-            putMethodModel(objName, methodName, retTypeName, paramTypeNames);
+            putMethodModel(objName, methodName, retTypeName, paramTypeNames, isStatic);
         } else {
             getObjModelThenDo(objName, error.toString(), (objModel) -> {
-                objModel.putMethodModel(methodName, accessLevel, retTypeName, paramTypeNames);
+                objModel.putMethodModel(methodName, accessLevel, retTypeName, paramTypeNames, isStatic);
             });
         }
     }    
@@ -138,14 +138,14 @@ public class DesignModel implements IDesignModel {
      * access level.
      */
     private void putMethodModel(String objName, String methodName, 
-            String retTypeName, String[] paramTypeNames) {
+            String retTypeName, String[] paramTypeNames, boolean isStatic) {
         
         StringBuilder error = new StringBuilder();
         error.append("The object model to which this method belongs must ");
         error.append("be created before methods can be assigned to it.");
 
         getObjModelThenDo(objName, error.toString(), (objModel) -> {
-            objModel.putMethodModel( methodName, retTypeName, paramTypeNames);
+            objModel.putMethodModel( methodName, retTypeName, paramTypeNames, isStatic);
         });
     }    
    
@@ -182,7 +182,7 @@ public class DesignModel implements IDesignModel {
     public void putMethodCall(
             String callerClassName, String callerMethodName, String[] callerParamTypeNames,
             String calleeClassName, String calleeMethodName, String[] calleeParamTypeNames, 
-            String calleeReturnTypeName, boolean isConstructor) {
+            String calleeReturnTypeName, boolean isConstructor, boolean isStatic) {
                 
         // The object to which the caller method belongs should not be modeled,
         // so do nothing.
@@ -210,13 +210,13 @@ public class DesignModel implements IDesignModel {
                 putClassModel(calleeClassName, true);
                 calleeObjModel = nameToModelMap.get(calleeClassName);
             }
-            calleeObjModel.putMethodModel(calleeMethodName, calleeReturnTypeName, calleeParamTypeNames);
+            calleeObjModel.putMethodModel(calleeMethodName, calleeReturnTypeName, calleeParamTypeNames, isStatic);
             calleeMethodModel = calleeObjModel.getMethodModel(calleeMethodName, calleeParamTypeNames);
         } else {
             // The model for the called method does not belong to an object 
             // model, since the object is not being modeled.
             calleeMethodModel = new MethodModel(calleeClassName, calleeMethodName, null,
-                    calleeReturnTypeName, calleeParamTypeNames);
+                    calleeReturnTypeName, calleeParamTypeNames, isStatic);
         }
 
         // Add the method model to the caller method's list of method calls.

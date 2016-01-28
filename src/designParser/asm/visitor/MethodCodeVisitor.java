@@ -52,6 +52,10 @@ public class MethodCodeVisitor extends MethodVisitor {
         String[] calleeParamTypesNames = AsmProcessData.prettyParamTypesFromMthdDesc(desc);
         String calleeReturnTypeName = AsmProcessData.prettyRetTypeFromMthdDesc(desc);
         String calleeMethodName;
+        boolean isStatic = opcode == Opcodes.INVOKESTATIC;
+        if (isStatic) {
+            int x = 0;
+        }
         
         // Handle the special case for constructor methods.
         if (isConstructor) {
@@ -84,7 +88,8 @@ public class MethodCodeVisitor extends MethodVisitor {
         }
         
         model.putMethodCall(callerClassName, callerMethodName, callerParamTypeNames, 
-                calleeClassName, calleeMethodName, calleeParamTypesNames, calleeReturnTypeName, isConstructor);
+                calleeClassName, calleeMethodName, calleeParamTypesNames, calleeReturnTypeName, 
+                isConstructor, isStatic);
     }    
     
     @Override

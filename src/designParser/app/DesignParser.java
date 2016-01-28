@@ -23,6 +23,10 @@ public class DesignParser {
 			"appLauncherSltn.IApplicationLauncher", "appLauncherSltn.IDirectoryListener",
 			"appLauncherSltn.IDirectoryMonitorService", "appLauncherSltn.ProcessRunner" };
 
+//    public final static String MODEL_NAME = "ChocolateBoiler";
+//    public final static String[] OBJECT_NAMES = { "headfirst.singleton.chocolate.ChocolateBoiler",
+//            "headfirst.singleton.chocolate.ChocolateController" };
+    
 //	 private final static String MODEL_NAME = "AbstractPizzaFactory";
 //	 private final static String[] OBJECT_NAMES = {
 //    	 "pizzaStore.Cheese",
@@ -66,14 +70,14 @@ public class DesignParser {
 			designModel = methodVisitor.getModel();
 		}
 
-//		MarkupGenerator umlGenerator = new UmlGenerator(MODEL_NAME, designModel);
-//		System.out.println(umlGenerator.getMarkup());
+		MarkupGenerator umlGenerator = new UmlGenerator(MODEL_NAME, designModel);
+		System.out.println(umlGenerator.getMarkup());
 
-		String mthdClassName = "DesignParser";
-		String mthdName = "main";
-		String[] mthdParamTypes = { "String[]" };
-		int callDepth = 5;
-		MarkupGenerator sdGenerator = new SdGenerator(designModel, mthdClassName, mthdName, mthdParamTypes, callDepth);
-		System.out.println(sdGenerator.getMarkup());
+//		String mthdClassName = "DesignParser";
+//		String mthdName = "main";
+//		String[] mthdParamTypes = { "String[]" };
+//		int callDepth = 5;
+//		MarkupGenerator sdGenerator = new SdGenerator(designModel, mthdClassName, mthdName, mthdParamTypes, callDepth);
+//		System.out.println(sdGenerator.getMarkup());
 	}
 }

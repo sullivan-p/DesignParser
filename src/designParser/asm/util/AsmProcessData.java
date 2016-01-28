@@ -86,6 +86,10 @@ public final class AsmProcessData {
         }
     }
     
+    public static boolean isStatic(int opcode) {
+        return (opcode & Opcodes.ACC_STATIC) == Opcodes.ACC_STATIC;
+    }
+    
     public static String prettyRetTypeFromMthdDesc(String mthdDescriptor) {
         int paramsEnd = mthdDescriptor.indexOf(')');
         String returnSubStr = mthdDescriptor.substring(paramsEnd+1);
