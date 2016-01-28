@@ -1,4 +1,4 @@
-package headfirst.singleton.chocolate;
+package testModels.singleton;
  
 public class ChocolateController {
 	public static void main(String args[]) {
