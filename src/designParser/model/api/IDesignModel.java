@@ -1,5 +1,7 @@
 package designParser.model.api;
 
+import java.util.Collection;
+
 import designParser.model.impl.AccessLevel;
 
 public interface IDesignModel extends ITraversable {
@@ -42,10 +44,21 @@ public interface IDesignModel extends ITraversable {
     
     public IObject getObjectModel(String name);
     
+    public IDependencyRelation getDepRltn(String srcName, String dstName);
+    
+    public Collection<IDependencyRelation> getDepRltnsForSrc(String srcName);
+    
     /**
      * Add the given object model to the design model if another object model 
      * with the same name already exists. Replaces the old object model with the
      * same name.
      */
     public void replaceWithObjectModel(IObject model);
+    
+    /**
+     * Add the given dependency relation to the design model if another 
+     * dependency relation with the same source and destination names already
+     * exists. Replaces the old dependency relation with the same name.
+     */
+    public void replaceWithDepRltn(IDependencyRelation r);
 }

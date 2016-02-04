@@ -66,6 +66,11 @@ public class MethodModel implements IMethod {
     }
     
     @Override
+    public String[] getParamTypeNames() {
+        return paramTypeNames;
+    }
+    
+    @Override
     public AccessLevel getAccessLevel() {
         return accessLevel;
     }

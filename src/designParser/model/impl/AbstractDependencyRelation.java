@@ -1,14 +1,16 @@
 package designParser.model.impl;
 
+import designParser.model.api.IDependencyRelation;
+
 public abstract class AbstractDependencyRelation extends AbstractObjectRelation 
-    implements Comparable<AbstractDependencyRelation> {
+    implements IDependencyRelation {
 
     public AbstractDependencyRelation(String srcNamel, String dstName) {
         super(srcNamel, dstName);
     }
     
     @Override
-    public int compareTo(AbstractDependencyRelation rltn) {
+    public int compareTo(IDependencyRelation rltn) {
         
         // Order relations alphabetically by the source object and then the
         // destination object names.
@@ -33,7 +35,7 @@ public abstract class AbstractDependencyRelation extends AbstractObjectRelation
         return 0;
     }
     
-    private static int getRelationTypeRank(AbstractDependencyRelation r) {
+    private static int getRelationTypeRank(IDependencyRelation r) {
         if (r.getClass().isAssignableFrom(AssociatesWithRelation.class)) {
             return 2;
         } else if (r.getClass().isAssignableFrom(ReferencesRelation.class)) {

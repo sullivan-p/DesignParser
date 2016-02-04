@@ -1,5 +1,7 @@
 package designParser.model.impl;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -9,13 +11,14 @@ import designParser.asm.util.AsmProcessData;
 import designParser.model.api.IObject;
 import designParser.visitor.api.IModelVisitor;
 import pair.impl.Pair;
+import designParser.model.api.IDependencyRelation;
 import designParser.model.api.IDesignModel;
 import designParser.model.api.IMethod;
 
 public class DesignModel implements IDesignModel {	
     private Map<String, IObject> nameToModelMap;
     private Map<Pair<String, String>, AbstractHierarchyRelation> hierarchyRelations;
-    private Map<Pair<String, String>, AbstractDependencyRelation> dependencyRelations;
+    private Map<Pair<String, String>, IDependencyRelation> dependencyRelations;
 
 	public DesignModel(String[] names) {
 	    nameToModelMap = new HashMap<String, IObject>();
@@ -24,7 +27,7 @@ public class DesignModel implements IDesignModel {
 	        nameToModelMap.put(unqualifiedObjName, null);
 	    }
 	    hierarchyRelations = new HashMap<Pair<String, String>, AbstractHierarchyRelation>();
-        dependencyRelations = new HashMap<Pair<String, String>, AbstractDependencyRelation>();
+        dependencyRelations = new HashMap<Pair<String, String>, IDependencyRelation>();
 	}
 		
 	@Override
@@ -38,7 +41,7 @@ public class DesignModel implements IDesignModel {
         for (AbstractHierarchyRelation r : hierarchyRelations.values()) {
             r.accept(visitor);
         }        
-        for (AbstractDependencyRelation r : dependencyRelations.values()) {
+        for (IDependencyRelation r : dependencyRelations.values()) {
             r.accept(visitor);
         }
         visitor.postvisit(this);
@@ -302,14 +305,40 @@ public class DesignModel implements IDesignModel {
     // Methods for allowing pattern detectors to get and replace objects models
     //--------------------------------------------------------------------------
     
+    @Override
     public IObject getObjectModel(String name) {
         return nameToModelMap.get(name);
     }
+ 
+    @Override
+    public IDependencyRelation getDepRltn(String srcName, String dstName) {
+        return dependencyRelations.get(new Pair<String, String>(srcName, dstName));
+    }   
     
+    @Override
+    public Collection<IDependencyRelation> getDepRltnsForSrc(String srcName) {
+        Collection<IDependencyRelation> rltns = new ArrayList<IDependencyRelation>();
+        for (Pair<String, String> namePair : dependencyRelations.keySet()) {
+            if (namePair.getFirst().equals(srcName)) {
+                rltns.add(dependencyRelations.get(namePair));
+            }
+        }
+        return rltns;
+    }
+    
+    @Override
     public void replaceWithObjectModel(IObject model) {
         String name = model.getName();
         if (nameToModelMap.containsKey(name)) {
             nameToModelMap.put(name, model);
+        }
+    }
+
+    @Override
+    public void replaceWithDepRltn(IDependencyRelation r) {
+        Pair<String, String> names = new Pair<String, String>(r.getSourceName(), r.getDestinationName());
+        if (dependencyRelations.containsKey(names)) {
+            dependencyRelations.put(names, r);
         }
     }
 }

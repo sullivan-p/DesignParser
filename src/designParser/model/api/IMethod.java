@@ -5,6 +5,7 @@ import designParser.model.impl.AccessLevel;
 public interface IMethod extends IModelComponent {
     public String getObjectName();
     public String getReturnTypeName();
+    public String[] getParamTypeNames();
     public AccessLevel getAccessLevel();
     public boolean isConstructor();
     public boolean isStatic();

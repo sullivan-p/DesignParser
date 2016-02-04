@@ -27,5 +27,4 @@ public abstract class DesignParserFramework {
     protected abstract Collection<PatternDetector> getPatternDetectors();
 
     protected abstract MarkupGenerator getMarkupGenerator(IDesignModel designModel);
-    
 }

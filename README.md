@@ -1,3 +1,17 @@
+# Week 8 Update
+
+Since last week, I have not implemented any new pattern detection. I have, however, refactored parts of the design to make the addition of new pattern detectors easier.
+
+Previously, singleton detection was performed in the UmlObjectVisitor. Design pattern detection is now performed in a PatternDetector visitor which is passed over the design model. After the pattern detector finds a singleton pattern, it replaces the appropriate object model in the design model with a decorated object model. The decoration that wraps the object model indicates that the object is a singleton.
+
+After the pattern detector has been passed over the design model, an additional visitor that is responsible for markup generation can output particular markup if it visits one of the design pattern decorations.
+
+The various steps for generating the design model, detecting patterns, and generating markup are now wrapped together and performed in a DesignParserFramework. The DesignParserFramework class uses the Template pattern to specify the algorithm for performing these steps.    
+
+The current state of the design is captured by the UML below. Classes that are part of a decorator pattern are green. The red subclasses of PatternDetector still need to be implemented as part of decorator and adapter pattern detection. 
+
+![DesignParser UML](/docs/DesignParserUML-w8-1.png)
+
 # Week 7 Update 2
 
 Not many changes were made to the design to implement singelton detection. Various models, the `ClassMethodVisitor`, and the `MethodCodeVisitor` were modified so that method models could be marked as static or not. The `UmlObjVisitor` was also modified and is where singleton detection is performed. When the `UmlObjVisitor` is visiting a class model it checks for the following conditions:
