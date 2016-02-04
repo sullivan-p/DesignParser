@@ -39,4 +39,13 @@ public interface IDesignModel extends ITraversable {
     public void putMethodCall(String callerClassName, String callerMethodName, String[] callerParamTypeNames,
             String calleeClassName, String calleeMethodName, String[] calleeParamTypeNames, String calleeReturnTypeName,
             boolean isConstructor, boolean isStatic);
+    
+    public IObject getObjectModel(String name);
+    
+    /**
+     * Add the given object model to the design model if another object model 
+     * with the same name already exists. Replaces the old object model with the
+     * same name.
+     */
+    public void replaceWithObjectModel(IObject model);
 }

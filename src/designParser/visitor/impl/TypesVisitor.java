@@ -1,11 +1,11 @@
-package designParser.markupGen.impl;
+package designParser.visitor.impl;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import designParser.markupGen.api.IModelVisitor;
 import designParser.model.api.ITraversable;
+import designParser.visitor.api.IModelVisitor;
 
 public class TypesVisitor implements IModelVisitor {
     private Map<Class<?>, Consumer<ITraversable>> typeNameToPrevisitMethod;

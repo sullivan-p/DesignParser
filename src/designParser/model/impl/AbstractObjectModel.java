@@ -4,10 +4,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import designParser.markupGen.api.IModelVisitor;
 import designParser.model.api.IField;
 import designParser.model.api.IMethod;
 import designParser.model.api.IObject;
+import designParser.visitor.api.IModelVisitor;
 
 public abstract class AbstractObjectModel implements IObject {
     private String name;
@@ -118,6 +118,11 @@ public abstract class AbstractObjectModel implements IObject {
         for (IMethod m : methods) {
             abbrevSigToMethod.put(m.getAbbrevSignature(), m);
         }
+    }
+    
+    @Override
+    public boolean getIsConcrete() {
+        return false;
     }
     
     /**

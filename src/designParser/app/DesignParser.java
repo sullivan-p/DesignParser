@@ -8,6 +8,8 @@ import designParser.asm.visitor.ClassDeclarationVisitor;
 import designParser.asm.visitor.ClassFieldVisitor;
 import designParser.asm.visitor.ClassMethodVisitor;
 import designParser.asm.visitor.ModelBuilderClassVisitor;
+import designParser.framework.api.DesignParserFramework;
+import designParser.framework.impl.DesignParserUmlGenerator;
 import designParser.markupGen.api.MarkupGenerator;
 import designParser.markupGen.impl.SdGenerator;
 import designParser.markupGen.impl.UmlGenerator;
@@ -23,9 +25,16 @@ public class DesignParser {
 //			"appLauncherSltn.IApplicationLauncher", "appLauncherSltn.IDirectoryListener",
 //			"appLauncherSltn.IDirectoryMonitorService", "appLauncherSltn.ProcessRunner" };
 
-    public final static String MODEL_NAME = "ChocolateBoiler";
-    public final static String[] OBJECT_NAMES = { "headfirst.singleton.chocolate.ChocolateBoiler",
-            "headfirst.singleton.chocolate.ChocolateController" };
+	public final static String CONFIG = 
+	        "appLauncherSltn.AppLauncherApplication appLauncherSltn.ApplicationLauncher " + 
+	        "appLauncherSltn.DataFileRunner appLauncherSltn.DirectoryChangeLogger " +
+	        "appLauncherSltn.DirectoryEvent appLauncherSltn.DirectoryMonitorService " + 
+	        "appLauncherSltn.ExecutableFileRunner appLauncherSltn.IApplicationLauncher " + 
+	        "appLauncherSltn.IDirectoryListener appLauncherSltn.IDirectoryMonitorService " +
+	        "appLauncherSltn.ProcessRunner";
+//    public final static String MODEL_NAME = "ChocolateBoiler";
+//    public final static String[] OBJECT_NAMES = { "headfirst.singleton.chocolate.ChocolateBoiler",
+//            "headfirst.singleton.chocolate.ChocolateController" };
     
 //	 private final static String MODEL_NAME = "AbstractPizzaFactory";
 //	 private final static String[] OBJECT_NAMES = {
@@ -57,27 +66,30 @@ public class DesignParser {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		IDesignModel designModel = new DesignModel(OBJECT_NAMES);
-		for (String className : OBJECT_NAMES) {
-			ClassReader reader = new ClassReader(className);
+//		IDesignModel designModel = new DesignModel(OBJECT_NAMES);
+//		for (String className : OBJECT_NAMES) {
+//			ClassReader reader = new ClassReader(className);
+//
+//			ModelBuilderClassVisitor decVisitor;
+//			decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, designModel);
+//			ModelBuilderClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, decVisitor);
+//			ModelBuilderClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor);
+//
+//			reader.accept(methodVisitor, ClassReader.EXPAND_FRAMES);
+//			designModel = methodVisitor.getModel();
+//		}
 
-			ModelBuilderClassVisitor decVisitor;
-			decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, designModel);
-			ModelBuilderClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, decVisitor);
-			ModelBuilderClassVisitor methodVisitor = new ClassMethodVisitor(Opcodes.ASM5, fieldVisitor);
+//		MarkupGenerator umlGenerator = new UmlGenerator(MODEL_NAME, designModel);
+//		System.out.println(umlGenerator.getMarkup());
 
-			reader.accept(methodVisitor, ClassReader.EXPAND_FRAMES);
-			designModel = methodVisitor.getModel();
-		}
-
-		MarkupGenerator umlGenerator = new UmlGenerator(MODEL_NAME, designModel);
-		System.out.println(umlGenerator.getMarkup());
-
-//		String mthdClassName = "DesignParser";
+//		String mthdClassName = "AppLauncherApplication";
 //		String mthdName = "main";
 //		String[] mthdParamTypes = { "String[]" };
 //		int callDepth = 5;
 //		MarkupGenerator sdGenerator = new SdGenerator(designModel, mthdClassName, mthdName, mthdParamTypes, callDepth);
 //		System.out.println(sdGenerator.getMarkup());
+	    DesignParserFramework dp = new DesignParserUmlGenerator();
+	    String markup = dp.process(CONFIG);
+	    System.out.println(markup);
 	}
 }

@@ -1,7 +1,7 @@
 package designParser.model.impl;
 
-import designParser.markupGen.api.IModelVisitor;
 import designParser.model.api.IVariable;
+import designParser.visitor.api.IModelVisitor;
 
 public class VariableModel implements IVariable {
     private String name;

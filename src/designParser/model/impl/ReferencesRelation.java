@@ -1,6 +1,6 @@
 package designParser.model.impl;
 
-import designParser.markupGen.api.IModelVisitor;
+import designParser.visitor.api.IModelVisitor;
 
 public class ReferencesRelation extends AbstractDependencyRelation {
 

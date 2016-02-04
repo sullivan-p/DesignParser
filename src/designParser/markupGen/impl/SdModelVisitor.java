@@ -1,5 +1,7 @@
 package designParser.markupGen.impl;
 
+import designParser.visitor.impl.TypesVisitor;
+
 public abstract class SdModelVisitor extends TypesVisitor {    
     public abstract String getSdMarkup();
     

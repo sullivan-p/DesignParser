@@ -1,6 +1,6 @@
 package designParser.model.api;
 
-import designParser.markupGen.api.IModelVisitor;
+import designParser.visitor.api.IModelVisitor;
 
 public abstract class PrimitiveDataType implements IDataType {
     private String name;

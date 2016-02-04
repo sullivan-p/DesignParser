@@ -3,8 +3,8 @@ package designParser.model.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import designParser.markupGen.api.IModelVisitor;
 import designParser.model.api.IMethod;
+import designParser.visitor.api.IModelVisitor;
 
 public class MethodModel implements IMethod {
     private String objName;

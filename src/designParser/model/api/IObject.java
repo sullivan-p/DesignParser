@@ -16,4 +16,5 @@ public interface IObject extends IDataType {
     public Collection<IMethod> getAllMethodModels();
     public void setFieldModels(Collection<IField> fields);
     public void setMethodModels(Collection<IMethod> methods);
+    public boolean getIsConcrete();
 }

@@ -6,8 +6,8 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import designParser.asm.util.AsmProcessData;
-import designParser.markupGen.api.IModelVisitor;
 import designParser.model.api.IObject;
+import designParser.visitor.api.IModelVisitor;
 import pair.impl.Pair;
 import designParser.model.api.IDesignModel;
 import designParser.model.api.IMethod;
@@ -294,6 +294,22 @@ public class DesignModel implements IDesignModel {
         if (!dependencyRelations.keySet().contains(objNames) ||
             rltn.compareTo(dependencyRelations.get(objNames)) > 0) {
             dependencyRelations.put(objNames, rltn);
+        }
+    }
+
+    
+    //--------------------------------------------------------------------------
+    // Methods for allowing pattern detectors to get and replace objects models
+    //--------------------------------------------------------------------------
+    
+    public IObject getObjectModel(String name) {
+        return nameToModelMap.get(name);
+    }
+    
+    public void replaceWithObjectModel(IObject model) {
+        String name = model.getName();
+        if (nameToModelMap.containsKey(name)) {
+            nameToModelMap.put(name, model);
         }
     }
 }

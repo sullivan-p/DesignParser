@@ -1,7 +1,7 @@
 package designParser.model.impl;
 
-import designParser.markupGen.api.IModelVisitor;
 import designParser.model.api.IField;
+import designParser.visitor.api.IModelVisitor;
 
 public class FieldModel extends VariableModel implements IField {
     private AccessLevel accessLevel;

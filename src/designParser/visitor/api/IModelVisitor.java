@@ -1,4 +1,4 @@
-package designParser.markupGen.api;
+package designParser.visitor.api;
 
 public interface IModelVisitor extends IVisitor {
 
