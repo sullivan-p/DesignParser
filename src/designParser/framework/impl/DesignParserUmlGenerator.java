@@ -17,6 +17,7 @@ import designParser.markupGen.impl.UmlGenerator;
 import designParser.model.api.IDesignModel;
 import designParser.model.impl.DesignModel;
 import designParser.patternDet.api.PatternDetector;
+import designParser.patternDet.impl.DecoratorDetector;
 import designParser.patternDet.impl.SingletonDetector;
 
 public class DesignParserUmlGenerator extends DesignParserFramework {
@@ -31,8 +32,12 @@ public class DesignParserUmlGenerator extends DesignParserFramework {
     protected IDesignModel generateDesignModel(String[] objNames) throws IOException {
         IDesignModel designModel = new DesignModel(objNames);
         for (String className : objNames) {
-            ClassReader reader = new ClassReader(className);
-
+            ClassReader reader;
+            try {
+                reader = new ClassReader(className);
+            } catch (IOException e) {
+                throw new IOException("The class, " + className + " was not found.");
+            }
             ModelBuilderClassVisitor decVisitor;
             decVisitor = new ClassDeclarationVisitor(Opcodes.ASM5, designModel);
             ModelBuilderClassVisitor fieldVisitor = new ClassFieldVisitor(Opcodes.ASM5, decVisitor);
@@ -48,6 +53,7 @@ public class DesignParserUmlGenerator extends DesignParserFramework {
     protected Collection<PatternDetector> getPatternDetectors() {
         Collection<PatternDetector> patternDetectors = new ArrayList<PatternDetector>();
         patternDetectors.add(new SingletonDetector());
+        patternDetectors.add(new DecoratorDetector());
         return patternDetectors;
     }
 

@@ -1,20 +1,8 @@
 package designParser.app;
 
 import java.io.IOException;
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.Opcodes;
-
-import designParser.asm.visitor.ClassDeclarationVisitor;
-import designParser.asm.visitor.ClassFieldVisitor;
-import designParser.asm.visitor.ClassMethodVisitor;
-import designParser.asm.visitor.ModelBuilderClassVisitor;
 import designParser.framework.api.DesignParserFramework;
 import designParser.framework.impl.DesignParserUmlGenerator;
-import designParser.markupGen.api.MarkupGenerator;
-import designParser.markupGen.impl.SdGenerator;
-import designParser.markupGen.impl.UmlGenerator;
-import designParser.model.api.IDesignModel;
-import designParser.model.impl.DesignModel;
 
 public class DesignParser {
 //	public final static String MODEL_NAME = "AppLauncher";

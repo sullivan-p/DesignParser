@@ -1,7 +1,5 @@
 package designParser.model.api;
 
-import java.util.Collection;
-
 import designParser.model.impl.AccessLevel;
 
 public interface IDesignModel extends ITraversable {
@@ -33,6 +31,8 @@ public interface IDesignModel extends ITraversable {
 
     public void putExtendsRelation(String srcName, String dstName);
 
+    public boolean isSubType(String subName, String superName);
+
     public void putMethodModel(String objName, String methodName, AccessLevel accessLevel, String retTypeName,
             String[] paramTypeNames, boolean isStatic);
     
@@ -46,7 +46,7 @@ public interface IDesignModel extends ITraversable {
     
     public IDependencyRelation getDepRltn(String srcName, String dstName);
     
-    public Collection<IDependencyRelation> getDepRltnsForSrc(String srcName);
+//    public Collection<IDependencyRelation> getDepRltnsForSrc(String srcName);
     
     /**
      * Add the given object model to the design model if another object model 

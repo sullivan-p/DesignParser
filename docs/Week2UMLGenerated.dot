@@ -1,0 +1,76 @@
+digraph UMLDiagram{
+rankdir=BT;
+FilterInputStream [
+shape = "record",
+label = "{FilterInputStream\n\<\<decorator\>\>|# InputStream in\l|+ int available()\l+ long skip(long)\l+ int read()\l+ int read(byte[], int, int)\l+ void mark(int)\l# FilterInputStream(InputStream)\l+ void reset()\l+ boolean markSupported()\l+ int read(byte[])\l+ void close()\l}"
+style = filled
+fillcolor = green
+];
+IEncryption [
+shape = "record",
+label = "{\<\<interface\>\>\nIEncryption|+ char encrypt(char)\l}"
+style = filled
+fillcolor = white
+];
+InputStream [
+shape = "record",
+label = "{\<\<abstract\>\>\nInputStream\n\<\<component\>\>|- int MAX_SKIP_BUFFER_SIZE\l|+ int available()\l+ long skip(long)\l+ int read()\l+ int read(byte[], int, int)\l+ void mark(int)\l+ void reset()\l+ boolean markSupported()\l+ InputStream()\l+ int read(byte[])\l+ void close()\l}"
+style = filled
+fillcolor = green
+];
+EncryptionOutputStream [
+shape = "record",
+label = "{EncryptionOutputStream\n\<\<decorator\>\>|- IEncryption encryptor\l|+ EncryptionOutputStream(OutputStream, IEncryption)\l+ void write(int)\l}"
+style = filled
+fillcolor = green
+];
+OutputStream [
+shape = "record",
+label = "{\<\<abstract\>\>\nOutputStream\n\<\<component\>\>||+ void write(byte[])\l+ void flush()\l+ void write(byte[], int, int)\l+ void write(int)\l+ OutputStream()\l+ void close()\l}"
+style = filled
+fillcolor = green
+];
+SubstitutionCipher [
+shape = "record",
+label = "{SubstitutionCipher|- char[] decryptionKey\l- char[] encryptionKey\l|+ char encrypt(char)\l+ char decrypt(char)\l+ SubstitutionCipher()\l}"
+style = filled
+fillcolor = white
+];
+DecryptionInputStream [
+shape = "record",
+label = "{DecryptionInputStream\n\<\<decorator\>\>|- IDecryption decryptor\l|+ int read()\l+ int read(byte[], int, int)\l+ DecryptionInputStream(InputStream, IDecryption)\l}"
+style = filled
+fillcolor = green
+];
+IDecryption [
+shape = "record",
+label = "{\<\<interface\>\>\nIDecryption|+ char decrypt(char)\l}"
+style = filled
+fillcolor = white
+];
+FilterOutputStream [
+shape = "record",
+label = "{FilterOutputStream\n\<\<decorator\>\>|# OutputStream out\l|+ void write(byte[])\l+ FilterOutputStream(OutputStream)\l+ void flush()\l+ void write(byte[], int, int)\l+ void write(int)\l+ void close()\l}"
+style = filled
+fillcolor = green
+];
+TextEditorApp [
+shape = "record",
+label = "{TextEditorApp||+ TextEditorApp()\l+ static void main(String[])\l}"
+style = filled
+fillcolor = white
+];
+EncryptionOutputStream -> FilterOutputStream [arrowhead="onormal", style="solid"];
+DecryptionInputStream -> FilterInputStream [arrowhead="onormal", style="solid"];
+SubstitutionCipher -> IEncryption [arrowhead="onormal", style="dashed"];
+SubstitutionCipher -> IDecryption [arrowhead="onormal", style="dashed"];
+FilterOutputStream -> OutputStream [arrowhead="onormal", style="solid"];
+FilterInputStream -> InputStream [arrowhead="onormal", style="solid"];
+DecryptionInputStream -> InputStream [arrowhead="vee", style="dashed"];
+DecryptionInputStream -> IDecryption [arrowhead="vee", style="solid"];
+EncryptionOutputStream -> OutputStream [arrowhead="vee", style="dashed"];
+EncryptionOutputStream -> IEncryption [arrowhead="vee", style="solid"];
+FilterOutputStream -> OutputStream [arrowhead="vee", style="solid", label="\<\<decorates\>\>"];
+FilterInputStream -> InputStream [arrowhead="vee", style="solid", label="\<\<decorates\>\>"];
+}
+

@@ -8,24 +8,24 @@ public final class UmlArrowMarkup {
     
     private UmlArrowMarkup() {}
 
-    public static String getExtendsArrow(String subclassName, String superclassName) {
-        return getArrow(subclassName, superclassName, OPEN_ARROWHEAD, SOLID_LINE);
+    public static String getExtendsArrow(String subclassName, String superclassName, String label) {
+        return getArrow(subclassName, superclassName, OPEN_ARROWHEAD, SOLID_LINE, label);
     }
 
-    public static String getImplementsArrow(String subclassName, String superclassName) {
-        return getArrow(subclassName, superclassName, OPEN_ARROWHEAD, DASHED_LINE);
+    public static String getImplementsArrow(String subclassName, String superclassName, String label) {
+        return getArrow(subclassName, superclassName, OPEN_ARROWHEAD, DASHED_LINE, label);
     }
     
-    public static String getReferencesArrow(String subclassName, String superclassName) {
-        return getArrow(subclassName, superclassName, V_ARROWHEAD, DASHED_LINE);
+    public static String getReferencesArrow(String subclassName, String superclassName, String label) {
+        return getArrow(subclassName, superclassName, V_ARROWHEAD, DASHED_LINE, label);
     }
 
-    public static String getAssociatesArrow(String subclassName, String superclassName) {
-        return getArrow(subclassName, superclassName, V_ARROWHEAD, SOLID_LINE);
+    public static String getAssociatesArrow(String subclassName, String superclassName, String label) {
+        return getArrow(subclassName, superclassName, V_ARROWHEAD, SOLID_LINE, label);
     }
     
     private static String getArrow(String sourceName, String destName, 
-            String arrowHead, String style) {
+            String arrowHead, String style, String label) {
         StringBuilder sb = new StringBuilder();
         sb.append(sourceName);
         sb.append(" -> ");
@@ -34,6 +34,10 @@ public final class UmlArrowMarkup {
         sb.append(arrowHead);
         sb.append("\", style=\"");
         sb.append(style);
+        if (label != null && label != "") {
+            sb.append("\", label=\"");
+            sb.append(label);
+        }
         sb.append("\"];\n");    
         return sb.toString();
     }

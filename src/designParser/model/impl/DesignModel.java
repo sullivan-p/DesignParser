@@ -3,7 +3,10 @@ package designParser.model.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -244,7 +247,16 @@ public class DesignModel implements IDesignModel {
             return new ImplementsRelation(srcName, dstName);
         });    
     }
-    
+//  @Override
+//  public Collection<IDependencyRelation> getDepRltnsForSrc(String srcName) {
+//      Collection<IDependencyRelation> rltns = new ArrayList<IDependencyRelation>();
+//      for (Pair<String, String> namePair : dependencyRelations.keySet()) {
+//          if (namePair.getFirst().equals(srcName)) {
+//              rltns.add(dependencyRelations.get(namePair));
+//          }
+//      }
+//      return rltns;
+//  }
     @Override
     public void putAssociatesWithRelation(String srcName, String dstName) {
         putDependencyRelation(srcName, dstName, () -> {
@@ -257,6 +269,23 @@ public class DesignModel implements IDesignModel {
         putDependencyRelation(srcName, dstName, () -> {
             return new ReferencesRelation(srcName, dstName);
         });    
+    }
+    
+    @Override
+    public boolean isSubType(String subName, String superName) {        
+        Collection<String> visited = new HashSet<String>();
+        Queue<String> toVisit = new LinkedList<String>();
+        toVisit.offer(subName);
+        
+        while(!toVisit.isEmpty()) {
+            String currType = toVisit.poll();
+            visited.add(currType);
+            if (currType.equals(superName)) return true;
+            for (String dstName : getDstNamesFromSrc(currType, hierarchyRelations.keySet())) {
+                if (!visited.contains(dstName)) toVisit.offer(dstName);
+            }
+        }
+        return false;
     }
     
     /**
@@ -300,6 +329,17 @@ public class DesignModel implements IDesignModel {
         }
     }
 
+    private Collection<String> getDstNamesFromSrc(String srcName, 
+            Collection<Pair<String, String>> srcToDstPairs) {
+        Collection<String> dstNames = new ArrayList<String>();
+        for (Pair<String, String> namePair : srcToDstPairs) {
+            if (namePair.getFirst().equals(srcName)) {
+                dstNames.add(namePair.getSecond());
+            }
+        }
+        return dstNames;
+    }
+    
     
     //--------------------------------------------------------------------------
     // Methods for allowing pattern detectors to get and replace objects models
@@ -315,16 +355,16 @@ public class DesignModel implements IDesignModel {
         return dependencyRelations.get(new Pair<String, String>(srcName, dstName));
     }   
     
-    @Override
-    public Collection<IDependencyRelation> getDepRltnsForSrc(String srcName) {
-        Collection<IDependencyRelation> rltns = new ArrayList<IDependencyRelation>();
-        for (Pair<String, String> namePair : dependencyRelations.keySet()) {
-            if (namePair.getFirst().equals(srcName)) {
-                rltns.add(dependencyRelations.get(namePair));
-            }
-        }
-        return rltns;
-    }
+//    @Override
+//    public Collection<IDependencyRelation> getDepRltnsForSrc(String srcName) {
+//        Collection<IDependencyRelation> rltns = new ArrayList<IDependencyRelation>();
+//        for (Pair<String, String> namePair : dependencyRelations.keySet()) {
+//            if (namePair.getFirst().equals(srcName)) {
+//                rltns.add(dependencyRelations.get(namePair));
+//            }
+//        }
+//        return rltns;
+//    }
     
     @Override
     public void replaceWithObjectModel(IObject model) {

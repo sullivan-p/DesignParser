@@ -53,9 +53,6 @@ public class MethodCodeVisitor extends MethodVisitor {
         String calleeReturnTypeName = AsmProcessData.prettyRetTypeFromMthdDesc(desc);
         String calleeMethodName;
         boolean isStatic = opcode == Opcodes.INVOKESTATIC;
-        if (isStatic) {
-            int x = 0;
-        }
         
         // Handle the special case for constructor methods.
         if (isConstructor) {

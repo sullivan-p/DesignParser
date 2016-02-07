@@ -26,10 +26,10 @@ public class UmlHierarchyVisitor extends UmlModelVisitor{
 	}
 
 	private void visitExtendsRelation(ExtendsRelation r) {
-	    sb.append(UmlArrowMarkup.getExtendsArrow(r.getSourceName(), r.getDestinationName()));
+	    sb.append(UmlArrowMarkup.getExtendsArrow(r.getSourceName(), r.getDestinationName(), ""));
 	}
 
     private void visitImplementsRelation(ImplementsRelation r) {
-        sb.append(UmlArrowMarkup.getImplementsArrow(r.getSourceName(), r.getDestinationName()));
+        sb.append(UmlArrowMarkup.getImplementsArrow(r.getSourceName(), r.getDestinationName(), ""));
     }
 }
