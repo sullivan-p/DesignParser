@@ -1,3 +1,9 @@
+# Week 9 Update 1
+
+Since last week, I have added a decorator pattern detector and an adapter pattern detector. The overall design has not changed significantly since last week.
+
+![DesignParser UML](/docs/DesignParserUML-w9-1.png)
+
 # Week 8 Update
 
 Since last week, I have not implemented any new pattern detection. I have, however, refactored parts of the design to make the addition of new pattern detectors easier.

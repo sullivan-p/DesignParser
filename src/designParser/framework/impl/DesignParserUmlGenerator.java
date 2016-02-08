@@ -17,6 +17,7 @@ import designParser.markupGen.impl.UmlGenerator;
 import designParser.model.api.IDesignModel;
 import designParser.model.impl.DesignModel;
 import designParser.patternDet.api.PatternDetector;
+import designParser.patternDet.impl.AdapterDetector;
 import designParser.patternDet.impl.DecoratorDetector;
 import designParser.patternDet.impl.SingletonDetector;
 
@@ -54,6 +55,7 @@ public class DesignParserUmlGenerator extends DesignParserFramework {
         Collection<PatternDetector> patternDetectors = new ArrayList<PatternDetector>();
         patternDetectors.add(new SingletonDetector());
         patternDetectors.add(new DecoratorDetector());
+        patternDetectors.add(new AdapterDetector());
         return patternDetectors;
     }
 

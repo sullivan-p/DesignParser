@@ -18,9 +18,9 @@ public class Week2DecoratorUmlTest {
         "java.io.FilterInputStream " +
         "java.io.FilterOutputStream";
         
-        public static void main(String[] args) throws IOException {
-            DesignParserFramework dp = new DesignParserUmlGenerator();
-            String markup = dp.process(CONFIG);
-            System.out.println(markup);
-        }
+    public static void main(String[] args) throws IOException {
+        DesignParserFramework dp = new DesignParserUmlGenerator();
+        String markup = dp.process(CONFIG);
+        System.out.println(markup);
+    }
 }

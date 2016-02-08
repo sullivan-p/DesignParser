@@ -7,7 +7,7 @@ import designParser.framework.impl.DesignParserUmlGenerator;
 
 public class ChocolateBoilerUmlTest {
     public final static String CONFIG = 
-        "testModels.singleton.ChocolateBoiler,testModels.singleton.ChocolateController";
+        "testModels.singleton.ChocolateBoiler testModels.singleton.ChocolateController";
     
     public static void main(String[] args) throws IOException {
         DesignParserFramework dp = new DesignParserUmlGenerator();

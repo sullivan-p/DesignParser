@@ -1,0 +1,36 @@
+digraph UMLDiagram{
+rankdir=BT;
+App [
+shape = "record",
+label = "{App||+ App()\l+ static void main(String[])\l}"
+style = filled
+fillcolor = white
+];
+LinearTransformer [
+shape = "record",
+label = "{LinearTransformer|- Enumeration\<T\> enumTion\l|+ void transform(OutputStream)\lLinearTransformer(Enumeration)\l+ LinearTransformer(Enumeration\<T\>)\l}"
+style = filled
+fillcolor = white
+];
+Enumeration [
+shape = "record",
+label = "{\<\<interface\>\>\nEnumeration\n\<\<target\>\>|+ E nextElement()\l+ boolean hasMoreElements()\l}"
+style = filled
+fillcolor = red
+];
+Iterator [
+shape = "record",
+label = "{\<\<interface\>\>\nIterator\n\<\<adaptee\>\>|+ boolean hasNext()\l+ Object next()\l+ void forEachRemaining(Consumer\<E\>)\l+ void remove()\l}"
+style = filled
+fillcolor = red
+];
+IteratorToEnumerationAdapter [
+shape = "record",
+label = "{IteratorToEnumerationAdapter\n\<\<adapter\>\>|- Iterator\<E\> itr\l|IteratorToEnumerationAdapter(Iterator)\l+ IteratorToEnumerationAdapter(Iterator\<E\>)\l+ E nextElement()\l+ boolean hasMoreElements()\l}"
+style = filled
+fillcolor = red
+];
+IteratorToEnumerationAdapter -> Enumeration [arrowhead="onormal", style="dashed"];
+LinearTransformer -> Enumeration [arrowhead="vee", style="solid", label=""];
+IteratorToEnumerationAdapter -> Iterator [arrowhead="vee", style="solid", label="\<\<adapts\>\>"];
+}

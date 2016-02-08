@@ -66,11 +66,10 @@ SubstitutionCipher -> IEncryption [arrowhead="onormal", style="dashed"];
 SubstitutionCipher -> IDecryption [arrowhead="onormal", style="dashed"];
 FilterOutputStream -> OutputStream [arrowhead="onormal", style="solid"];
 FilterInputStream -> InputStream [arrowhead="onormal", style="solid"];
-DecryptionInputStream -> InputStream [arrowhead="vee", style="dashed"];
-DecryptionInputStream -> IDecryption [arrowhead="vee", style="solid"];
-EncryptionOutputStream -> OutputStream [arrowhead="vee", style="dashed"];
-EncryptionOutputStream -> IEncryption [arrowhead="vee", style="solid"];
+DecryptionInputStream -> InputStream [arrowhead="vee", style="dashed", label=""];
+DecryptionInputStream -> IDecryption [arrowhead="vee", style="solid", label=""];
+EncryptionOutputStream -> OutputStream [arrowhead="vee", style="dashed", label=""];
+EncryptionOutputStream -> IEncryption [arrowhead="vee", style="solid", label=""];
 FilterOutputStream -> OutputStream [arrowhead="vee", style="solid", label="\<\<decorates\>\>"];
 FilterInputStream -> InputStream [arrowhead="vee", style="solid", label="\<\<decorates\>\>"];
 }
-

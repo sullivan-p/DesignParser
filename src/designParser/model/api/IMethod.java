@@ -1,5 +1,7 @@
 package designParser.model.api;
 
+import java.util.Collection;
+
 import designParser.model.impl.AccessLevel;
 
 public interface IMethod extends IModelComponent {
@@ -15,4 +17,5 @@ public interface IMethod extends IModelComponent {
     public void setParamTypeNames(String[] paramTypeNames);
     public void setReturnTypeName(String returnTypeName);
     public void putMethodCall(IMethod methodModel);
+    public Collection<IMethod> getMethodCalls();
 }

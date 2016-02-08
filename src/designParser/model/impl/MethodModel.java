@@ -1,6 +1,7 @@
 package designParser.model.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import designParser.model.api.IMethod;
@@ -103,6 +104,11 @@ public class MethodModel implements IMethod {
     @Override
     public void putMethodCall(IMethod methodModel) {
         methodCalls.add(methodModel);
+    }
+    
+    @Override
+    public Collection<IMethod> getMethodCalls() {
+        return methodCalls;
     }
 
     public static String getSignature(String methodName, AccessLevel accessLevel, String retTypeName, 

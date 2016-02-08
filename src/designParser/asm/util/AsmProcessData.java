@@ -159,6 +159,11 @@ public final class AsmProcessData {
      * by the given type descriptor.
      */
     public static String getPrettyTypeNames(String typeDescriptor) {
+        
+        // Handle the special case of the * type param, which is not followed by
+        // a semicolon like other type params.
+        //typeDescriptor = typeDescriptor.replace("*", "*;>;");
+        
         final int NORMAL = 0;
         final int READING_SPECIAL = 1;
         final int INVALID = 2;
@@ -182,8 +187,13 @@ public final class AsmProcessData {
                     dimCount = 0;
                     typeNames.add(typeName);
                     typeName = "";
-                } else if (c == 'L') {
+                } else if (c == 'L' || c == 'T') {  
+                    // Note: Treating regular object types (L) and generic types
+                    // (T) the same may cause problems.
                     state = READING_SPECIAL;
+                } else if (c == '-') {
+                    // Do nothing.
+                    // Note: This may cause problems.
                 } else {
                     state = INVALID;
                 }
@@ -250,6 +260,7 @@ public final class AsmProcessData {
         symbolToDataType.put('J', (new PrimitiveLongDataType()).getName());
         symbolToDataType.put('D', (new PrimitiveDoubleDataType()).getName());
         symbolToDataType.put('V', "void");
+        symbolToDataType.put('*', "*");
         symbolToDataType.put('[', (new ArrayModel()).getName());
         return symbolToDataType;
     }
